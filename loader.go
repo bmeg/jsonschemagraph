@@ -52,40 +52,62 @@ func yamlLoader(s string) (io.ReadCloser, error) {
 }
 
 /*
-func isEdge(s string) bool {
-	if strings.Contains(s, "_definitions.yaml#/to_many") {
-		return true
-	} else if strings.Contains(s, "_definitions.yaml#/to_one") {
-		return true
+	func isEdge(s string) bool {
+		if strings.Contains(s, "_definitions.yaml#/to_many") {
+			return true
+		} else if strings.Contains(s, "_definitions.yaml#/to_one") {
+			return true
+		}
+		return false
 	}
-	return false
-}
 */
-
 var graphExtMeta = jsonschema.MustCompileString("graphExtMeta.json", `{
-	"properties" : {
-		"targets": {
-			"type" : "array",
-			"items" : {
-				"type" : "object",
-				"properties" : {
-					"type" : {
-						"type": "object",
-						"properties" : {
-							"$ref" : {
-								"type" : "string"
+		"properties" : {
+			"targets": {
+				"type" : "array",
+				"items" : {
+					"type" : "object",
+					"properties" : {
+						"type" : {
+							"type": "object",
+							"properties" : {
+								"$ref" : {
+									"type" : "string"
+								}
 							}
+						},
+						"backref" : {
+							"type": "string"
 						}
-					},
-					"backref" : {
-						"type": "string"
 					}
 				}
 			}
 		}
-	}
-}`)
+	}`)
 
+/*
+	var graphExtMeta = jsonschema.MustCompileString("graphExtMeta.json", `{
+		"properties": {
+			"rel": {
+				"anyOf": [{
+						"type": "string"
+					},
+					{
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"minItems": 1
+					}
+				]
+			},
+			"href": {
+				"type": "string",
+				"format": "uri-template"
+			}
+		}
+	}`)
+*/
 type graphExtCompiler struct{}
 
 type Target struct {
@@ -98,7 +120,7 @@ type GraphExtension struct {
 }
 
 func (s GraphExtension) Validate(ctx jsonschema.ValidationContext, v interface{}) error {
-	//fmt.Printf("graph schema validate\n")
+	fmt.Printf("graph schema validate\n")
 	return nil
 }
 
@@ -201,20 +223,27 @@ func Load(path string, opt ...LoadOpt) (GraphSchema, error) {
 	if err != nil {
 		return GraphSchema{}, err
 	}
+
 	out := GraphSchema{Classes: map[string]*jsonschema.Schema{}, compiler: compiler}
 	if info.IsDir() {
 		files, _ := filepath.Glob(filepath.Join(path, "*.yaml"))
 		if len(files) == 0 {
 			return GraphSchema{}, fmt.Errorf("no schema files found")
 		}
+
 		for _, f := range files {
+			fmt.Println("VALEU OF PATH ", f)
+
 			if sch, err := compiler.Compile(f); err == nil {
+
 				if sch.Title != "" {
 					out.Classes[sch.Title] = sch
 				} else {
-					//log.Printf("Title not found: %s %#v", f, sch)
+					log.Printf("Title not found: %s %#v", f, sch)
 				}
 			} else {
+				fmt.Println("WE HERE")
+
 				for _, i := range opt {
 					if i.LogError != nil {
 						i.LogError(f, err)
