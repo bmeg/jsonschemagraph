@@ -1,0 +1,126 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: pathway
+title: Pathway
+type: object
+namespace: http://gdc.nci.nih.gov
+program: '*'
+project: '*'
+category: genomic
+description: 'A biological pathway
+
+  '
+additionalProperties: false
+submittable: true
+validators: null
+systemProperties:
+- id
+- project_id
+- created_datetime
+- updated_datetime
+required:
+- submitter_id
+- project_id
+- name
+uniqueKeys:
+- - id
+- - project_id
+  - submitter_id
+links:
+- rel: genes
+  href: gene/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: gene.yaml
+  templatePointers:
+  - /id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: pathways
+- rel: interactions
+  href: interaction/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: interaction.yaml
+  templatePointers:
+  - /id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: pathways
+- rel: publications
+  href: publication/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: publication.yaml
+  templatePointers:
+  - /id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: pathways
+- rel: parent_pathways
+  href: parentpathway/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: pathway.yaml
+  templatePointers:
+  - /id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: sub_pathways
+- rel: sub_pathways
+  href: subpathway/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: pathway.yaml
+  templatePointers:
+  - /id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: parent_pathways
+properties:
+  id:
+    type: string
+    systemAlias: node_id
+  name:
+    type: string
+  genes:
+    $ref: _definitions.yaml#/to_many
+  interactions:
+    $ref: _definitions.yaml#/to_many
+  publications:
+    $ref: _definitions.yaml#/to_many
+  parent_pathways:
+    $ref: _definitions.yaml#/to_many
+  sub_pathways:
+    $ref: _definitions.yaml#/to_many
+  project_id:
+    $ref: _definitions.yaml#/project_id
+  submitter_id:
+    type:
+    - string
+    - 'null'
+  type:
+    type: string
+  created_datetime:
+    $ref: _definitions.yaml#/datetime
+  updated_datetime:
+    $ref: _definitions.yaml#/datetime

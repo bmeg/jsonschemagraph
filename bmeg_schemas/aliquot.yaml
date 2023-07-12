@@ -1,0 +1,166 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: aliquot
+title: Aliquot
+type: object
+namespace: http://gdc.nci.nih.gov
+program: '*'
+project: '*'
+category: biospecimen
+description: 'Pertaining to a portion of the whole; any one of two or more samples
+  of something, of the same volume or weight.
+
+  '
+additionalProperties: false
+submittable: true
+validators: null
+systemProperties:
+- id
+- project_id
+- created_datetime
+- updated_datetime
+required:
+- submitter_id
+- project_id
+- id
+uniqueKeys:
+- - id
+- - project_id
+  - submitter_id
+graph_element: vertex
+graph_id: id
+links:
+- rel: gene_expressions
+  href: geneexpression/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: gene_expression.yaml
+  templatePointers:
+  - /id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: aliquot
+- rel: drug_responses
+  href: drugresponse/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: drug_response.yaml
+  templatePointers:
+  - /id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: aliquot
+- rel: somatic_callsets
+  href: somaticcallset/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: somatic_callset.yaml
+  templatePointers:
+  - /id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: aliquot
+- rel: copy_number_alterations
+  href: copynumberalteration/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: copy_number_alteration.yaml
+  templatePointers:
+  - /id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: aliquot
+- rel: projects
+  href: project/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: project.yaml
+  templatePointers:
+  - /id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: aliquots
+- rel: sample
+  href: sample/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: sample.yaml
+  templatePointers:
+  - /id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_one
+    backref: aliquots
+- rel: transcript_expressions
+  href: transcriptexpression/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: transcript_expression.yaml
+  templatePointers:
+  - /id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: aliquot
+properties:
+  id:
+    type: string
+  cellline_attributes:
+    type:
+    - 'null'
+    - object
+  gdc_attributes:
+    type:
+    - 'null'
+    - object
+  gene_expressions:
+    $ref: _definitions.yaml#/to_many
+  drug_responses:
+    $ref: _definitions.yaml#/to_many
+  somatic_callsets:
+    $ref: _definitions.yaml#/to_many
+  copy_number_alterations:
+    $ref: _definitions.yaml#/to_many
+  projects:
+    $ref: _definitions.yaml#/to_many
+  sample:
+    $ref: _definitions.yaml#/to_one
+  transcript_expressions:
+    $ref: _definitions.yaml#/to_many
+  project_id:
+    $ref: _definitions.yaml#/project_id
+  submitter_id:
+    type:
+    - string
+    - 'null'
+  type:
+    type: string
+  created_datetime:
+    $ref: _definitions.yaml#/datetime
+  updated_datetime:
+    $ref: _definitions.yaml#/datetime

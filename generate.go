@@ -100,57 +100,62 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 				return nil, err
 			}
 		} else {
+			//fmt.Println("CLASS ", class)
+			//fmt.Println("DATA ", data)
 			err := class.Validate(data)
 			if err != nil {
 				return nil, err
 			}
 		}
 		out := make([]GraphElement, 0, 1)
-
-		//TODO: need a way to define the primary ID field
-		if id, err := getObjectID(data, class); err == nil {
+		// if name inside for loop inside gext object then do the work
+		// iterate through links instead of properties
+		// href templating lookups vs. before straight copy
+		if id, nerr := getObjectID(data, class); nerr == nil {
 			vData := map[string]any{}
-			for name, prop := range class.Properties {
-				if ext, ok := prop.Extensions[GraphExtensionTag]; ok {
-					//fmt.Printf("Extension: %#v\n", ext)
-					gext := ext.(GraphExtension)
-					dstIDs, err := getReferenceIDField(data, name)
-					if err == nil {
-						for _, dstID := range dstIDs {
-							for _, target := range gext.Targets {
-								if target.Schema.Title == dstID.dstType || dstID.dstType == "" {
-									edgeOut := Edge{
-										To:    dstID.dstID,
-										From:  id,
-										Label: name,
-									}
-									out = append(out, GraphElement{OutEdge: &edgeOut})
-									if target.Backref != "" {
-										edgeIn := Edge{
-											To:    id,
-											From:  dstID.dstID,
-											Label: target.Backref,
-										}
-										out = append(out, GraphElement{InEdge: &edgeIn})
-									}
-								}
+			if ext, ok := class.Extensions[GraphExtensionTag]; ok {
+				gext := ext.(GraphExtension)
+				for _, target := range gext.Targets {
+					if val, ok := data[target.Rel].([]any); ok {
+						ToVal := ""
+						if value, ok := val[0].(any).(map[string]any); ok {
+							if bstr, ok := value["id"].(string); ok {
+								ToVal = bstr
 							}
 						}
-					} else {
-						return nil, err
-					}
-				} else {
-					if d, ok := data[name]; ok {
-						vData[name] = d
+						edgeOut := Edge{
+							To:    ToVal,
+							From:  id,
+							Label: target.Schema.Title,
+						}
+						out = append(out, GraphElement{OutEdge: &edgeOut})
+
+						if target.Backref != "" {
+							edgeIn := Edge{
+								To:    id,
+								From:  ToVal,
+								Label: target.Backref,
+							}
+							out = append(out, GraphElement{InEdge: &edgeIn})
+						}
+
 					}
 				}
 			}
+			for name := range class.Properties {
+				//fmt.Println("NAME:        ", name)
+				if d, ok := data[name]; ok {
+					vData[name] = d
+				}
+			}
 
-			//fmt.Printf("Vertex %s\n", id)
 			dataPB, err := structpb.NewStruct(vData)
 			if err == nil {
 				vert := Vertex{Gid: id, Label: classID, Data: dataPB}
 				out = append(out, GraphElement{Vertex: &vert})
+			}
+			if nerr != nil {
+				fmt.Println("VALUE OF ERROR ", nerr)
 			}
 
 		}

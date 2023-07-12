@@ -26,8 +26,10 @@ func check_delete(filePath string) {
 
 // https://github.com/bmeg/sifter/blob/51a67b0de852e429d30b9371d9975dbefe3a8df9/transform/graph_build.go#L86
 func main() {
-	if out, err := jsgraph.Load("old_schemas"); err == nil {
-		fmt.Println(out, out.ListClasses())
+	if out, err := jsgraph.Load("bmeg_schemas"); err == nil {
+
+		fmt.Println(out.ListClasses())
+		//fmt.Println("OUT ", out)
 		entries, err := os.ReadDir("data")
 		if err != nil {
 			log.Fatal(err)
@@ -37,9 +39,9 @@ func main() {
 				fmt.Println(e.Name(), "Does not have suffix .gz -- continuing")
 				continue
 			}
-			fmt.Println("Writing: ", "data/"+e.Name())
-			if reader, err := readers.ReadGzipLines("swapi/" + e.Name()); err == nil {
-				procChan := make(chan map[string]interface{}, 100)
+			fmt.Println("Writing: ", "output/"+e.Name())
+			if reader, err := readers.ReadGzipLines("data/" + e.Name()); err == nil {
+				procChan := make(chan map[string]any, 100)
 				go func() {
 					for line := range reader {
 						o := map[string]any{}
@@ -75,9 +77,10 @@ func main() {
 					// could either read off of the file name to choose the class or try every type and use the one that doesn't produce an error
 					//new_type := strings.ToUpper(class_type[(len(class_type) - 3)][:1]) + class_type[(len(class_type) - 3)][1:]
 					new_type := strings.Split(strings.Split(e.Name(), ".")[0], "_")[1]
-					//fmt.Println("HERE", new_type)
+					new_type = strings.ToUpper(new_type[:1]) + new_type[1:]
 					if result, err := out.Generate(new_type, line, false); err == nil {
 						for _, lin := range result {
+							//fmt.Println("THE VALUE OF LIN ", lin)
 							// lin contains Vertex,OutEdge,InEdge refer to generate.go
 							if b, err := json.Marshal(lin.Vertex); err == nil {
 								if string(b) != "null" && (proc_count < proc_len) {
@@ -105,8 +108,8 @@ func main() {
 							if err != nil {
 								fmt.Println("Error during write")
 							}
-							//if (lin  != jsgraph.GraphElement{} && lin.Vertex != nil && lin.Vertex.Label != ""){
-							//    fmt.Println(lin.Vertex.Label)
+							//if (lin != jsgraph.GraphElement{} && lin.OutEdge != nil) {
+							//	fmt.Println("LIN INEDGE ", lin.OutEdge)
 							//}
 						}
 					}

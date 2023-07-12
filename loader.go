@@ -61,58 +61,68 @@ func yamlLoader(s string) (io.ReadCloser, error) {
 		return false
 	}
 */
-var graphExtMeta = jsonschema.MustCompileString("graphExtMeta.json", `{
-		"properties" : {
-			"targets": {
-				"type" : "array",
-				"items" : {
-					"type" : "object",
-					"properties" : {
-						"type" : {
-							"type": "object",
-							"properties" : {
-								"$ref" : {
-									"type" : "string"
-								}
-							}
-						},
-						"backref" : {
-							"type": "string"
-						}
-					}
-				}
+var graphExtMeta = jsonschema.MustCompileString("graphExtMeta.json", `{"properties": {
+	"anchor": {
+		"type": "string",
+		"format": "uri-template"
+	},
+	"anchorPointer": {
+		"type": "string",
+		"anyOf": [
+			{ "format": "json-pointer" },
+			{ "format": "relative-json-pointer" }
+		]
+	},
+	"rel": {
+		"anyOf": [
+			{ "type": "string" },
+			{
+				"type": "array",
+				"items": { "type": "string" },
+				"minItems": 1
 			}
+		]
+	},
+	"href": {
+		"type": "string",
+		"format": "uri-template"
+	},
+	"templatePointers": {
+		"type": "object",
+		"additionalProperties": {
+			"type": "string",
+			"anyOf": [
+				{ "format": "json-pointer" },
+				{ "format": "relative-json-pointer" }
+			]
 		}
-	}`)
+	},
+	"templateRequired": {
+		"type": "array",
+		"items": {
+			"type": "string"
+		},
+		"uniqueItems": true
+	},
+	"title": {
+		"type": "string"
+	},
+	"description": {
+		"type": "string"
+	},
+	"$comment": {
+		"type": "string"
+	}
+}
+}`)
 
-/*
-	var graphExtMeta = jsonschema.MustCompileString("graphExtMeta.json", `{
-		"properties": {
-			"rel": {
-				"anyOf": [{
-						"type": "string"
-					},
-					{
-						"type": "array",
-						"items": {
-							"type": "string"
-						},
-						"minItems": 1
-					}
-				]
-			},
-			"href": {
-				"type": "string",
-				"format": "uri-template"
-			}
-		}
-	}`)
-*/
 type graphExtCompiler struct{}
 
 type Target struct {
 	Schema  *jsonschema.Schema
 	Backref string
+	Rel     string
+	Href    string
 }
 
 type GraphExtension struct {
@@ -120,34 +130,60 @@ type GraphExtension struct {
 }
 
 func (s GraphExtension) Validate(ctx jsonschema.ValidationContext, v interface{}) error {
-	fmt.Printf("graph schema validate\n")
+	fmt.Println("graph schema validate error at ")
 	return nil
 }
 
 func (graphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]interface{}) (jsonschema.ExtSchema, error) {
-	if e, ok := m["targets"]; ok {
+	if e, ok := m["links"]; ok {
+		/*
+			if b, ok := m["title"]; ok {
+				fmt.Println("--------------------------SCHEMA TITLE: ", b)
+			}
+		*/
 		if ea, ok := e.([]any); ok {
 			out := GraphExtension{Targets: []Target{}}
 			for i := range ea {
 				if emap, ok := ea[i].(map[string]any); ok {
-					if tval, ok := emap["type"]; ok {
+					rel := ""
+					if flavortown, ok := emap["rel"]; ok {
+						if bstr, ok := flavortown.(string); ok {
+							rel = bstr
+						}
+					}
+					href := ""
+					if hrefproto, ok := emap["href"]; ok {
+						if bstr, ok := hrefproto.(string); ok {
+							href = bstr
+						}
+					}
+					if tval, ok := emap["targetSchema"]; ok {
 						if tmap, ok := tval.(map[string]any); ok {
 							if ref, ok := tmap["$ref"]; ok {
 								if refStr, ok := ref.(string); ok {
 									backRef := ""
-									if bval, ok := emap["backref"]; ok {
-										if bstr, ok := bval.(string); ok {
-											backRef = bstr
+									if bval, ok := emap["targetHints"]; ok {
+										if hval, ok := bval.(map[string]any); ok {
+											if ref, ok := hval["backref"]; ok {
+												if bstr, ok := ref.(string); ok {
+													backRef = bstr
+												}
+											}
+											//fmt.Println("refstr", refStr)
+											sch, err := ctx.CompileRef(refStr, "./", false)
+											//fmt.Println("After CompileRef")
+
+											if err == nil {
+												out.Targets = append(out.Targets, Target{
+													Schema:  sch,
+													Backref: backRef,
+													Rel:     rel,
+													Href:    href,
+												})
+											} else {
+												return nil, err
+											}
 										}
-									}
-									sch, err := ctx.CompileRef(refStr, "./", false)
-									if err == nil {
-										out.Targets = append(out.Targets, Target{
-											Schema:  sch,
-											Backref: backRef,
-										})
-									} else {
-										return nil, err
 									}
 								}
 							}
@@ -155,8 +191,8 @@ func (graphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]int
 					}
 				}
 			}
+			//fmt.Println("NEXT ONE _____________________________________________")
 			return out, nil
-			//return GraphExtension{emap}, nil
 		}
 	}
 	return nil, nil
@@ -232,17 +268,14 @@ func Load(path string, opt ...LoadOpt) (GraphSchema, error) {
 		}
 
 		for _, f := range files {
-			fmt.Println("VALEU OF PATH ", f)
-
+			//fmt.Println("VALUE OF F ", f)
 			if sch, err := compiler.Compile(f); err == nil {
-
 				if sch.Title != "" {
 					out.Classes[sch.Title] = sch
 				} else {
 					log.Printf("Title not found: %s %#v", f, sch)
 				}
 			} else {
-				fmt.Println("WE HERE")
 
 				for _, i := range opt {
 					if i.LogError != nil {
@@ -255,10 +288,12 @@ func Load(path string, opt ...LoadOpt) (GraphSchema, error) {
 		if sch, err := compiler.Compile(path); err == nil {
 			for _, obj := range ObjectScan(sch) {
 				if obj.Title != "" {
+
 					out.Classes[obj.Title] = obj
 				}
 			}
 		} else {
+
 			for _, i := range opt {
 				if i.LogError != nil {
 					i.LogError(path, err)
