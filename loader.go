@@ -123,6 +123,7 @@ type Target struct {
 	Backref string
 	Rel     string
 	Href    string
+	LinkKey string
 }
 
 type GraphExtension struct {
@@ -157,6 +158,16 @@ func (graphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]int
 							href = bstr
 						}
 					}
+
+					linkKey := ""
+					// Need to put something in the schema that denotes that the key is nested in an array
+					if hrefproto, ok := emap["templateRequired"]; ok {
+						if emap, ok := hrefproto.([]any); ok {
+							if umap, ok := emap[0].(any).(string); ok {
+								linkKey = umap
+							}
+						}
+					}
 					if tval, ok := emap["targetSchema"]; ok {
 						if tmap, ok := tval.(map[string]any); ok {
 							if ref, ok := tmap["$ref"]; ok {
@@ -179,6 +190,7 @@ func (graphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]int
 													Backref: backRef,
 													Rel:     rel,
 													Href:    href,
+													LinkKey: linkKey,
 												})
 											} else {
 												return nil, err

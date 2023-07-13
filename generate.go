@@ -66,8 +66,10 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 				for _, target := range gext.Targets {
 					if val, ok := data[target.Rel].([]any); ok {
 						idTwo := ""
+						// this logic needs to be edited to better reflect the schema.
 						if value, ok := val[0].(any).(map[string]any); ok {
-							if tmp, ok := value["id"].(string); ok {
+							//fmt.Println("TARGET LINK KEY ", target)
+							if tmp, ok := value[target.LinkKey].(string); ok {
 								idTwo = tmp
 							}
 						}
