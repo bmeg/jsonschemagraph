@@ -130,7 +130,7 @@ type GraphExtension struct {
 }
 
 func (s GraphExtension) Validate(ctx jsonschema.ValidationContext, v interface{}) error {
-	fmt.Println("graph schema validate error at ")
+	fmt.Println("graph schema validate error at ") // don't think this is reacting to an actual error but it does currently get called when generating edges/vertices
 	return nil
 }
 

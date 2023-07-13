@@ -2,7 +2,6 @@ package jsgraph
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/santhosh-tekuri/jsonschema/v5"
 	"google.golang.org/protobuf/types/known/structpb"
@@ -34,54 +33,6 @@ type reference struct {
 	dstType string
 }
 
-func getReferenceIDField(data map[string]any, fieldName string) ([]reference, error) {
-	out := []reference{}
-	if d, ok := data[fieldName]; ok {
-		//fmt.Printf("Dest id field %#v\n", d)
-		if idStr, ok := d.(string); ok {
-			out = append(out, reference{dstID: idStr})
-		} else if idArray, ok := d.([]any); ok {
-			for _, g := range idArray {
-				if gStr, ok := g.(string); ok {
-					out = append(out, reference{dstID: gStr})
-				} else if gMap, ok := g.(map[string]any); ok {
-					if id, ok := gMap["id"]; ok {
-						if idStr, ok := id.(string); ok {
-							out = append(out, reference{dstID: idStr})
-						}
-					} else if id, ok := gMap["reference"]; ok {
-						//reference is a FHIR style id pointer, { "reference": "Type/id" }
-						if idStr, ok := id.(string); ok {
-							a := strings.Split(idStr, "/")
-							if len(a) > 1 {
-								out = append(out, reference{dstID: a[1], dstType: a[0]})
-							}
-						}
-					} else {
-						//fmt.Printf("id/reference Not found in %#v\n", gMap)
-					}
-				}
-			}
-		} else if idMap, ok := d.(map[string]any); ok {
-			if id, ok := idMap["id"]; ok {
-				if idStr, ok := id.(string); ok {
-					out = append(out, reference{dstID: idStr})
-				}
-			} else if id, ok := idMap["reference"]; ok {
-				//reference is a FHIR style id pointer, { "reference": "Type/id" }
-				if idStr, ok := id.(string); ok {
-					a := strings.Split(idStr, "/")
-					if len(a) > 1 {
-						out = append(out, reference{dstID: a[1], dstType: a[0]})
-					}
-				}
-			}
-		}
-	}
-
-	return out, nil
-}
-
 func getObjectID(data map[string]any, schema *jsonschema.Schema) (string, error) {
 	if id, ok := data["id"]; ok {
 		if idStr, ok := id.(string); ok {
@@ -108,32 +59,30 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 			}
 		}
 		out := make([]GraphElement, 0, 1)
-		// if name inside for loop inside gext object then do the work
-		// iterate through links instead of properties
-		// href templating lookups vs. before straight copy
 		if id, nerr := getObjectID(data, class); nerr == nil {
 			vData := map[string]any{}
 			if ext, ok := class.Extensions[GraphExtensionTag]; ok {
 				gext := ext.(GraphExtension)
 				for _, target := range gext.Targets {
 					if val, ok := data[target.Rel].([]any); ok {
-						ToVal := ""
+						idTwo := ""
 						if value, ok := val[0].(any).(map[string]any); ok {
-							if bstr, ok := value["id"].(string); ok {
-								ToVal = bstr
+							if tmp, ok := value["id"].(string); ok {
+								idTwo = tmp
 							}
 						}
 						edgeOut := Edge{
-							To:    ToVal,
+							To:    idTwo,
 							From:  id,
-							Label: target.Schema.Title,
+							Label: target.Schema.Title, // this label isn't quite right. Ex: right now "Transcript" -> should be "transcripts"
+							// could do some string manipulation but not sure if there is a better solution
 						}
 						out = append(out, GraphElement{OutEdge: &edgeOut})
 
 						if target.Backref != "" {
 							edgeIn := Edge{
 								To:    id,
-								From:  ToVal,
+								From:  idTwo,
 								Label: target.Backref,
 							}
 							out = append(out, GraphElement{InEdge: &edgeIn})
