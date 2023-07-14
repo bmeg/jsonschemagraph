@@ -36,7 +36,7 @@ links:
   targetSchema:
     $ref: gene_expression.yaml
   templatePointers:
-  - /id
+    id: /gene_expressions/-/id
   targetHints:
     directionality:
     - outbound
@@ -50,7 +50,7 @@ links:
   targetSchema:
     $ref: drug_response.yaml
   templatePointers:
-  - /id
+    id: /drug_responses/-/id
   targetHints:
     directionality:
     - outbound
@@ -64,7 +64,7 @@ links:
   targetSchema:
     $ref: somatic_callset.yaml
   templatePointers:
-  - /id
+    id: /somatic_callsets/-/id
   targetHints:
     directionality:
     - outbound
@@ -78,7 +78,7 @@ links:
   targetSchema:
     $ref: copy_number_alteration.yaml
   templatePointers:
-  - /id
+    id: /copy_number_alterations/-/id
   targetHints:
     directionality:
     - outbound
@@ -92,7 +92,7 @@ links:
   targetSchema:
     $ref: project.yaml
   templatePointers:
-  - /id
+    id: /projects/-/id
   targetHints:
     directionality:
     - outbound
@@ -106,7 +106,7 @@ links:
   targetSchema:
     $ref: sample.yaml
   templatePointers:
-  - /id
+    id: /sample/-/id
   targetHints:
     directionality:
     - outbound
@@ -120,7 +120,7 @@ links:
   targetSchema:
     $ref: transcript_expression.yaml
   templatePointers:
-  - /id
+    id: /transcript_expressions/-/id
   targetHints:
     directionality:
     - outbound
@@ -139,19 +139,40 @@ properties:
     - 'null'
     - object
   gene_expressions:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   drug_responses:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   somatic_callsets:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   copy_number_alterations:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   projects:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   sample:
-    $ref: _definitions.yaml#/to_one
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   transcript_expressions:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:

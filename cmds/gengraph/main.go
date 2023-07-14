@@ -27,8 +27,7 @@ func check_delete(filePath string) {
 // https://github.com/bmeg/sifter/blob/51a67b0de852e429d30b9371d9975dbefe3a8df9/transform/graph_build.go#L86
 func main() {
 	if out, err := jsgraph.Load("bmeg_schemas"); err == nil {
-
-		fmt.Println(out.ListClasses())
+		fmt.Println("Loaded ", out.ListClasses())
 		//fmt.Println("OUT ", out)
 		entries, err := os.ReadDir("data")
 		if err != nil {
@@ -70,14 +69,15 @@ func main() {
 				}
 				defer OutEdege_file.Close()
 
-				print("LENGTH OF PROCCHAN ", len(procChan))
+				//print("LENGTH OF PROCCHAN ", len(procChan))
 				proc_len := len(procChan) - 1
 				proc_count := 0
 				for line := range procChan {
 					// could either read off of the file name to choose the class or try every type and use the one that doesn't produce an error
-					//new_type := strings.ToUpper(class_type[(len(class_type) - 3)][:1]) + class_type[(len(class_type) - 3)][1:]
 					new_type := strings.Split(strings.Split(e.Name(), ".")[0], "_")[1]
+					// toggle uncomment/comment of below line depending on SWAPI/BMEG data
 					new_type = strings.ToUpper(new_type[:1]) + new_type[1:]
+					//fmt.Println("NEW TYPE ", new_type)
 					if result, err := out.Generate(new_type, line, false); err == nil {
 						for _, lin := range result {
 							//fmt.Println("THE VALUE OF LIN ", lin)

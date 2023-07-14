@@ -35,7 +35,7 @@ links:
   targetSchema:
     $ref: phenotype.yaml
   templatePointers:
-  - /id
+    id: /child_terms/-/id
   targetHints:
     directionality:
     - outbound
@@ -49,7 +49,7 @@ links:
   targetSchema:
     $ref: phenotype.yaml
   templatePointers:
-  - /id
+    id: /parent_terms/-/id
   targetHints:
     directionality:
     - outbound
@@ -70,9 +70,15 @@ properties:
   description:
     type: string
   child_terms:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   parent_terms:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:

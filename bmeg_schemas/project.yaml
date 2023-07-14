@@ -6,66 +6,69 @@ namespace: http://gdc.nci.nih.gov
 program: '*'
 project: '*'
 category: administrative
-description: 'Any specifically defined piece of work that is undertaken or attempted to meet a single requirement.'
+description: 'Any specifically defined piece of work that is undertaken or attempted
+  to meet a single requirement.
+
+  '
 additionalProperties: false
 submittable: true
 validators: null
 systemProperties:
-  - id
-  - project_id
-  - created_datetime
-  - updated_datetime
+- id
+- project_id
+- created_datetime
+- updated_datetime
 required:
-  - id
-  - submitter_id
-  - project_id
+- id
+- submitter_id
+- project_id
 uniqueKeys:
-  - - id
-  - - project_id
-    - submitter_id
+- - id
+- - project_id
+  - submitter_id
 links:
-  - rel: cases
-    href: case/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: case.yaml
-    templatePointers:
-      - /id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_many
-      backref: projects
-  - rel: compounds
-    href: compound/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: compound.yaml
-    templatePointers:
-      - /id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_many
-      backref: projects
-  - rel: programs
-    href: program/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: program.yaml
-    templatePointers:
-      - /id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_many
-      backref: projects
+- rel: cases
+  href: case/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: case.yaml
+  templatePointers:
+    id: /cases/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: projects
+- rel: compounds
+  href: compound/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: compound.yaml
+  templatePointers:
+    id: /compounds/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: projects
+- rel: programs
+  href: program/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: program.yaml
+  templatePointers:
+    id: /programs/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: projects
 properties:
   id:
     type: string
@@ -73,18 +76,27 @@ properties:
     $ref: _definitions.yaml#/project_id
   gdc_attributes:
     type:
-      - 'null'
-      - object
+    - 'null'
+    - object
   cases:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   compounds:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   programs:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   submitter_id:
     type:
-      - string
-      - 'null'
+    - string
+    - 'null'
   type:
     type: string
   created_datetime:

@@ -104,7 +104,7 @@ var Exons_Out_Edge = []exon{
 func checkNullFields(data map[string]interface{}) bool {
 	for key, value := range data {
 		if value == "" {
-			fmt.Printf("ERROR: key %s has no value\n", key)
+			fmt.Printf("Warning: key %s has no value\n", key)
 			return false
 		} else if subData, ok := value.(map[string]interface{}); ok {
 			if !checkNullFields(subData) {

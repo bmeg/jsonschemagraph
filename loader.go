@@ -122,8 +122,8 @@ type Target struct {
 	Schema  *jsonschema.Schema
 	Backref string
 	Rel     string
-	Href    string
-	LinkKey string
+	//Href            string don't currently use this
+	templatePointer map[string]any
 }
 
 type GraphExtension struct {
@@ -131,43 +131,38 @@ type GraphExtension struct {
 }
 
 func (s GraphExtension) Validate(ctx jsonschema.ValidationContext, v interface{}) error {
-	fmt.Println("graph schema validate error at ") // don't think this is reacting to an actual error but it does currently get called when generating edges/vertices
+	fmt.Println("graph schema validate error at ", v)
 	return nil
 }
 
 func (graphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]interface{}) (jsonschema.ExtSchema, error) {
 	if e, ok := m["links"]; ok {
-		/*
-			if b, ok := m["title"]; ok {
-				fmt.Println("--------------------------SCHEMA TITLE: ", b)
-			}
-		*/
 		if ea, ok := e.([]any); ok {
 			out := GraphExtension{Targets: []Target{}}
 			for i := range ea {
 				if emap, ok := ea[i].(map[string]any); ok {
 					rel := ""
-					if flavortown, ok := emap["rel"]; ok {
-						if bstr, ok := flavortown.(string); ok {
-							rel = bstr
+					if emapmap, ok := emap["rel"]; ok {
+						if rel_type_check, ok := emapmap.(string); ok {
+							rel = rel_type_check
 						}
 					}
-					href := ""
-					if hrefproto, ok := emap["href"]; ok {
-						if bstr, ok := hrefproto.(string); ok {
-							href = bstr
+					/*
+						href := ""
+						if tmp, ok := emap["href"]; ok {
+							if href_type_check, ok := tmp.(string); ok {
+								href = href_type_check
+							}
+						}
+					*/
+
+					linkKey := make(map[string]any)
+					if tpmap, ok := emap["templatePointers"]; ok {
+						if tp_type_check, ok := tpmap.(map[string]any); ok {
+							linkKey = tp_type_check
 						}
 					}
 
-					linkKey := ""
-					// Need to put something in the schema that denotes that the key is nested in an array
-					if hrefproto, ok := emap["templateRequired"]; ok {
-						if emap, ok := hrefproto.([]any); ok {
-							if umap, ok := emap[0].(any).(string); ok {
-								linkKey = umap
-							}
-						}
-					}
 					if tval, ok := emap["targetSchema"]; ok {
 						if tmap, ok := tval.(map[string]any); ok {
 							if ref, ok := tmap["$ref"]; ok {
@@ -189,8 +184,8 @@ func (graphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]int
 													Schema:  sch,
 													Backref: backRef,
 													Rel:     rel,
-													Href:    href,
-													LinkKey: linkKey,
+													//Href:            href,
+													templatePointer: linkKey,
 												})
 											} else {
 												return nil, err
@@ -288,6 +283,7 @@ func Load(path string, opt ...LoadOpt) (GraphSchema, error) {
 					log.Printf("Title not found: %s %#v", f, sch)
 				}
 			} else {
+				fmt.Println("ERRORRARARAAR", err)
 
 				for _, i := range opt {
 					if i.LogError != nil {

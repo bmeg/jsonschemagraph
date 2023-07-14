@@ -6,72 +6,74 @@ namespace: http://gdc.nci.nih.gov
 program: '*'
 project: '*'
 category: reference
-description: 'A transcript.'
+description: 'A transcript.
+
+  '
 additionalProperties: false
 submittable: true
 validators: null
 systemProperties:
-  - id
-  - project_id
-  - created_datetime
-  - updated_datetime
+- id
+- project_id
+- created_datetime
+- updated_datetime
 required:
-  - submitter_id
-  - project_id
-  - biotype
-  - chromosome
-  - strand
-  - start
-  - genome
-  - end
-  - transcript_id
+- submitter_id
+- project_id
+- biotype
+- chromosome
+- strand
+- start
+- genome
+- end
+- transcript_id
 uniqueKeys:
-  - - id
-  - - project_id
-    - submitter_id
+- - id
+- - project_id
+  - submitter_id
 links:
-  - rel: exons
-    href: exon/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: exon.yaml
-    templatePointers:
-      - /id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_many
-      backref: transcripts
-  - rel: gene
-    href: gene/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: gene.yaml
-    templatePointers:
-      - /id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_one
-      backref: transcripts
-  - rel: proteins
-    href: protein/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: protein.yaml
-    templatePointers:
-      - /id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_many
-      backref: transcripts
+- rel: exons
+  href: exon/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: exon.yaml
+  templatePointers:
+    id: /exons/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: transcripts
+- rel: gene
+  href: gene/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: gene.yaml
+  templatePointers:
+    id: /gene/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_one
+    backref: transcripts
+- rel: proteins
+  href: protein/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: protein.yaml
+  templatePointers:
+    id: /proteins/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: transcripts
 properties:
   transcript_id:
     type: string
@@ -88,17 +90,26 @@ properties:
   strand:
     $ref: _definitions.yaml#/strand
   exons:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   gene:
-    $ref: _definitions.yaml#/to_one
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   proteins:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:
     type:
-      - string
-      - 'null'
+    - string
+    - 'null'
   id:
     type: string
     systemAlias: node_id

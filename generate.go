@@ -2,6 +2,7 @@ package jsgraph
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/santhosh-tekuri/jsonschema/v5"
 	"google.golang.org/protobuf/types/known/structpb"
@@ -63,33 +64,57 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 			vData := map[string]any{}
 			if ext, ok := class.Extensions[GraphExtensionTag]; ok {
 				gext := ext.(GraphExtension)
+				// trying to index into derivedId with the appropriate json pointer patter that is taken from templatePointers
 				for _, target := range gext.Targets {
-					if val, ok := data[target.Rel].([]any); ok {
-						idTwo := ""
-						// this logic needs to be edited to better reflect the schema.
-						if value, ok := val[0].(any).(map[string]any); ok {
-							//fmt.Println("TARGET LINK KEY ", target)
-							if tmp, ok := value[target.LinkKey].(string); ok {
-								idTwo = tmp
+					pointer_fragment := ""
+					for _, pointer_string := range target.templatePointer {
+						splitted_pointer := strings.Split(pointer_string.(string), "/")
+						if len(splitted_pointer) < 3 {
+							return nil, fmt.Errorf("length of templatePointers is not long enough")
+						}
+						// this if statement is used to get map[string]any into type any which is much easier to work with
+						// this assumes that the first characters of the target.templatePointer will always be of the form '/hgfdsadfg/'
+						if derivedId, ok := data[splitted_pointer[1]].(any); ok {
+							rest_of_pointer := strings.Join(splitted_pointer[2:], "/") + "/"
+							//fmt.Println("----------------------------------------------------------------", rest_of_value)
+							for _, v := range rest_of_pointer {
+								if v != 45 && v != 47 {
+									pointer_fragment = pointer_fragment + string(v)
+								} else if v == 45 {
+									if _, ok := derivedId.([]any); ok {
+										if value, ok := derivedId.([]any); ok {
+											derivedId = value[0]
+											//fmt.Println("v==45", derivedId, "VAL VALUE: ", pointer_fragment)
+										}
+									}
+								} else if v == 47 {
+									if _, ok := derivedId.(map[string]any); ok {
+										if nalue, ok := derivedId.(map[string]any)[pointer_fragment]; ok {
+											derivedId = nalue
+											//fmt.Println("v==47", derivedId, "VAL VALUE: ", pointer_fragment)
+										}
+									}
+									pointer_fragment = ""
+								}
 							}
-						}
-						edgeOut := Edge{
-							To:    idTwo,
-							From:  id,
-							Label: target.Schema.Title, // this label isn't quite right. Ex: right now "Transcript" -> should be "transcripts"
-							// could do some string manipulation but not sure if there is a better solution
-						}
-						out = append(out, GraphElement{OutEdge: &edgeOut})
 
-						if target.Backref != "" {
-							edgeIn := Edge{
+							edgeOut := Edge{
 								To:    id,
-								From:  idTwo,
-								Label: target.Backref,
+								From:  derivedId.(string),
+								Label: target.Rel,
+								// this label isn't quite right. Ex: right now "Transcript" -> should be "transcripts"
+								// doing some string manipulation now, but not sure if there is a better solution
 							}
-							out = append(out, GraphElement{InEdge: &edgeIn})
+							out = append(out, GraphElement{OutEdge: &edgeOut})
+							if target.Backref != "" {
+								edgeIn := Edge{
+									To:    id,
+									From:  derivedId.(string),
+									Label: target.Backref,
+								}
+								out = append(out, GraphElement{InEdge: &edgeIn})
+							}
 						}
-
 					}
 				}
 			}

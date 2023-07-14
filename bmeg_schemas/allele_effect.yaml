@@ -10,7 +10,7 @@ links:
   targetSchema:
     $ref: gene.yaml
   templatePointers:
-  - /id
+    id: /ensembl_gene/-/id
   targetHints:
     directionality:
     - outbound
@@ -24,7 +24,7 @@ links:
   targetSchema:
     $ref: transcript.yaml
   templatePointers:
-  - /id
+    id: /ensembl_transcript/-/id
   targetHints:
     directionality:
     - outbound
@@ -57,9 +57,15 @@ properties:
   hgvsp:
     type: string
   ensembl_gene:
-    $ref: _definitions.yaml#/to_one
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   ensembl_transcript:
-    $ref: _definitions.yaml#/to_one
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   hugo_symbol:
     type: string
   biotype:

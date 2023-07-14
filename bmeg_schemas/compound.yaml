@@ -31,7 +31,7 @@ links:
   targetSchema:
     $ref: case.yaml
   templatePointers:
-  - /id
+    id: /cases/-/id
   targetHints:
     directionality:
     - outbound
@@ -45,7 +45,21 @@ links:
   targetSchema:
     $ref: drug_response.yaml
   templatePointers:
-  - /id
+    id: /drug_responses/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: compounds
+- rel: g2p_associations
+  href: g2passociation/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: gene_phenotype_association.yaml
+  templatePointers:
+    id: /g2p_associations/-/id
   targetHints:
     directionality:
     - outbound
@@ -59,7 +73,7 @@ links:
   targetSchema:
     $ref: project.yaml
   templatePointers:
-  - /id
+    id: /projects/-/id
   targetHints:
     directionality:
     - outbound
@@ -126,13 +140,25 @@ properties:
     - 'null'
     - array
   cases:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   drug_responses:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   g2p_associations:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   projects:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:

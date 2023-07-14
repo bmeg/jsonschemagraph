@@ -26,6 +26,20 @@ uniqueKeys:
 - - project_id
   - submitter_id
 links:
+- rel: g2p_associations
+  href: g2passociation/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: gene_phenotype_association.yaml
+  templatePointers:
+    id: /g2p_associations/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: genomic_features
 - rel: genes
   href: gene/{id}
   templateRequired:
@@ -33,7 +47,7 @@ links:
   targetSchema:
     $ref: gene.yaml
   templatePointers:
-  - /id
+    id: /genes/-/id
   targetHints:
     directionality:
     - outbound
@@ -72,9 +86,15 @@ properties:
   name:
     type: string
   g2p_associations:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   genes:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:

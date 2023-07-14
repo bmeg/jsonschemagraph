@@ -6,128 +6,144 @@ namespace: http://gdc.nci.nih.gov
 program: '*'
 project: '*'
 category: reference
-description: 'A gene.'
+description: 'A gene.
+
+  '
 additionalProperties: false
 submittable: true
 validators: null
 systemProperties:
-  - id
-  - project_id
-  - created_datetime
-  - updated_datetime
+- id
+- project_id
+- created_datetime
+- updated_datetime
 required:
-  - submitter_id
-  - project_id
-  - description
-  - chromosome
-  - strand
-  - start
-  - genome
-  - end
-  - symbol
+- submitter_id
+- project_id
+- description
+- chromosome
+- strand
+- start
+- genome
+- end
+- symbol
 uniqueKeys:
-  - - id
-  - - project_id
-    - submitter_id
+- - id
+- - project_id
+  - submitter_id
 links:
-  - rel: alleles
-    href: allele/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: allele.yaml
-    templatePointers:
-      - /id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_many
-      backref: genes
-  - rel: interaction_input
-    href: interactioninpu/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: interaction.yaml
-    templatePointers:
-      - /id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_many
-      backref: genes
-  - rel: gene_ontology_terms
-    href: geneontologyterm/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: gene_ontology_term.yaml
-    templatePointers:
-      - /id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_many
-      backref: genes
-  - rel: gene_sets
-    href: geneset/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: gene_set.yaml
-    templatePointers:
-      - /id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_many
-      backref: genes
-  - rel: genomic_features
-    href: genomicfeature/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: genomic_feature.yaml
-    templatePointers:
-      - /id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_many
-      backref: genes
-  - rel: pathways
-    href: pathway/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: pathway.yaml
-    templatePointers:
-      - /id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_many
-      backref: genes
-  - rel: transcripts
-    href: transcript/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: transcript.yaml
-    templatePointers:
-      - /id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_many
-      backref: genes
+- rel: alleles
+  href: allele/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: allele.yaml
+  templatePointers:
+    id: /alleles/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: genes
+- rel: interaction_input
+  href: interactioninpu/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: interaction.yaml
+  templatePointers:
+    id: /interaction_input/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: genes
+- rel: g2p_associations
+  href: g2passociation/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: gene_phenotype_association.yaml
+  templatePointers:
+    id: /g2p_associations/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: genes
+- rel: gene_ontology_terms
+  href: geneontologyterm/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: gene_ontology_term.yaml
+  templatePointers:
+    id: /gene_ontology_terms/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: genes
+- rel: gene_sets
+  href: geneset/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: gene_set.yaml
+  templatePointers:
+    id: /gene_sets/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: genes
+- rel: genomic_features
+  href: genomicfeature/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: genomic_feature.yaml
+  templatePointers:
+    id: /genomic_features/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: genes
+- rel: pathways
+  href: pathway/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: pathway.yaml
+  templatePointers:
+    id: /pathways/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: genes
+- rel: transcripts
+  href: transcript/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: transcript.yaml
+  templatePointers:
+    id: /transcripts/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: genes
 properties:
   id:
     type: string
@@ -146,27 +162,51 @@ properties:
   strand:
     $ref: _definitions.yaml#/strand
   alleles:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   interaction_input:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   g2p_associations:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   gene_ontology_terms:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   gene_sets:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   genomic_features:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   pathways:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   transcripts:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:
     type:
-      - string
-      - 'null'
+    - string
+    - 'null'
   type:
     type: string
   created_datetime:

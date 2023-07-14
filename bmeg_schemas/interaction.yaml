@@ -29,13 +29,13 @@ uniqueKeys:
   - submitter_id
 links:
 - rel: interaction_input
-  href: interaction_input/{id}
+  href: interactioninpu/{id}
   templateRequired:
   - id
   targetSchema:
-    $ref: interaction.yaml
+    $ref: protein.yaml
   templatePointers:
-  - /id
+    id: /interaction_input/-/id
   targetHints:
     directionality:
     - outbound
@@ -47,9 +47,9 @@ links:
   templateRequired:
   - id
   targetSchema:
-    $ref: interaction.yaml
+    $ref: protein.yaml
   templatePointers:
-  - /id
+    id: /interaction_output/-/id
   targetHints:
     directionality:
     - outbound
@@ -63,7 +63,7 @@ links:
   targetSchema:
     $ref: pathway.yaml
   templatePointers:
-  - /id
+    id: /pathways/-/id
   targetHints:
     directionality:
     - outbound
@@ -77,7 +77,7 @@ links:
   targetSchema:
     $ref: publication.yaml
   templatePointers:
-  - /id
+    id: /publications/-/id
   targetHints:
     directionality:
     - outbound
@@ -90,13 +90,25 @@ properties:
   type:
     type: string
   interaction_input:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   interaction_output:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   pathways:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   publications:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:

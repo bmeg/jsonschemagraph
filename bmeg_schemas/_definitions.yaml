@@ -1,5 +1,5 @@
 id: _definitions
-title: Definitions
+title: Definition
 UUID:
     term:
         $ref: "_terms.yaml#/UUID"

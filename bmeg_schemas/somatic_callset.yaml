@@ -33,7 +33,7 @@ links:
   targetSchema:
     $ref: aliquot.yaml
   templatePointers:
-  - /id
+    id: /aliquots/-/id
   targetHints:
     directionality:
     - outbound
@@ -41,7 +41,6 @@ links:
     - has_many
     backref: somatic_callsets
 properties:
-  links:
   id:
     type: string
   tumor_aliquot_id:
@@ -51,7 +50,10 @@ properties:
     - 'null'
     - string
   aliquots:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:

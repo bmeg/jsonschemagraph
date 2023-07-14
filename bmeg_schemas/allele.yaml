@@ -21,7 +21,7 @@ links:
   targetSchema:
     $ref: allele_effect.yaml
   templatePointers:
-  - /id
+    id: /effects/-/id
   targetHints:
     directionality:
     - outbound
@@ -35,7 +35,7 @@ links:
   targetSchema:
     $ref: gene.yaml
   templatePointers:
-  - /id
+    id: /gene/-/id
   targetHints:
     directionality:
     - outbound
@@ -49,7 +49,7 @@ links:
   targetSchema:
     $ref: transcript.yaml
   templatePointers:
-  - /id
+    id: /transcript/-/id
   targetHints:
     directionality:
     - outbound
@@ -63,7 +63,7 @@ links:
   targetSchema:
     $ref: protein.yaml
   templatePointers:
-  - /id
+    id: /protein/-/id
   targetHints:
     directionality:
     - outbound
@@ -90,13 +90,25 @@ properties:
   dbsnp_rs:
     type: string
   effects:
-    $ref: _definitions.yaml#/to_many
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   gene:
-    $ref: _definitions.yaml#/to_one
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   transcript:
-    $ref: _definitions.yaml#/to_one
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   protein:
-    $ref: _definitions.yaml#/to_one
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:
