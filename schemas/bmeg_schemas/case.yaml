@@ -3,14 +3,26 @@ $id: case
 title: Case
 type: object
 description: 'The collection of all data related to a specific subject in the context
-  of a specific experiment.
-
-  '
+  of a specific experiment.'
 required:
 - submitter_id
 - project_id
 - case_id
 links:
+- rel: projects
+  href: project/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: project.yaml
+  templatePointers:
+    id: /projects/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: cases
 - rel: compounds
   href: compound/{id}
   templateRequired:
@@ -39,36 +51,8 @@ links:
     multiplicity:
     - has_many
     backref: cases
-- rel: projects
-  href: project/{id}
-  templateRequired:
-  - id
-  targetSchema:
-    $ref: project.yaml
-  templatePointers:
-    id: /projects/-/id
-  targetHints:
-    directionality:
-    - outbound
-    multiplicity:
-    - has_many
-    backref: cases
-- rel: samples
-  href: sample/{id}
-  templateRequired:
-  - id
-  targetSchema:
-    $ref: sample.yaml
-  templatePointers:
-    id: /samples/-/id
-  targetHints:
-    directionality:
-    - outbound
-    multiplicity:
-    - has_many
-    backref: case
 - rel: same_as
-  href: samea/{id}
+  href: case/{id}
   templateRequired:
   - id
   targetSchema:
@@ -109,11 +93,6 @@ properties:
     items:
       $ref: reference.yaml
   projects:
-    type:
-    - array
-    items:
-      $ref: reference.yaml
-  samples:
     type:
     - array
     items:

@@ -69,8 +69,11 @@ Schemas is the location of your schema files
 ## Example Commands
 Generate edge and vertex files 
 ```
-jsonschemagraph gen-graph [schema_directory_location] [data_directory_location] [output_directory_location]
+jsonschemagraph gen-graph [schema_directory_location] [data_file_location] [output_directory_location] [schema_class_name]
 ```
+SWAPI Example: jsonschemagraph gen-graph schemas/ data/swapi/swapi_character.json.gz output character
+
+BMEG Example: jsonschemagraph gen-graph schemas/bmeg_schemas data/ensembl_transcript.json.gz output Transcript
 
 Check to see if the schemas in a directory are valid
 ```

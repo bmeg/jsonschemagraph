@@ -8,21 +8,7 @@ description: 'A broad framework of goals to be achieved. (i.e. TCGA or FM-AD)
 required:
 - submitter_id
 - program_id
-links:
-- rel: projects
-  href: project/{id}
-  templateRequired:
-  - id
-  targetSchema:
-    $ref: project.yaml
-  templatePointers:
-    id: /projects/-/id
-  targetHints:
-    directionality:
-    - outbound
-    multiplicity:
-    - has_many
-    backref: project
+links: []
 properties:
   program_id:
     type: string
@@ -30,11 +16,6 @@ properties:
     type:
     - 'null'
     - object
-  projects:
-    type:
-    - array
-    items:
-      $ref: reference.yaml
   submitter_id:
     type:
     - string
