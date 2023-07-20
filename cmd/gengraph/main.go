@@ -1,6 +1,8 @@
 package gengraph
 
 import (
+	"bufio"
+	"compress/gzip"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -10,6 +12,30 @@ import (
 	"github.com/bmeg/sifter/readers"
 	"github.com/spf13/cobra"
 )
+
+func countLines(filePath string) int {
+	file, err := os.Open(filePath)
+	if err != nil {
+		fmt.Println(err)
+		return 0
+	}
+	defer file.Close()
+
+	gzReader, err := gzip.NewReader(file)
+	if err != nil {
+		fmt.Println(err)
+		return 0
+	}
+	defer gzReader.Close()
+
+	scanner := bufio.NewScanner(gzReader)
+	count := 0
+	for scanner.Scan() {
+		count++
+	}
+
+	return count
+}
 
 // https://github.com/bmeg/sifter/blob/51a67b0de852e429d30b9371d9975dbefe3a8df9/transform/graph_build.go#L86
 var Cmd = &cobra.Command{
@@ -30,7 +56,9 @@ var Cmd = &cobra.Command{
 			}
 
 			if reader, err := readers.ReadGzipLines(args[1]); err == nil {
-				procChan := make(chan map[string]any, 100)
+				var lines int = countLines(args[1])
+				fmt.Println("HELLO?", args[1], lines)
+				procChan := make(chan map[string]any, lines)
 				go func() {
 					for line := range reader {
 						o := map[string]any{}
@@ -58,37 +86,24 @@ var Cmd = &cobra.Command{
 					fmt.Println("ERROR ON FILE CREATE")
 				}
 				defer OutEdege_file.Close()
-
-				//print("LENGTH OF PROCCHAN ", len(procChan))
-				proc_len := len(procChan) - 1
-				proc_count := 0
 				for line := range procChan {
-
 					if result, err := out.Generate(args[3], line, false); err == nil {
 						for _, lin := range result {
 							//fmt.Println("THE VALUE OF LIN ", lin)
 							// lin contains Vertex,OutEdge,InEdge refer to generate.go
 							if b, err := json.Marshal(lin.Vertex); err == nil {
-								if string(b) != "null" && (proc_count < proc_len) {
+								if string(b) != "null" {
 									vertex_file.WriteString(string(b) + "\n")
-								} else if string(b) != "null" && !(proc_count < proc_len) {
-									vertex_file.WriteString(string(b))
 								}
 							}
-
 							if b, err := json.Marshal(lin.InEdge); err == nil {
-								if string(b) != "null" && (proc_count < proc_len) {
+								if string(b) != "null" {
 									InEdge_file.WriteString(string(b) + "\n")
-								} else if string(b) != "null" && !(proc_count < proc_len) {
-									InEdge_file.WriteString(string(b))
 								}
 							}
-
 							if b, err := json.Marshal(lin.OutEdge); err == nil {
-								if string(b) != "null" && (proc_count < proc_len) {
+								if string(b) != "null" {
 									OutEdege_file.WriteString(string(b) + "\n")
-								} else if string(b) != "null" && !(proc_count < proc_len) {
-									OutEdege_file.WriteString(string(b))
 								}
 							}
 							if err != nil {
@@ -99,7 +114,6 @@ var Cmd = &cobra.Command{
 							//}
 						}
 					}
-					proc_count = proc_count + 1
 				}
 				jsgraph.Check_delete(args[2] + "/" + args[3] + ".OutEdge.json")
 				jsgraph.Check_delete(args[2] + "/" + args[3] + ".InEdge.json")
