@@ -40,6 +40,21 @@ func countLines(filePath string) int {
 	return count
 }
 
+func write_to_file(lin jsgraph.GraphElement, file *os.File, visited bool) (bool, error) {
+	if b, err := json.Marshal(lin.InEdge); err == nil {
+		if string(b) != "null" {
+			if visited {
+				_, err := file.WriteString(string(b))
+				visited = !visited
+				return visited, err
+			} else {
+				_, err := file.WriteString("\n" + string(b))
+				return visited, err
+			}
+		}
+	}
+}
+
 // https://github.com/bmeg/sifter/blob/51a67b0de852e429d30b9371d9975dbefe3a8df9/transform/graph_build.go#L86
 var Cmd = &cobra.Command{
 	Use:   "gen-graph [schema dir] [data dir] [out dir] [class name]",
@@ -60,11 +75,12 @@ var Cmd = &cobra.Command{
 			// for a single line because some of the file lines needed a larger buffer to load
 			// current buffer size 1 MB
 			if reader, err := jsgraph.ReadGzipLines(args[1], 1024*1024); err == nil {
-				var lines int = countLines(args[1])
-				fmt.Println("HELLO?", args[1], lines)
-				procChan := make(chan map[string]any, lines)
+				var line_count int = countLines(args[1])
+				fmt.Println("INIT VALS ", args[1], line_count)
+				procChan := make(chan map[string]any, line_count)
 				go func() {
 					for line := range reader {
+
 						o := map[string]any{}
 						if len(line) > 0 {
 							json.Unmarshal(line, &o)
@@ -73,12 +89,12 @@ var Cmd = &cobra.Command{
 					}
 					close(procChan)
 				}()
+
 				// creates output string that is unique so that files of the same class do not overwrite eachother
 				base_name := strings.Split(args[1], "/")
 				unqiue_str_tmp := strings.Split(base_name[len(base_name)-1], ".")
 				unique_str := strings.Join(unqiue_str_tmp[0:len(unqiue_str_tmp)-2], ".")
 
-				//fmt.Println("CURRENT FILE PATH: ", args[2]+"/"+strs+".Vertex.json")
 				vertex_file, err := os.Create(args[2] + "/" + unique_str + ".Vertex.json")
 				if err != nil {
 					fmt.Println("ERROR ON FILE CREATE", err)
@@ -96,30 +112,18 @@ var Cmd = &cobra.Command{
 					fmt.Println("ERROR ON FILE CREATE", err)
 				}
 				defer OutEdege_file.Close()
+
+				var IedgeInit, VertexInit, OedegeInit = true, true, true
 				for line := range procChan {
 					if result, err := out.Generate(args[3], line, false); err == nil {
 						for _, lin := range result {
-							//fmt.Println("THE VALUE OF LIN ", lin)
-							// lin contains Vertex,OutEdge,InEdge refer to generate.go
-							if b, err := json.Marshal(lin.Vertex); err == nil {
-								if string(b) != "null" {
-									vertex_file.WriteString(string(b) + "\n")
-								}
-							}
-							if b, err := json.Marshal(lin.InEdge); err == nil {
-								if string(b) != "null" {
-									InEdge_file.WriteString(string(b) + "\n")
-								}
-							}
-							if b, err := json.Marshal(lin.OutEdge); err == nil {
-								if string(b) != "null" {
-									OutEdege_file.WriteString(string(b) + "\n")
-								}
-							}
+							IedgeInit, err = write_to_file(lin, InEdge_file, IedgeInit)
+							OedegeInit, err = write_to_file(lin, OutEdege_file, OedegeInit)
+							VertexInit, err = write_to_file(lin, vertex_file, VertexInit)
+
 							if err != nil {
 								fmt.Println("Error during write")
 							}
-
 						}
 					}
 				}
@@ -127,7 +131,6 @@ var Cmd = &cobra.Command{
 				jsgraph.Check_delete(args[2] + "/" + unique_str + ".InEdge.json")
 				jsgraph.Check_delete(args[2] + "/" + unique_str + ".Vertex.json")
 			}
-			//}
 		}
 		return nil
 	},

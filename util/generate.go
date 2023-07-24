@@ -42,6 +42,14 @@ func getObjectID(data map[string]any, schema *jsonschema.Schema) (string, error)
 	}
 	return "", fmt.Errorf("object id not found")
 }
+func contains(elems []string, v string) bool {
+	for _, s := range elems {
+		if v == s {
+			return true
+		}
+	}
+	return false
+}
 
 func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) ([]GraphElement, error) {
 	//fmt.Println("CLASS: ", classID, "DATA: ", data)
@@ -61,11 +69,13 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 		}
 		out := make([]GraphElement, 0, 1)
 		if id, nerr := getObjectID(data, class); nerr == nil {
+			var ListOfRels []string
 			vData := map[string]any{}
 			if ext, ok := class.Extensions[GraphExtensionTag]; ok {
 				gext := ext.(GraphExtension)
 				// trying to index into derivedId with the appropriate json pointer patter that is taken from templatePointers
 				for _, target := range gext.Targets {
+					ListOfRels = append(ListOfRels, target.Rel)
 					pointer_fragment := ""
 					for _, pointer_string := range target.templatePointer {
 						splitted_pointer := strings.Split(pointer_string.(string), "/")
@@ -99,8 +109,8 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 							}
 
 							edgeOut := Edge{
-								To:    id,
-								From:  derivedId.(string),
+								To:    derivedId.(string),
+								From:  id,
 								Label: target.Rel,
 								// this label isn't quite right. Ex: right now "Transcript" -> should be "transcripts"
 								// doing some string manipulation now, but not sure if there is a better solution
@@ -119,9 +129,11 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 				}
 			}
 			for name := range class.Properties {
-				//fmt.Println("NAME:        ", name)
-				if d, ok := data[name]; ok {
-					vData[name] = d
+				// gather compare to a list of rels so that the vertexes don't include edge reference information
+				if !contains(ListOfRels, name) {
+					if d, ok := data[name]; ok {
+						vData[name] = d
+					}
 				}
 			}
 

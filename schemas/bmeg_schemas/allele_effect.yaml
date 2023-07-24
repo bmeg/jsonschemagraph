@@ -62,11 +62,11 @@ properties:
     type: string
   ensembl_gene:
     type:
-    - array
+    - string
     items:
       $ref: reference.yaml
   ensembl_transcript:
     type:
-    - array
+    - string
     items:
       $ref: reference.yaml
