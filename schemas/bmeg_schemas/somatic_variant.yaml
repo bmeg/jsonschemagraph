@@ -38,16 +38,6 @@ properties:
   id:
     type: string
     systemAlias: node_id
-  somatic_callset:
-    type:
-    - array
-    items:
-      $ref: reference.yaml
-  allele:
-    type:
-    - array
-    items:
-      $ref: reference.yaml
   ref:
     type: string
   alt:
@@ -76,3 +66,13 @@ properties:
     type: string
   ensembl_gene:
     type: string
+  somatic_callset:
+    type:
+    - string
+    items:
+      $ref: reference.yaml
+  allele:
+    type:
+    - string
+    items:
+      $ref: reference.yaml

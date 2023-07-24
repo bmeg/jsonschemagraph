@@ -55,11 +55,6 @@ properties:
     - $ref: _definitions.yaml#/strand
   name:
     type: string
-  genes:
-    type:
-    - array
-    items:
-      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:
@@ -75,3 +70,8 @@ properties:
     $ref: _definitions.yaml#/datetime
   updated_datetime:
     $ref: _definitions.yaml#/datetime
+  genes:
+    type:
+    - array
+    items:
+      $ref: reference.yaml

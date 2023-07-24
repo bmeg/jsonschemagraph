@@ -9,8 +9,8 @@ import (
 )
 
 var Cmd = &cobra.Command{
-	Use:   "schema-lint",
-	Short: "Schema lint",
+	Use:   "schema-lint [schema dir]",
+	Short: "Checks a directory of yaml schemas for syntax errors",
 	Args:  cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 

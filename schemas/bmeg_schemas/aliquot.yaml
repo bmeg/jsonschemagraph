@@ -50,16 +50,6 @@ properties:
     type:
     - 'null'
     - object
-  projects:
-    type:
-    - array
-    items:
-      $ref: reference.yaml
-  sample:
-    type:
-    - array
-    items:
-      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:
@@ -72,3 +62,13 @@ properties:
     $ref: _definitions.yaml#/datetime
   updated_datetime:
     $ref: _definitions.yaml#/datetime
+  sample:
+    type:
+    - array
+    items:
+      $ref: reference.yaml
+  projects:
+    type:
+    - array
+    items:
+      $ref: reference.yaml

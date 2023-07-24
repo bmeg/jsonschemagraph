@@ -122,7 +122,7 @@ type Target struct {
 	Schema  *jsonschema.Schema
 	Backref string
 	Rel     string
-	//Href            string don't currently use this
+	//Href  string don't currently use this
 	templatePointer map[string]any
 }
 
@@ -131,7 +131,7 @@ type GraphExtension struct {
 }
 
 func (s GraphExtension) Validate(ctx jsonschema.ValidationContext, v interface{}) error {
-	fmt.Println("graph schema validate error at ", v)
+	//fmt.Println("graph schema validate error at ", v)
 	return nil
 }
 

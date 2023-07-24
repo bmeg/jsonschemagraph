@@ -44,6 +44,7 @@ func getObjectID(data map[string]any, schema *jsonschema.Schema) (string, error)
 }
 
 func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) ([]GraphElement, error) {
+	//fmt.Println("CLASS: ", classID, "DATA: ", data)
 	if class := s.GetClass(classID); class != nil {
 		if clean {
 			var err error
@@ -52,10 +53,9 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 				return nil, err
 			}
 		} else {
-			//fmt.Println("CLASS ", class)
-			//fmt.Println("DATA ", data)
 			err := class.Validate(data)
 			if err != nil {
+				fmt.Println("VALUE OF ERROR: ", err)
 				return nil, err
 			}
 		}

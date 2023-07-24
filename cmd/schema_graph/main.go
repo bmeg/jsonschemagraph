@@ -8,8 +8,8 @@ import (
 )
 
 var Cmd = &cobra.Command{
-	Use:   "schema-graph",
-	Short: "Schema graph <dir>",
+	Use:   "schema-graph [schema dir]",
+	Short: "Generates a d2 file to visualize graph schema structure",
 	Args:  cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 

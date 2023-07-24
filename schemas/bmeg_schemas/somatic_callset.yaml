@@ -47,11 +47,6 @@ properties:
     type:
     - 'null'
     - string
-  aliquots:
-    type:
-    - array
-    items:
-      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:
@@ -64,3 +59,13 @@ properties:
     $ref: _definitions.yaml#/datetime
   updated_datetime:
     $ref: _definitions.yaml#/datetime
+  alleles:
+    type:
+    - array
+    items:
+      $ref: reference.yaml
+  aliquots:
+    type:
+    - array
+    items:
+      $ref: reference.yaml

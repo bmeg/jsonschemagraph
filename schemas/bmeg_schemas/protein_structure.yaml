@@ -41,11 +41,6 @@ properties:
     type: string
   experiment_type:
     type: string
-  protein:
-    type:
-    - array
-    items:
-      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:
@@ -58,3 +53,8 @@ properties:
     $ref: _definitions.yaml#/datetime
   updated_datetime:
     $ref: _definitions.yaml#/datetime
+  protein:
+    type:
+    - array
+    items:
+      $ref: reference.yaml

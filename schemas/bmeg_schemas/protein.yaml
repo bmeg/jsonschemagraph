@@ -9,7 +9,35 @@ required:
 - id
 - submitter_id
 - project_id
-links: []
+links:
+- rel: gene
+  href: gene/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: gene.yaml
+  templatePointers:
+    id: /gene/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_one
+    association: true
+- rel: transcript
+  href: transcript/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: transcript.yaml
+  templatePointers:
+    id: /transcript/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_one
+    association: true
 properties:
   id:
     type: string
@@ -31,3 +59,13 @@ properties:
     $ref: _definitions.yaml#/datetime
   updated_datetime:
     $ref: _definitions.yaml#/datetime
+  gene:
+    type:
+    - array
+    items:
+      $ref: reference.yaml
+  transcript:
+    type:
+    - array
+    items:
+      $ref: reference.yaml
