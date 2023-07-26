@@ -40,21 +40,6 @@ func countLines(filePath string) int {
 	return count
 }
 
-func write_to_file(lin jsgraph.GraphElement, file *os.File, visited bool) (bool, error) {
-	if b, err := json.Marshal(lin.InEdge); err == nil {
-		if string(b) != "null" {
-			if visited {
-				_, err := file.WriteString(string(b))
-				visited = !visited
-				return visited, err
-			} else {
-				_, err := file.WriteString("\n" + string(b))
-				return visited, err
-			}
-		}
-	}
-}
-
 // https://github.com/bmeg/sifter/blob/51a67b0de852e429d30b9371d9975dbefe3a8df9/transform/graph_build.go#L86
 var Cmd = &cobra.Command{
 	Use:   "gen-graph [schema dir] [data dir] [out dir] [class name]",
@@ -117,12 +102,53 @@ var Cmd = &cobra.Command{
 				for line := range procChan {
 					if result, err := out.Generate(args[3], line, false); err == nil {
 						for _, lin := range result {
-							IedgeInit, err = write_to_file(lin, InEdge_file, IedgeInit)
-							OedegeInit, err = write_to_file(lin, OutEdege_file, OedegeInit)
-							VertexInit, err = write_to_file(lin, vertex_file, VertexInit)
-
-							if err != nil {
-								fmt.Println("Error during write")
+							if b, err := json.Marshal(lin.InEdge); err == nil {
+								if string(b) != "null" {
+									if IedgeInit {
+										_, err := InEdge_file.WriteString(string(b))
+										IedgeInit = !IedgeInit
+										if err != nil {
+											log.Fatal("Write File error")
+										}
+									} else {
+										_, err := InEdge_file.WriteString("\n" + string(b))
+										if err != nil {
+											log.Fatal("Write File error")
+										}
+									}
+								}
+							}
+							if b, err := json.Marshal(lin.OutEdge); err == nil {
+								if string(b) != "null" {
+									if OedegeInit {
+										_, err := OutEdege_file.WriteString(string(b))
+										OedegeInit = !OedegeInit
+										if err != nil {
+											log.Fatal("Write File error")
+										}
+									} else {
+										_, err := OutEdege_file.WriteString("\n" + string(b))
+										if err != nil {
+											log.Fatal("Write File error")
+										}
+									}
+								}
+							}
+							if b, err := json.Marshal(lin.Vertex); err == nil {
+								if string(b) != "null" {
+									if VertexInit {
+										_, err := vertex_file.WriteString(string(b))
+										VertexInit = !VertexInit
+										if err != nil {
+											log.Fatal("Write File error")
+										}
+									} else {
+										_, err := vertex_file.WriteString("\n" + string(b))
+										if err != nil {
+											log.Fatal("Write File error")
+										}
+									}
+								}
 							}
 						}
 					}
