@@ -1,4 +1,4 @@
-package jsgraph
+package util
 
 import (
 	"log"
