@@ -1,0 +1,468 @@
+$id: ClaimResponseAddItem
+additionalProperties: false
+description: Insurer added line items. The first-tier service adjudications for payor
+  added product or service lines. [See https://hl7.org/fhir/R5/ClaimResponseAddItem.html]
+  [See https://hl7.org/fhir/R5/ClaimResponseAddItem.html]
+links:
+- href: Location/{id}
+  rel: locationReference
+  targetHints:
+    backref:
+    - claim_response_add_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /locationReference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: provider_Practitioner
+  targetHints:
+    backref:
+    - provider_claim_response_add_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /provider/-/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: provider_PractitionerRole
+  targetHints:
+    backref:
+    - provider_claim_response_add_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /provider/-/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: provider_Organization
+  targetHints:
+    backref:
+    - provider_claim_response_add_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /provider/-/reference
+  templateRequired:
+  - id
+- href: DeviceRequest/{id}
+  rel: request_DeviceRequest
+  targetHints:
+    backref:
+    - request_claim_response_add_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: DeviceRequest.yaml
+  templatePointers:
+    id: /request/-/reference
+  templateRequired:
+  - id
+- href: MedicationRequest/{id}
+  rel: request_MedicationRequest
+  targetHints:
+    backref:
+    - request_claim_response_add_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: MedicationRequest.yaml
+  templatePointers:
+    id: /request/-/reference
+  templateRequired:
+  - id
+- href: NutritionOrder/{id}
+  rel: request_NutritionOrder
+  targetHints:
+    backref:
+    - request_claim_response_add_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: NutritionOrder.yaml
+  templatePointers:
+    id: /request/-/reference
+  templateRequired:
+  - id
+- href: ServiceRequest/{id}
+  rel: request_ServiceRequest
+  targetHints:
+    backref:
+    - request_claim_response_add_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: ServiceRequest.yaml
+  templatePointers:
+    id: /request/-/reference
+  templateRequired:
+  - id
+- href: SupplyRequest/{id}
+  rel: request_SupplyRequest
+  targetHints:
+    backref:
+    - request_claim_response_add_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: SupplyRequest.yaml
+  templatePointers:
+    id: /request/-/reference
+  templateRequired:
+  - id
+- href: VisionPrescription/{id}
+  rel: request_VisionPrescription
+  targetHints:
+    backref:
+    - request_claim_response_add_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: VisionPrescription.yaml
+  templatePointers:
+    id: /request/-/reference
+  templateRequired:
+  - id
+properties:
+  _detailSequence:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``detailSequence``.
+    type: array
+  _factor:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``factor``.
+  _itemSequence:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``itemSequence``.
+    type: array
+  _noteNumber:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``noteNumber``.
+    type: array
+  _servicedDate:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``servicedDate``.
+  _subdetailSequence:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``subdetailSequence``.
+    type: array
+  adjudication:
+    description: The adjudication results.
+    element_property: true
+    items:
+      $ref: ClaimResponseItemAdjudication.yaml
+    title: Added items adjudication
+    type: array
+  bodySite:
+    description: Physical location where the service is performed or applies.
+    element_property: true
+    items:
+      $ref: ClaimResponseAddItemBodySite.yaml
+    title: Anatomical location
+    type: array
+  detail:
+    description: The second-tier service adjudications for payor added services.
+    element_property: true
+    items:
+      $ref: ClaimResponseAddItemDetail.yaml
+    title: Insurer added line details
+    type: array
+  detailSequence:
+    description: The sequence number of the details within the claim item which this
+      line is intended to replace.
+    element_property: true
+    items:
+      exclusiveMinimum: 0
+      type: integer
+    title: Detail sequence number
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  factor:
+    description: A real number that represents a multiplier used in determining the
+      overall value of services delivered and/or goods received. The concept of a
+      Factor allows for a discount or surcharge multiplier to be applied to a monetary
+      amount.
+    element_property: true
+    title: Price scaling factor
+    type: number
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  itemSequence:
+    description: Claim items which this service line is intended to replace.
+    element_property: true
+    items:
+      exclusiveMinimum: 0
+      type: integer
+    title: Item sequence number
+    type: array
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  locationAddress:
+    $ref: Address.yaml
+    description: Where the product or service was provided.
+    element_property: true
+    one_of_many: location
+    one_of_many_required: false
+    title: Place of service or where product was supplied
+  locationCodeableConcept:
+    $ref: CodeableConcept.yaml
+    description: Where the product or service was provided.
+    element_property: true
+    one_of_many: location
+    one_of_many_required: false
+    title: Place of service or where product was supplied
+  locationReference:
+    $ref: Reference.yaml
+    backref: claim_response_add_item
+    description: Where the product or service was provided.
+    element_property: true
+    enum_reference_types:
+    - Location
+    one_of_many: location
+    one_of_many_required: false
+    title: Place of service or where product was supplied
+  modifier:
+    binding_description: Item type or modifiers codes, eg for Oral whether the treatment
+      is cosmetic or associated with TMJ, or an appliance was lost or stolen.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/claim-modifiers
+    binding_version: null
+    description: Item typification or modifiers codes to convey additional context
+      for the product or service.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Service/Product billing modifiers
+    type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  net:
+    $ref: Money.yaml
+    description: The total amount claimed for the group (if a grouper) or the addItem.
+      Net = unit price * quantity * factor.
+    element_property: true
+    title: Total item cost
+  noteNumber:
+    description: The numbers associated with notes below which apply to the adjudication
+      of this item.
+    element_property: true
+    items:
+      exclusiveMinimum: 0
+      type: integer
+    title: Applicable note numbers
+    type: array
+  productOrService:
+    $ref: CodeableConcept.yaml
+    binding_description: Allowable service and product codes.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/service-uscls
+    binding_version: null
+    description: When the value is a group code then this item collects a set of related
+      item details, otherwise this contains the product, service, drug or other billing
+      code for the item. This element may be the start of a range of .productOrService
+      codes used in conjunction with .productOrServiceEnd or it may be a solo element
+      where .productOrServiceEnd is not used.
+    element_property: true
+    title: Billing, service, product, or drug code
+  productOrServiceEnd:
+    $ref: CodeableConcept.yaml
+    binding_description: null
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/service-uscls
+    binding_version: null
+    description: This contains the end of a range of product, service, drug or other
+      billing codes for the item. This element is not used when the .productOrService
+      is a group code. This value may only be present when a .productOfService code
+      has been provided to convey the start of the range. Typically this value may
+      be used only with preauthorizations and not with claims.
+    element_property: true
+    title: End of a range of codes
+  programCode:
+    binding_description: Program specific reason codes.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/ex-program-code
+    binding_version: null
+    description: Identifies the program under which this may be recovered.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Program the product or service is provided under
+    type: array
+  provider:
+    backref: provider_claim_response_add_item
+    description: The providers who are authorized for the services rendered to the
+      patient.
+    element_property: true
+    enum_reference_types:
+    - Practitioner
+    - PractitionerRole
+    - Organization
+    items:
+      $ref: Reference.yaml
+    title: Authorized providers
+    type: array
+  quantity:
+    $ref: Quantity.yaml
+    description: The number of repetitions of a service or product.
+    element_property: true
+    title: Count of products or services
+  request:
+    backref: request_claim_response_add_item
+    description: Request or Referral for Goods or Service to be rendered.
+    element_property: true
+    enum_reference_types:
+    - DeviceRequest
+    - MedicationRequest
+    - NutritionOrder
+    - ServiceRequest
+    - SupplyRequest
+    - VisionPrescription
+    items:
+      $ref: Reference.yaml
+    title: Request or Referral for Service
+    type: array
+  resourceType:
+    const: ClaimResponseAddItem
+    default: ClaimResponseAddItem
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  revenue:
+    $ref: CodeableConcept.yaml
+    binding_description: Codes for the revenue or cost centers supplying the service
+      and/or products.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/ex-revenue-center
+    binding_version: null
+    description: The type of revenue or cost center providing the product and/or service.
+    element_property: true
+    title: Revenue or cost center code
+  reviewOutcome:
+    $ref: ClaimResponseItemReviewOutcome.yaml
+    description: The high-level results of the adjudication if adjudication has been
+      performed.
+    element_property: true
+    title: Added items adjudication results
+  servicedDate:
+    description: The date or dates when the service or product was supplied, performed
+      or completed.
+    element_property: true
+    format: date
+    one_of_many: serviced
+    one_of_many_required: false
+    title: Date or dates of service or product delivery
+    type: string
+  servicedPeriod:
+    $ref: Period.yaml
+    description: The date or dates when the service or product was supplied, performed
+      or completed.
+    element_property: true
+    one_of_many: serviced
+    one_of_many_required: false
+    title: Date or dates of service or product delivery
+  subdetailSequence:
+    description: The sequence number of the sub-details within the details within
+      the claim item which this line is intended to replace.
+    element_property: true
+    items:
+      exclusiveMinimum: 0
+      type: integer
+    title: Subdetail sequence number
+    type: array
+  tax:
+    $ref: Money.yaml
+    description: The total of taxes applicable for this product or service.
+    element_property: true
+    title: Total tax
+  traceNumber:
+    description: Trace number for tracking purposes. May be defined at the jurisdiction
+      level or between trading partners.
+    element_property: true
+    items:
+      $ref: Identifier.yaml
+    title: Number for tracking
+    type: array
+  unitPrice:
+    $ref: Money.yaml
+    description: If the item is not a group then this is the fee for the product or
+      service, otherwise this is the total of the fees for the details of the group.
+    element_property: true
+    title: Fee, charge or cost per item
+title: ClaimResponseAddItem
+type: object

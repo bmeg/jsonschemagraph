@@ -1,0 +1,120 @@
+$id: SubstanceNucleicAcidSubunit
+additionalProperties: false
+description: Subunits are listed in order of decreasing length; sequences of the same
+  length will be ordered by molecular weight; subunits that have identical sequences
+  will be repeated multiple times. [See https://hl7.org/fhir/R5/SubstanceNucleicAcidSubunit.html]
+  [See https://hl7.org/fhir/R5/SubstanceNucleicAcidSubunit.html]
+links: []
+properties:
+  _length:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``length``.
+  _sequence:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``sequence``.
+  _subunit:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``subunit``.
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  fivePrime:
+    $ref: CodeableConcept.yaml
+    element_property: true
+    title: "The nucleotide present at the 5\u2019 terminal shall be specified based\
+      \ on a controlled vocabulary. Since the sequence is represented from the 5'\
+      \ to the 3' end, the 5\u2019 prime nucleotide is the letter at the first position\
+      \ in the sequence. A separate representation would be redundant"
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  length:
+    element_property: true
+    title: The length of the sequence shall be captured
+    type: integer
+  linkage:
+    element_property: true
+    items:
+      $ref: SubstanceNucleicAcidSubunitLinkage.yaml
+    title: The linkages between sugar residues will also be captured
+    type: array
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: SubstanceNucleicAcidSubunit
+    default: SubstanceNucleicAcidSubunit
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  sequence:
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Actual nucleotide sequence notation from 5' to 3' end using standard single
+      letter codes. In addition to the base sequence, sugar and type of phosphate
+      or non-phosphate linkage should also be captured
+    type: string
+  sequenceAttachment:
+    $ref: Attachment.yaml
+    element_property: true
+    title: (TBC)
+  subunit:
+    element_property: true
+    title: Index of linear sequences of nucleic acids in order of decreasing length.
+      Sequences of the same length will be ordered by molecular weight. Subunits that
+      have identical sequences will be repeated and have sequential subscripts
+    type: integer
+  sugar:
+    element_property: true
+    items:
+      $ref: SubstanceNucleicAcidSubunitSugar.yaml
+    title: 5.3.6.8.1 Sugar ID (Mandatory)
+    type: array
+  threePrime:
+    $ref: CodeableConcept.yaml
+    element_property: true
+    title: "The nucleotide present at the 3\u2019 terminal shall be specified based\
+      \ on a controlled vocabulary. Since the sequence is represented from the 5'\
+      \ to the 3' end, the 5\u2019 prime nucleotide is the letter at the last position\
+      \ in the sequence. A separate representation would be redundant"
+title: SubstanceNucleicAcidSubunit
+type: object

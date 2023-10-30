@@ -1,0 +1,95 @@
+$id: InsurancePlanPlanSpecificCostBenefitCost
+additionalProperties: false
+description: List of the costs. List of the costs associated with a specific benefit.
+  [See https://hl7.org/fhir/R5/InsurancePlanPlanSpecificCostBenefitCost.html] [See
+  https://hl7.org/fhir/R5/InsurancePlanPlanSpecificCostBenefitCost.html]
+links: []
+properties:
+  applicability:
+    $ref: CodeableConcept.yaml
+    binding_description: Whether the cost applies to in-network or out-of-network
+      providers.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/insuranceplan-applicability
+    binding_version: 5.0.0
+    description: Whether the cost applies to in-network or out-of-network providers
+      (in-network; out-of-network; other).
+    element_property: true
+    title: in-network | out-of-network | other
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  qualifiers:
+    description: Additional information about the cost, such as information about
+      funding sources (e.g. HSA, HRA, FSA, RRA).
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Additional information about the cost
+    type: array
+  resourceType:
+    const: InsurancePlanPlanSpecificCostBenefitCost
+    default: InsurancePlanPlanSpecificCostBenefitCost
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  type:
+    $ref: CodeableConcept.yaml
+    description: Type of cost (copay; individual cap; family cap; coinsurance; deductible).
+    element_property: true
+    title: Type of cost
+  value:
+    $ref: Quantity.yaml
+    description: The actual cost value. (some of the costs may be represented as percentages
+      rather than currency, e.g. 10% coinsurance).
+    element_property: true
+    title: The actual cost value
+required:
+- type
+title: InsurancePlanPlanSpecificCostBenefitCost
+type: object

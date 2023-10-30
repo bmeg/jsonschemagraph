@@ -1,0 +1,903 @@
+$id: MedicationDispense
+additionalProperties: false
+description: Dispensing a medication to a named patient. Indicates that a medication
+  product is to be or has been dispensed for a named person/patient.  This includes
+  a description of the medication product (supply) provided and the instructions for
+  administering the medication.  The medication dispense is the result of a pharmacy
+  system responding to a medication order. [See https://hl7.org/fhir/R5/MedicationDispense.html]
+links:
+- href: MedicationRequest/{id}
+  rel: authorizingPrescription
+  targetHints:
+    backref:
+    - authorizingPrescription_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: MedicationRequest.yaml
+  templatePointers:
+    id: /authorizingPrescription/-/reference
+  templateRequired:
+  - id
+- href: CarePlan/{id}
+  rel: basedOn
+  targetHints:
+    backref:
+    - basedOn_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: CarePlan.yaml
+  templatePointers:
+    id: /basedOn/-/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: destination
+  targetHints:
+    backref:
+    - destination_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /destination/reference
+  templateRequired:
+  - id
+- href: Encounter/{id}
+  rel: encounter
+  targetHints:
+    backref:
+    - medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Encounter.yaml
+  templatePointers:
+    id: /encounter/reference
+  templateRequired:
+  - id
+- href: Provenance/{id}
+  rel: eventHistory
+  targetHints:
+    backref:
+    - eventHistory_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Provenance.yaml
+  templatePointers:
+    id: /eventHistory/-/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: location
+  targetHints:
+    backref:
+    - location_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /location/reference
+  templateRequired:
+  - id
+- href: Procedure/{id}
+  rel: partOf_Procedure
+  targetHints:
+    backref:
+    - partOf_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Procedure.yaml
+  templatePointers:
+    id: /partOf/-/reference
+  templateRequired:
+  - id
+- href: MedicationAdministration/{id}
+  rel: partOf_MedicationAdministration
+  targetHints:
+    backref:
+    - partOf_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: MedicationAdministration.yaml
+  templatePointers:
+    id: /partOf/-/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: receiver_Patient
+  targetHints:
+    backref:
+    - receiver_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /receiver/-/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: receiver_Practitioner
+  targetHints:
+    backref:
+    - receiver_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /receiver/-/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: receiver_RelatedPerson
+  targetHints:
+    backref:
+    - receiver_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /receiver/-/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: receiver_Location
+  targetHints:
+    backref:
+    - receiver_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /receiver/-/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: receiver_PractitionerRole
+  targetHints:
+    backref:
+    - receiver_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /receiver/-/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: subject_Patient
+  targetHints:
+    backref:
+    - subject_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /subject/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: subject_Group
+  targetHints:
+    backref:
+    - subject_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /subject/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: supportingInformation
+  targetHints:
+    backref:
+    - supportingInformation_medication_dispense
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /supportingInformation/-/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: medication_reference
+  targetHints:
+    backref:
+    - codeable_reference
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /medication/reference/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: notPerformedReason_reference
+  targetHints:
+    backref:
+    - codeable_reference
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /notPerformedReason/reference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: note_authorReference_Practitioner
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: note_authorReference_PractitionerRole
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: note_authorReference_Patient
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: note_authorReference_RelatedPerson
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: note_authorReference_Organization
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: performer_actor_Practitioner
+  targetHints:
+    backref:
+    - medication_dispense_performer
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /performer/-/actor/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: performer_actor_PractitionerRole
+  targetHints:
+    backref:
+    - medication_dispense_performer
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /performer/-/actor/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: performer_actor_Organization
+  targetHints:
+    backref:
+    - medication_dispense_performer
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /performer/-/actor/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: performer_actor_Patient
+  targetHints:
+    backref:
+    - medication_dispense_performer
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /performer/-/actor/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: performer_actor_Device
+  targetHints:
+    backref:
+    - medication_dispense_performer
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /performer/-/actor/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: performer_actor_RelatedPerson
+  targetHints:
+    backref:
+    - medication_dispense_performer
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /performer/-/actor/reference
+  templateRequired:
+  - id
+- href: CareTeam/{id}
+  rel: performer_actor_CareTeam
+  targetHints:
+    backref:
+    - medication_dispense_performer
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: CareTeam.yaml
+  templatePointers:
+    id: /performer/-/actor/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: substitution_responsibleParty_Practitioner
+  targetHints:
+    backref:
+    - medication_dispense_substitution
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /substitution/responsibleParty/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: substitution_responsibleParty_PractitionerRole
+  targetHints:
+    backref:
+    - medication_dispense_substitution
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /substitution/responsibleParty/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: substitution_responsibleParty_Organization
+  targetHints:
+    backref:
+    - medication_dispense_substitution
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /substitution/responsibleParty/reference
+  templateRequired:
+  - id
+properties:
+  _implicitRules:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``implicitRules``.
+  _language:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``language``.
+  _recorded:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``recorded``.
+  _renderedDosageInstruction:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``renderedDosageInstruction``.
+  _status:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``status``.
+  _statusChanged:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``statusChanged``.
+  _whenHandedOver:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``whenHandedOver``.
+  _whenPrepared:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``whenPrepared``.
+  authorizingPrescription:
+    backref: authorizingPrescription_medication_dispense
+    description: Indicates the medication order that is being dispensed against.
+    element_property: true
+    enum_reference_types:
+    - MedicationRequest
+    items:
+      $ref: Reference.yaml
+    title: Medication order that authorizes the dispense
+    type: array
+  basedOn:
+    backref: basedOn_medication_dispense
+    description: A plan that is fulfilled in whole or in part by this MedicationDispense.
+    element_property: true
+    enum_reference_types:
+    - CarePlan
+    items:
+      $ref: Reference.yaml
+    title: Plan that is fulfilled by this dispense
+    type: array
+  category:
+    binding_description: A code describing where the dispensed medication is expected
+      to be consumed or administered.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/medicationdispense-admin-location
+    binding_version: null
+    description: Indicates the type of medication dispense (for example, drug classification
+      like ATC, where meds would be administered, legal category of the medication.).
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Type of medication dispense
+    type: array
+  contained:
+    description: These resources do not have an independent existence apart from the
+      resource that contains them - they cannot be identified independently, nor can
+      they have their own independent transaction scope. This is allowed to be a Parameters
+      resource if and only if it is referenced by a resource that provides context/meaning.
+    element_property: true
+    items:
+      $ref: Resource.yaml
+    title: Contained, inline Resources
+    type: array
+  daysSupply:
+    $ref: Quantity.yaml
+    description: The amount of medication expressed as a timing amount.
+    element_property: true
+    title: Amount of medication expressed as a timing amount
+  destination:
+    $ref: Reference.yaml
+    backref: destination_medication_dispense
+    description: Identification of the facility/location where the medication was/will
+      be shipped to, as part of the dispense event.
+    element_property: true
+    enum_reference_types:
+    - Location
+    title: Where the medication was/will be sent
+  dosageInstruction:
+    description: Indicates how the medication is to be used by the patient.
+    element_property: true
+    items:
+      $ref: Dosage.yaml
+    title: How the medication is to be used by the patient or administered by the
+      caregiver
+    type: array
+  encounter:
+    $ref: Reference.yaml
+    backref: medication_dispense
+    description: The encounter that establishes the context for this event.
+    element_property: true
+    enum_reference_types:
+    - Encounter
+    title: Encounter associated with event
+  eventHistory:
+    backref: eventHistory_medication_dispense
+    description: A summary of the events of interest that have occurred, such as when
+      the dispense was verified.
+    element_property: true
+    enum_reference_types:
+    - Provenance
+    items:
+      $ref: Reference.yaml
+    title: A list of relevant lifecycle events
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource. To make the use of extensions safe
+      and managable, there is a strict set of governance applied to the definition
+      and use of extensions. Though any implementer can define an extension, there
+      is a set of requirements that SHALL be met as part of the definition of the
+      extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: The logical id of the resource, as used in the URL for the resource.
+      Once assigned, this value never changes.
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Logical id of this artifact
+    type: string
+  identifier:
+    description: Identifiers associated with this Medication Dispense that are defined
+      by business processes and/or used to refer to it when a direct URL reference
+      to the resource itself is not appropriate. They are business identifiers assigned
+      to this resource by the performer or other systems and remain constant as the
+      resource is updated and propagates from server to server.
+    element_property: true
+    items:
+      $ref: Identifier.yaml
+    title: External identifier
+    type: array
+  implicitRules:
+    description: A reference to a set of rules that were followed when the resource
+      was constructed, and which must be understood when processing the content. Often,
+      this is a reference to an implementation guide that defines the special rules
+      along with other profiles etc.
+    element_property: true
+    pattern: \S*
+    title: A set of rules under which this content was created
+    type: string
+  language:
+    binding_description: IETF language tag for a human language
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/all-languages
+    binding_version: 5.0.0
+    description: The base language in which the resource is written.
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Language of the resource content
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  location:
+    $ref: Reference.yaml
+    backref: location_medication_dispense
+    description: The principal physical location where the dispense was performed.
+    element_property: true
+    enum_reference_types:
+    - Location
+    title: Where the dispense occurred
+  medication:
+    $ref: CodeableReference.yaml
+    backref: medication_dispense
+    binding_description: A coded concept identifying which substance or product can
+      be dispensed.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/medication-codes
+    binding_version: null
+    description: Identifies the medication supplied. This is either a link to a resource
+      representing the details of the medication or a simple attribute carrying a
+      code that identifies the medication from a known list of medications.
+    element_property: true
+    enum_reference_types:
+    - Medication
+    title: What medication was supplied
+  meta:
+    $ref: Meta.yaml
+    description: The metadata about the resource. This is content that is maintained
+      by the infrastructure. Changes to the content might not always be associated
+      with version changes to the resource.
+    element_property: true
+    title: Metadata about the resource
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource and that modifies the understanding
+      of the element that contains it and/or the understanding of the containing element's
+      descendants. Usually modifier elements provide negation or qualification. To
+      make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer is allowed
+      to define an extension, there is a set of requirements that SHALL be met as
+      part of the definition of the extension. Applications processing a resource
+      are required to check for modifier extensions.  Modifier extensions SHALL NOT
+      change the meaning of any elements on Resource or DomainResource (including
+      cannot change the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored
+    type: array
+  notPerformedReason:
+    $ref: CodeableReference.yaml
+    backref: medication_dispense
+    binding_description: null
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/medicationdispense-status-reason
+    binding_version: null
+    description: Indicates the reason why a dispense was not performed.
+    element_property: true
+    enum_reference_types:
+    - DetectedIssue
+    title: Why a dispense was not performed
+  note:
+    description: Extra information about the dispense that could not be conveyed in
+      the other attributes.
+    element_property: true
+    items:
+      $ref: Annotation.yaml
+    title: Information about the dispense
+    type: array
+  partOf:
+    backref: partOf_medication_dispense
+    description: The procedure or medication administration that triggered the dispense.
+    element_property: true
+    enum_reference_types:
+    - Procedure
+    - MedicationAdministration
+    items:
+      $ref: Reference.yaml
+    title: Event that dispense is part of
+    type: array
+  performer:
+    description: Indicates who or what performed the event.
+    element_property: true
+    items:
+      $ref: MedicationDispensePerformer.yaml
+    title: Who performed event
+    type: array
+  quantity:
+    $ref: Quantity.yaml
+    description: The amount of medication that has been dispensed. Includes unit of
+      measure.
+    element_property: true
+    title: Amount dispensed
+  receiver:
+    backref: receiver_medication_dispense
+    description: Identifies the person who picked up the medication or the location
+      of where the medication was delivered.  This will usually be a patient or their
+      caregiver, but some cases exist where it can be a healthcare professional or
+      a location.
+    element_property: true
+    enum_reference_types:
+    - Patient
+    - Practitioner
+    - RelatedPerson
+    - Location
+    - PractitionerRole
+    items:
+      $ref: Reference.yaml
+    title: Who collected the medication or where the medication was delivered
+    type: array
+  recorded:
+    description: The date (and maybe time) when the dispense activity started if whenPrepared
+      or whenHandedOver is not populated.
+    element_property: true
+    format: date-time
+    title: When the recording of the dispense started
+    type: string
+  renderedDosageInstruction:
+    description: The full representation of the dose of the medication included in
+      all dosage instructions.  To be used when multiple dosage instructions are included
+      to represent complex dosing such as increasing or tapering doses.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Full representation of the dosage instructions
+    type: string
+  resourceType:
+    const: MedicationDispense
+    default: MedicationDispense
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  status:
+    binding_description: Describes the lifecycle of the dispense.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/medicationdispense-status
+    binding_version: 5.0.0
+    description: A code specifying the state of the set of dispense events.
+    element_property: true
+    element_required: true
+    enum_values:
+    - preparation
+    - in-progress
+    - cancelled
+    - on-hold
+    - completed
+    - entered-in-error
+    - stopped
+    - declined
+    - unknown
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: preparation | in-progress | cancelled | on-hold | completed | entered-in-error
+      | stopped | declined | unknown
+    type: string
+  statusChanged:
+    description: The date (and maybe time) when the status of the dispense record
+      changed.
+    element_property: true
+    format: date-time
+    title: When the status changed
+    type: string
+  subject:
+    $ref: Reference.yaml
+    backref: subject_medication_dispense
+    description: A link to a resource representing the person or the group to whom
+      the medication will be given.
+    element_property: true
+    enum_reference_types:
+    - Patient
+    - Group
+    title: Who the dispense is for
+  substitution:
+    $ref: MedicationDispenseSubstitution.yaml
+    description: Indicates whether or not substitution was made as part of the dispense.  In
+      some cases, substitution will be expected but does not happen, in other cases
+      substitution is not expected but does happen.  This block explains what substitution
+      did or did not happen and why.  If nothing is specified, substitution was not
+      done.
+    element_property: true
+    title: Whether a substitution was performed on the dispense
+  supportingInformation:
+    backref: supportingInformation_medication_dispense
+    description: Additional information that supports the medication being dispensed.  For
+      example, there may be requirements that a specific lab test has been completed
+      prior to dispensing or the patient's weight at the time of dispensing is documented.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    items:
+      $ref: Reference.yaml
+    title: Information that supports the dispensing of the medication
+    type: array
+  text:
+    $ref: Narrative.yaml
+    description: A human-readable narrative that contains a summary of the resource
+      and can be used to represent the content of the resource to a human. The narrative
+      need not encode all the structured data, but is required to contain sufficient
+      detail to make it "clinically safe" for a human to just read the narrative.
+      Resource definitions may define what content should be represented in the narrative
+      to ensure clinical safety.
+    element_property: true
+    title: Text summary of the resource, for human interpretation
+  type:
+    $ref: CodeableConcept.yaml
+    binding_description: 'ActPharmacySupplyType '
+    binding_strength: example
+    binding_uri: http://terminology.hl7.org/ValueSet/v3-ActPharmacySupplyType
+    binding_version: null
+    description: Indicates the type of dispensing event that is performed. For example,
+      Trial Fill, Completion of Trial, Partial Fill, Emergency Fill, Samples, etc.
+    element_property: true
+    title: Trial fill, partial fill, emergency fill, etc
+  whenHandedOver:
+    description: The time the dispensed product was provided to the patient or their
+      representative.
+    element_property: true
+    format: date-time
+    title: When product was given out
+    type: string
+  whenPrepared:
+    description: The time when the dispensed product was packaged and reviewed.
+    element_property: true
+    format: date-time
+    title: When product was packaged and reviewed
+    type: string
+required:
+- medication
+- subject
+title: MedicationDispense
+type: object

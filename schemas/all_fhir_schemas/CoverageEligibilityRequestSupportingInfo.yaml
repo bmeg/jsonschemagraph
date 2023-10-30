@@ -1,0 +1,108 @@
+$id: CoverageEligibilityRequestSupportingInfo
+additionalProperties: false
+description: Supporting information. Additional information codes regarding exceptions,
+  special considerations, the condition, situation, prior or concurrent issues. [See
+  https://hl7.org/fhir/R5/CoverageEligibilityRequestSupportingInfo.html] [See https://hl7.org/fhir/R5/CoverageEligibilityRequestSupportingInfo.html]
+links:
+- href: Resource/{id}
+  rel: information
+  targetHints:
+    backref:
+    - coverage_eligibility_request_supporting_info
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /information/reference
+  templateRequired:
+  - id
+properties:
+  _appliesToAll:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``appliesToAll``.
+  _sequence:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``sequence``.
+  appliesToAll:
+    description: The supporting materials are applicable for all detail items, product/servce
+      categories and specific billing codes.
+    element_property: true
+    title: Applies to all items
+    type: boolean
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  information:
+    $ref: Reference.yaml
+    backref: coverage_eligibility_request_supporting_info
+    description: Additional data or information such as resources, documents, images
+      etc. including references to the data or the actual inclusion of the data.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    title: Data to be provided
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: CoverageEligibilityRequestSupportingInfo
+    default: CoverageEligibilityRequestSupportingInfo
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  sequence:
+    description: A number to uniquely identify supporting information entries.
+    element_property: true
+    element_required: true
+    exclusiveMinimum: 0
+    title: Information instance identifier
+    type: integer
+required:
+- information
+title: CoverageEligibilityRequestSupportingInfo
+type: object

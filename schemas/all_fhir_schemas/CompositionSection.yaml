@@ -1,0 +1,399 @@
+$id: CompositionSection
+additionalProperties: false
+description: Composition is broken into sections. The root of the sections that make
+  up the composition. [See https://hl7.org/fhir/R5/CompositionSection.html] [See https://hl7.org/fhir/R5/CompositionSection.html]
+  [See https://hl7.org/fhir/R5/CompositionSection.html]
+links:
+- href: Practitioner/{id}
+  rel: author_Practitioner
+  targetHints:
+    backref:
+    - author_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /author/-/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: author_PractitionerRole
+  targetHints:
+    backref:
+    - author_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /author/-/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: author_Device
+  targetHints:
+    backref:
+    - author_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /author/-/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: author_Patient
+  targetHints:
+    backref:
+    - author_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /author/-/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: author_RelatedPerson
+  targetHints:
+    backref:
+    - author_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /author/-/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: author_Organization
+  targetHints:
+    backref:
+    - author_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /author/-/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: entry
+  targetHints:
+    backref:
+    - entry_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /entry/-/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: focus
+  targetHints:
+    backref:
+    - focus_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /focus/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: section_author_Practitioner
+  targetHints:
+    backref:
+    - author_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /section/-/author/-/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: section_author_PractitionerRole
+  targetHints:
+    backref:
+    - author_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /section/-/author/-/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: section_author_Device
+  targetHints:
+    backref:
+    - author_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /section/-/author/-/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: section_author_Patient
+  targetHints:
+    backref:
+    - author_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /section/-/author/-/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: section_author_RelatedPerson
+  targetHints:
+    backref:
+    - author_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /section/-/author/-/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: section_author_Organization
+  targetHints:
+    backref:
+    - author_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /section/-/author/-/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: section_entry
+  targetHints:
+    backref:
+    - entry_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /section/-/entry/-/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: section_focus
+  targetHints:
+    backref:
+    - focus_composition_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /section/-/focus/reference
+  templateRequired:
+  - id
+properties:
+  _title:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``title``.
+  author:
+    backref: author_composition_section
+    description: Identifies who is responsible for the information in this section,
+      not necessarily who typed it in.
+    element_property: true
+    enum_reference_types:
+    - Practitioner
+    - PractitionerRole
+    - Device
+    - Patient
+    - RelatedPerson
+    - Organization
+    items:
+      $ref: Reference.yaml
+    title: Who and/or what authored the section
+    type: array
+  code:
+    $ref: CodeableConcept.yaml
+    binding_description: Classification of a section of a composition/document.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/doc-section-codes
+    binding_version: null
+    description: A code identifying the kind of content contained within the section.
+      This must be consistent with the section title.
+    element_property: true
+    title: Classification of section (recommended)
+  emptyReason:
+    $ref: CodeableConcept.yaml
+    binding_description: If a section is empty, why it is empty.
+    binding_strength: preferred
+    binding_uri: http://hl7.org/fhir/ValueSet/list-empty-reason
+    binding_version: null
+    description: If the section is empty, why the list is empty. An empty section
+      typically has some text explaining the empty reason.
+    element_property: true
+    title: Why the section is empty
+  entry:
+    backref: entry_composition_section
+    description: A reference to the actual resource from which the narrative in the
+      section is derived.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    items:
+      $ref: Reference.yaml
+    title: A reference to data that supports this section
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  focus:
+    $ref: Reference.yaml
+    backref: focus_composition_section
+    description: The actual focus of the section when it is not the subject of the
+      composition, but instead represents something or someone associated with the
+      subject such as (for a patient subject) a spouse, parent, fetus, or donor. If
+      not focus is specified, the focus is assumed to be focus of the parent section,
+      or, for a section in the Composition itself, the subject of the composition.
+      Sections with a focus SHALL only include resources where the logical subject
+      (patient, subject, focus, etc.) matches the section focus, or the resources
+      have no logical subject (few resources).
+    element_property: true
+    enum_reference_types:
+    - Resource
+    title: Who/what the section is about, when it is not about the subject of composition
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  orderedBy:
+    $ref: CodeableConcept.yaml
+    binding_description: What order applies to the items in the entry.
+    binding_strength: preferred
+    binding_uri: http://hl7.org/fhir/ValueSet/list-order
+    binding_version: null
+    description: Specifies the order applied to the items in the section entries.
+    element_property: true
+    title: Order of section entries
+  resourceType:
+    const: CompositionSection
+    default: CompositionSection
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  section:
+    description: A nested sub-section within this section.
+    element_property: true
+    items:
+      $ref: CompositionSection.yaml
+    title: Nested Section
+    type: array
+  text:
+    $ref: Narrative.yaml
+    description: A human-readable narrative that contains the attested content of
+      the section, used to represent the content of the resource to a human. The narrative
+      need not encode all the structured data, but is required to contain sufficient
+      detail to make it "clinically safe" for a human to just read the narrative.
+    element_property: true
+    title: Text summary of the section, for human interpretation
+  title:
+    description: The label for this particular section.  This will be part of the
+      rendered content for the document, and is often used to build a table of contents.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Label for section (e.g. for ToC)
+    type: string
+title: CompositionSection
+type: object

@@ -1,0 +1,443 @@
+$id: InventoryItem
+additionalProperties: false
+description: A functional description of an inventory item used in inventory and supply-
+  related workflows. [See https://hl7.org/fhir/R5/InventoryItem.html]
+links:
+- href: Medication/{id}
+  rel: productReference_Medication
+  targetHints:
+    backref:
+    - inventory_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Medication.yaml
+  templatePointers:
+    id: /productReference/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: productReference_Device
+  targetHints:
+    backref:
+    - inventory_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /productReference/reference
+  templateRequired:
+  - id
+- href: NutritionProduct/{id}
+  rel: productReference_NutritionProduct
+  targetHints:
+    backref:
+    - inventory_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: NutritionProduct.yaml
+  templatePointers:
+    id: /productReference/reference
+  templateRequired:
+  - id
+- href: BiologicallyDerivedProduct/{id}
+  rel: productReference_BiologicallyDerivedProduct
+  targetHints:
+    backref:
+    - inventory_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: BiologicallyDerivedProduct.yaml
+  templatePointers:
+    id: /productReference/reference
+  templateRequired:
+  - id
+- href: InventoryItem/{id}
+  rel: association_relatedItem_InventoryItem
+  targetHints:
+    backref:
+    - inventory_item_association
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: InventoryItem.yaml
+  templatePointers:
+    id: /association/-/relatedItem/reference
+  templateRequired:
+  - id
+- href: Medication/{id}
+  rel: association_relatedItem_Medication
+  targetHints:
+    backref:
+    - inventory_item_association
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Medication.yaml
+  templatePointers:
+    id: /association/-/relatedItem/reference
+  templateRequired:
+  - id
+- href: MedicationKnowledge/{id}
+  rel: association_relatedItem_MedicationKnowledge
+  targetHints:
+    backref:
+    - inventory_item_association
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: MedicationKnowledge.yaml
+  templatePointers:
+    id: /association/-/relatedItem/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: association_relatedItem_Device
+  targetHints:
+    backref:
+    - inventory_item_association
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /association/-/relatedItem/reference
+  templateRequired:
+  - id
+- href: DeviceDefinition/{id}
+  rel: association_relatedItem_DeviceDefinition
+  targetHints:
+    backref:
+    - inventory_item_association
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: DeviceDefinition.yaml
+  templatePointers:
+    id: /association/-/relatedItem/reference
+  templateRequired:
+  - id
+- href: NutritionProduct/{id}
+  rel: association_relatedItem_NutritionProduct
+  targetHints:
+    backref:
+    - inventory_item_association
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: NutritionProduct.yaml
+  templatePointers:
+    id: /association/-/relatedItem/reference
+  templateRequired:
+  - id
+- href: BiologicallyDerivedProduct/{id}
+  rel: association_relatedItem_BiologicallyDerivedProduct
+  targetHints:
+    backref:
+    - inventory_item_association
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: BiologicallyDerivedProduct.yaml
+  templatePointers:
+    id: /association/-/relatedItem/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: instance_location
+  targetHints:
+    backref:
+    - inventory_item_instance
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /instance/location/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: instance_subject_Patient
+  targetHints:
+    backref:
+    - inventory_item_instance
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /instance/subject/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: instance_subject_Organization
+  targetHints:
+    backref:
+    - inventory_item_instance
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /instance/subject/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: responsibleOrganization_organization
+  targetHints:
+    backref:
+    - inventory_item_responsible_organization
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /responsibleOrganization/-/organization/reference
+  templateRequired:
+  - id
+properties:
+  _implicitRules:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``implicitRules``.
+  _language:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``language``.
+  _status:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``status``.
+  association:
+    element_property: true
+    items:
+      $ref: InventoryItemAssociation.yaml
+    title: Association with other items or products
+    type: array
+  baseUnit:
+    $ref: CodeableConcept.yaml
+    element_property: true
+    title: The base unit of measure - the unit in which the product is used or counted
+  category:
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Category or class of the item
+    type: array
+  characteristic:
+    description: The descriptive or identifying characteristics of the item.
+    element_property: true
+    items:
+      $ref: InventoryItemCharacteristic.yaml
+    title: Characteristic of the item
+    type: array
+  code:
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Code designating the specific type of item
+    type: array
+  contained:
+    description: These resources do not have an independent existence apart from the
+      resource that contains them - they cannot be identified independently, nor can
+      they have their own independent transaction scope. This is allowed to be a Parameters
+      resource if and only if it is referenced by a resource that provides context/meaning.
+    element_property: true
+    items:
+      $ref: Resource.yaml
+    title: Contained, inline Resources
+    type: array
+  description:
+    $ref: InventoryItemDescription.yaml
+    description: The descriptive characteristics of the inventory item.
+    element_property: true
+    title: Descriptive characteristics of the item
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource. To make the use of extensions safe
+      and managable, there is a strict set of governance applied to the definition
+      and use of extensions. Though any implementer can define an extension, there
+      is a set of requirements that SHALL be met as part of the definition of the
+      extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: The logical id of the resource, as used in the URL for the resource.
+      Once assigned, this value never changes.
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Logical id of this artifact
+    type: string
+  identifier:
+    element_property: true
+    items:
+      $ref: Identifier.yaml
+    title: Business identifier for the inventory item
+    type: array
+  implicitRules:
+    description: A reference to a set of rules that were followed when the resource
+      was constructed, and which must be understood when processing the content. Often,
+      this is a reference to an implementation guide that defines the special rules
+      along with other profiles etc.
+    element_property: true
+    pattern: \S*
+    title: A set of rules under which this content was created
+    type: string
+  instance:
+    $ref: InventoryItemInstance.yaml
+    element_property: true
+    title: Instances or occurrences of the product
+  inventoryStatus:
+    description: The usage status e.g. recalled, in use, discarded... This can be
+      used to indicate that the items have been taken out of inventory, or are in
+      use, etc.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: The usage status like recalled, in use, discarded
+    type: array
+  language:
+    binding_description: IETF language tag for a human language
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/all-languages
+    binding_version: 5.0.0
+    description: The base language in which the resource is written.
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Language of the resource content
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  meta:
+    $ref: Meta.yaml
+    description: The metadata about the resource. This is content that is maintained
+      by the infrastructure. Changes to the content might not always be associated
+      with version changes to the resource.
+    element_property: true
+    title: Metadata about the resource
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource and that modifies the understanding
+      of the element that contains it and/or the understanding of the containing element's
+      descendants. Usually modifier elements provide negation or qualification. To
+      make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer is allowed
+      to define an extension, there is a set of requirements that SHALL be met as
+      part of the definition of the extension. Applications processing a resource
+      are required to check for modifier extensions.  Modifier extensions SHALL NOT
+      change the meaning of any elements on Resource or DomainResource (including
+      cannot change the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored
+    type: array
+  name:
+    description: The item name(s) - the brand name, or common name, functional name,
+      generic name.
+    element_property: true
+    items:
+      $ref: InventoryItemName.yaml
+    title: The item name(s) - the brand name, or common name, functional name, generic
+      name or others
+    type: array
+  netContent:
+    $ref: Quantity.yaml
+    element_property: true
+    title: Net content or amount present in the item
+  productReference:
+    $ref: Reference.yaml
+    backref: inventory_item
+    element_property: true
+    enum_reference_types:
+    - Medication
+    - Device
+    - NutritionProduct
+    - BiologicallyDerivedProduct
+    title: Link to a product resource used in clinical workflows
+  resourceType:
+    const: InventoryItem
+    default: InventoryItem
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  responsibleOrganization:
+    element_property: true
+    items:
+      $ref: InventoryItemResponsibleOrganization.yaml
+    title: Organization(s) responsible for the product
+    type: array
+  status:
+    binding_description: Status of the inventory item.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/inventoryitem-status
+    binding_version: 5.0.0
+    description: Status of the item entry.
+    element_property: true
+    element_required: true
+    enum_values:
+    - active
+    - inactive
+    - entered-in-error
+    - unknown
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: active | inactive | entered-in-error | unknown
+    type: string
+  text:
+    $ref: Narrative.yaml
+    description: A human-readable narrative that contains a summary of the resource
+      and can be used to represent the content of the resource to a human. The narrative
+      need not encode all the structured data, but is required to contain sufficient
+      detail to make it "clinically safe" for a human to just read the narrative.
+      Resource definitions may define what content should be represented in the narrative
+      to ensure clinical safety.
+    element_property: true
+    title: Text summary of the resource, for human interpretation
+title: InventoryItem
+type: object

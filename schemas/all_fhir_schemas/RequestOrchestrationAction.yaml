@@ -1,0 +1,879 @@
+$id: RequestOrchestrationAction
+additionalProperties: false
+description: Proposed actions, if any. The actions, if any, produced by the evaluation
+  of the artifact. [See https://hl7.org/fhir/R5/RequestOrchestrationAction.html] [See
+  https://hl7.org/fhir/R5/RequestOrchestrationAction.html]
+links:
+- href: Goal/{id}
+  rel: goal
+  targetHints:
+    backref:
+    - goal_request_orchestration_action
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Goal.yaml
+  templatePointers:
+    id: /goal/-/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: resource
+  targetHints:
+    backref:
+    - request_orchestration_action
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /resource/reference
+  templateRequired:
+  - id
+- href: Goal/{id}
+  rel: action_goal
+  targetHints:
+    backref:
+    - goal_request_orchestration_action
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Goal.yaml
+  templatePointers:
+    id: /action/-/goal/-/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: action_resource
+  targetHints:
+    backref:
+    - request_orchestration_action
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /action/-/resource/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: documentation_resourceReference
+  targetHints:
+    backref:
+    - related_artifact
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /documentation/-/resourceReference/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: location_reference
+  targetHints:
+    backref:
+    - codeable_reference
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /location/reference/reference
+  templateRequired:
+  - id
+- href: CareTeam/{id}
+  rel: participant_actorReference_CareTeam
+  targetHints:
+    backref:
+    - actorReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: CareTeam.yaml
+  templatePointers:
+    id: /participant/-/actorReference/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: participant_actorReference_Device
+  targetHints:
+    backref:
+    - actorReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /participant/-/actorReference/reference
+  templateRequired:
+  - id
+- href: DeviceDefinition/{id}
+  rel: participant_actorReference_DeviceDefinition
+  targetHints:
+    backref:
+    - actorReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: DeviceDefinition.yaml
+  templatePointers:
+    id: /participant/-/actorReference/reference
+  templateRequired:
+  - id
+- href: Endpoint/{id}
+  rel: participant_actorReference_Endpoint
+  targetHints:
+    backref:
+    - actorReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Endpoint.yaml
+  templatePointers:
+    id: /participant/-/actorReference/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: participant_actorReference_Group
+  targetHints:
+    backref:
+    - actorReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /participant/-/actorReference/reference
+  templateRequired:
+  - id
+- href: HealthcareService/{id}
+  rel: participant_actorReference_HealthcareService
+  targetHints:
+    backref:
+    - actorReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: HealthcareService.yaml
+  templatePointers:
+    id: /participant/-/actorReference/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: participant_actorReference_Location
+  targetHints:
+    backref:
+    - actorReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /participant/-/actorReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: participant_actorReference_Organization
+  targetHints:
+    backref:
+    - actorReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /participant/-/actorReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: participant_actorReference_Patient
+  targetHints:
+    backref:
+    - actorReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /participant/-/actorReference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: participant_actorReference_Practitioner
+  targetHints:
+    backref:
+    - actorReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /participant/-/actorReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: participant_actorReference_PractitionerRole
+  targetHints:
+    backref:
+    - actorReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /participant/-/actorReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: participant_actorReference_RelatedPerson
+  targetHints:
+    backref:
+    - actorReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /participant/-/actorReference/reference
+  templateRequired:
+  - id
+- href: CareTeam/{id}
+  rel: participant_typeReference_CareTeam
+  targetHints:
+    backref:
+    - typeReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: CareTeam.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: participant_typeReference_Device
+  targetHints:
+    backref:
+    - typeReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: DeviceDefinition/{id}
+  rel: participant_typeReference_DeviceDefinition
+  targetHints:
+    backref:
+    - typeReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: DeviceDefinition.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Endpoint/{id}
+  rel: participant_typeReference_Endpoint
+  targetHints:
+    backref:
+    - typeReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Endpoint.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: participant_typeReference_Group
+  targetHints:
+    backref:
+    - typeReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: HealthcareService/{id}
+  rel: participant_typeReference_HealthcareService
+  targetHints:
+    backref:
+    - typeReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: HealthcareService.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: participant_typeReference_Location
+  targetHints:
+    backref:
+    - typeReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: participant_typeReference_Organization
+  targetHints:
+    backref:
+    - typeReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: participant_typeReference_Patient
+  targetHints:
+    backref:
+    - typeReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: participant_typeReference_Practitioner
+  targetHints:
+    backref:
+    - typeReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: participant_typeReference_PractitionerRole
+  targetHints:
+    backref:
+    - typeReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: participant_typeReference_RelatedPerson
+  targetHints:
+    backref:
+    - typeReference_request_orchestration_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+properties:
+  _cardinalityBehavior:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``cardinalityBehavior``.
+  _definitionCanonical:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``definitionCanonical``.
+  _definitionUri:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``definitionUri``.
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _groupingBehavior:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``groupingBehavior``.
+  _linkId:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``linkId``.
+  _precheckBehavior:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``precheckBehavior``.
+  _prefix:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``prefix``.
+  _priority:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``priority``.
+  _requiredBehavior:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``requiredBehavior``.
+  _selectionBehavior:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``selectionBehavior``.
+  _textEquivalent:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``textEquivalent``.
+  _timingDateTime:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``timingDateTime``.
+  _title:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``title``.
+  _transform:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``transform``.
+  action:
+    description: Sub actions.
+    element_property: true
+    items:
+      $ref: RequestOrchestrationAction.yaml
+    title: Sub action
+    type: array
+  cardinalityBehavior:
+    binding_description: Defines behavior for an action or a group for how many times
+      that item may be repeated.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/action-cardinality-behavior
+    binding_version: 5.0.0
+    description: Defines whether the action can be selected multiple times.
+    element_property: true
+    enum_values:
+    - single
+    - multiple
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: single | multiple
+    type: string
+  code:
+    binding_description: null
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/action-code
+    binding_version: null
+    description: A code that provides meaning for the action or action group. For
+      example, a section may have a LOINC code for a section of a documentation template.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Code representing the meaning of the action or sub-actions
+    type: array
+  condition:
+    description: An expression that describes applicability criteria, or start/stop
+      conditions for the action.
+    element_property: true
+    items:
+      $ref: RequestOrchestrationActionCondition.yaml
+    title: Whether or not the action is applicable
+    type: array
+  definitionCanonical:
+    description: A reference to an ActivityDefinition that describes the action to
+      be taken in detail, a PlanDefinition that describes a series of actions to be
+      taken, a Questionnaire that should be filled out, a SpecimenDefinition describing
+      a specimen to be collected, or an ObservationDefinition that specifies what
+      observation should be captured.
+    element_property: true
+    enum_reference_types:
+    - ActivityDefinition
+    - ObservationDefinition
+    - PlanDefinition
+    - Questionnaire
+    - SpecimenDefinition
+    one_of_many: definition
+    one_of_many_required: false
+    pattern: \S*
+    title: Description of the activity to be performed
+    type: string
+  definitionUri:
+    description: A reference to an ActivityDefinition that describes the action to
+      be taken in detail, a PlanDefinition that describes a series of actions to be
+      taken, a Questionnaire that should be filled out, a SpecimenDefinition describing
+      a specimen to be collected, or an ObservationDefinition that specifies what
+      observation should be captured.
+    element_property: true
+    one_of_many: definition
+    one_of_many_required: false
+    pattern: \S*
+    title: Description of the activity to be performed
+    type: string
+  description:
+    description: A short description of the action used to provide a summary to display
+      to the user.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Short description of the action
+    type: string
+  documentation:
+    description: Didactic or other informational resources associated with the action
+      that can be provided to the CDS recipient. Information resources can include
+      inline text commentary and links to web resources.
+    element_property: true
+    items:
+      $ref: RelatedArtifact.yaml
+    title: Supporting documentation for the intended performer of the action
+    type: array
+  dynamicValue:
+    description: Customizations that should be applied to the statically defined resource.
+      For example, if the dosage of a medication must be computed based on the patient's
+      weight, a customization would be used to specify an expression that calculated
+      the weight, and the path on the resource that would contain the result.
+    element_property: true
+    items:
+      $ref: RequestOrchestrationActionDynamicValue.yaml
+    title: Dynamic aspects of the definition
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  goal:
+    backref: goal_request_orchestration_action
+    description: Goals that are intended to be achieved by following the requests
+      in this action.
+    element_property: true
+    enum_reference_types:
+    - Goal
+    items:
+      $ref: Reference.yaml
+    title: What goals
+    type: array
+  groupingBehavior:
+    binding_description: Defines organization behavior of a group.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/action-grouping-behavior
+    binding_version: 5.0.0
+    description: Defines the grouping behavior for the action and its children.
+    element_property: true
+    enum_values:
+    - visual-group
+    - logical-group
+    - sentence-group
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: visual-group | logical-group | sentence-group
+    type: string
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  input:
+    description: Defines input data requirements for the action.
+    element_property: true
+    items:
+      $ref: RequestOrchestrationActionInput.yaml
+    title: Input data requirements
+    type: array
+  linkId:
+    description: The linkId of the action from the PlanDefinition that corresponds
+      to this action in the RequestOrchestration resource.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Pointer to specific item from the PlanDefinition
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  location:
+    $ref: CodeableReference.yaml
+    backref: request_orchestration_action
+    description: Identifies the facility where the action will occur; e.g. home, hospital,
+      specific clinic, etc.
+    element_property: true
+    enum_reference_types:
+    - Location
+    title: Where it should happen
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  output:
+    description: Defines the outputs of the action, if any.
+    element_property: true
+    items:
+      $ref: RequestOrchestrationActionOutput.yaml
+    title: Output data definition
+    type: array
+  participant:
+    description: The participant that should perform or be responsible for this action.
+    element_property: true
+    items:
+      $ref: RequestOrchestrationActionParticipant.yaml
+    title: Who should perform the action
+    type: array
+  precheckBehavior:
+    binding_description: Defines selection frequency behavior for an action or group.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/action-precheck-behavior
+    binding_version: 5.0.0
+    description: Defines whether the action should usually be preselected.
+    element_property: true
+    enum_values:
+    - 'yes'
+    - 'no'
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: yes | no
+    type: string
+  prefix:
+    description: A user-visible prefix for the action. For example a section or item
+      numbering such as 1. or A.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: User-visible prefix for the action (e.g. 1. or A.)
+    type: string
+  priority:
+    binding_description: Identifies the level of importance to be assigned to actioning
+      the request.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/request-priority
+    binding_version: 5.0.0
+    description: Indicates how quickly the action should be addressed with respect
+      to other actions.
+    element_property: true
+    enum_values:
+    - routine
+    - urgent
+    - asap
+    - stat
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: routine | urgent | asap | stat
+    type: string
+  relatedAction:
+    description: A relationship to another action such as "before" or "30-60 minutes
+      after start of".
+    element_property: true
+    items:
+      $ref: RequestOrchestrationActionRelatedAction.yaml
+    title: Relationship to another action
+    type: array
+  requiredBehavior:
+    binding_description: Defines expectations around whether an action or action group
+      is required.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/action-required-behavior
+    binding_version: 5.0.0
+    description: Defines expectations around whether an action is required.
+    element_property: true
+    enum_values:
+    - must
+    - could
+    - must-unless-documented
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: must | could | must-unless-documented
+    type: string
+  resource:
+    $ref: Reference.yaml
+    backref: request_orchestration_action
+    description: The resource that is the target of the action (e.g. CommunicationRequest).
+    element_property: true
+    enum_reference_types:
+    - Resource
+    title: The target of the action
+  resourceType:
+    const: RequestOrchestrationAction
+    default: RequestOrchestrationAction
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  selectionBehavior:
+    binding_description: Defines selection behavior of a group.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/action-selection-behavior
+    binding_version: 5.0.0
+    description: Defines the selection behavior for the action and its children.
+    element_property: true
+    enum_values:
+    - any
+    - all
+    - all-or-none
+    - exactly-one
+    - at-most-one
+    - one-or-more
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: any | all | all-or-none | exactly-one | at-most-one | one-or-more
+    type: string
+  textEquivalent:
+    description: A text equivalent of the action to be performed. This provides a
+      human-interpretable description of the action when the definition is consumed
+      by a system that might not be capable of interpreting it dynamically.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Static text equivalent of the action, used if the dynamic aspects cannot
+      be interpreted by the receiving system
+    type: string
+  timingAge:
+    $ref: Age.yaml
+    description: An optional value describing when the action should be performed.
+    element_property: true
+    one_of_many: timing
+    one_of_many_required: false
+    title: When the action should take place
+  timingDateTime:
+    description: An optional value describing when the action should be performed.
+    element_property: true
+    format: date-time
+    one_of_many: timing
+    one_of_many_required: false
+    title: When the action should take place
+    type: string
+  timingDuration:
+    $ref: Duration.yaml
+    description: An optional value describing when the action should be performed.
+    element_property: true
+    one_of_many: timing
+    one_of_many_required: false
+    title: When the action should take place
+  timingPeriod:
+    $ref: Period.yaml
+    description: An optional value describing when the action should be performed.
+    element_property: true
+    one_of_many: timing
+    one_of_many_required: false
+    title: When the action should take place
+  timingRange:
+    $ref: Range.yaml
+    description: An optional value describing when the action should be performed.
+    element_property: true
+    one_of_many: timing
+    one_of_many_required: false
+    title: When the action should take place
+  timingTiming:
+    $ref: Timing.yaml
+    description: An optional value describing when the action should be performed.
+    element_property: true
+    one_of_many: timing
+    one_of_many_required: false
+    title: When the action should take place
+  title:
+    description: The title of the action displayed to a user.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: User-visible title
+    type: string
+  transform:
+    description: A reference to a StructureMap resource that defines a transform that
+      can be executed to produce the intent resource using the ActivityDefinition
+      instance as the input.
+    element_property: true
+    enum_reference_types:
+    - StructureMap
+    pattern: \S*
+    title: Transform to apply the template
+    type: string
+  type:
+    $ref: CodeableConcept.yaml
+    binding_description: The type of action to be performed.
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/action-type
+    binding_version: null
+    description: The type of action to perform (create, update, remove).
+    element_property: true
+    title: create | update | remove | fire-event
+title: RequestOrchestrationAction
+type: object

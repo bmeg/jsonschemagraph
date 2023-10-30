@@ -1,0 +1,79 @@
+$id: ValueSetScope
+additionalProperties: false
+description: Description of the semantic space the Value Set Expansion is intended
+  to cover and should further clarify the text in ValueSet.description. [See https://hl7.org/fhir/R5/ValueSetScope.html]
+  [See https://hl7.org/fhir/R5/ValueSetScope.html]
+links: []
+properties:
+  _exclusionCriteria:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``exclusionCriteria``.
+  _inclusionCriteria:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``inclusionCriteria``.
+  exclusionCriteria:
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Criteria describing which concepts or codes should be excluded and why
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  inclusionCriteria:
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Criteria describing which concepts or codes should be included and why
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: ValueSetScope
+    default: ValueSetScope
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+title: ValueSetScope
+type: object

@@ -1,0 +1,91 @@
+$id: BundleEntrySearch
+additionalProperties: false
+description: Search related information. Information about the search process that
+  lead to the creation of this entry. [See https://hl7.org/fhir/R5/BundleEntrySearch.html]
+  [See https://hl7.org/fhir/R5/BundleEntrySearch.html]
+links: []
+properties:
+  _mode:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``mode``.
+  _score:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``score``.
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  mode:
+    binding_description: Why an entry is in the result set - whether it's included
+      as a match or because of an _include requirement, or to convey information or
+      warning information about the search process.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/search-entry-mode
+    binding_version: 5.0.0
+    description: Why this entry is in the result set - whether it's included as a
+      match or because of an _include requirement, or to convey information or warning
+      information about the search process.
+    element_property: true
+    enum_values:
+    - match
+    - include
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: match | include - why this is in the result set
+    type: string
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: BundleEntrySearch
+    default: BundleEntrySearch
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  score:
+    description: When searching, the server's search ranking score for the entry.
+    element_property: true
+    title: Search ranking (between 0 and 1)
+    type: number
+title: BundleEntrySearch
+type: object

@@ -1,0 +1,1071 @@
+$id: Transport
+additionalProperties: false
+description: Delivery of item. Record of transport of item. [See https://hl7.org/fhir/R5/Transport.html]
+links:
+- href: Resource/{id}
+  rel: basedOn
+  targetHints:
+    backref:
+    - basedOn_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /basedOn/-/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: currentLocation
+  targetHints:
+    backref:
+    - currentLocation_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /currentLocation/reference
+  templateRequired:
+  - id
+- href: Encounter/{id}
+  rel: encounter
+  targetHints:
+    backref:
+    - transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Encounter.yaml
+  templatePointers:
+    id: /encounter/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: focus
+  targetHints:
+    backref:
+    - focus_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /focus/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: for_fhir
+  targetHints:
+    backref:
+    - for_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /for_fhir/reference
+  templateRequired:
+  - id
+- href: Transport/{id}
+  rel: history
+  targetHints:
+    backref:
+    - history_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Transport.yaml
+  templatePointers:
+    id: /history/reference
+  templateRequired:
+  - id
+- href: Coverage/{id}
+  rel: insurance_Coverage
+  targetHints:
+    backref:
+    - insurance_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Coverage.yaml
+  templatePointers:
+    id: /insurance/-/reference
+  templateRequired:
+  - id
+- href: ClaimResponse/{id}
+  rel: insurance_ClaimResponse
+  targetHints:
+    backref:
+    - insurance_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: ClaimResponse.yaml
+  templatePointers:
+    id: /insurance/-/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: location
+  targetHints:
+    backref:
+    - location_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /location/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: owner_Practitioner
+  targetHints:
+    backref:
+    - owner_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /owner/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: owner_PractitionerRole
+  targetHints:
+    backref:
+    - owner_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /owner/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: owner_Organization
+  targetHints:
+    backref:
+    - owner_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /owner/reference
+  templateRequired:
+  - id
+- href: CareTeam/{id}
+  rel: owner_CareTeam
+  targetHints:
+    backref:
+    - owner_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: CareTeam.yaml
+  templatePointers:
+    id: /owner/reference
+  templateRequired:
+  - id
+- href: HealthcareService/{id}
+  rel: owner_HealthcareService
+  targetHints:
+    backref:
+    - owner_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: HealthcareService.yaml
+  templatePointers:
+    id: /owner/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: owner_Patient
+  targetHints:
+    backref:
+    - owner_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /owner/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: owner_Device
+  targetHints:
+    backref:
+    - owner_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /owner/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: owner_RelatedPerson
+  targetHints:
+    backref:
+    - owner_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /owner/reference
+  templateRequired:
+  - id
+- href: Transport/{id}
+  rel: partOf
+  targetHints:
+    backref:
+    - partOf_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Transport.yaml
+  templatePointers:
+    id: /partOf/-/reference
+  templateRequired:
+  - id
+- href: Provenance/{id}
+  rel: relevantHistory
+  targetHints:
+    backref:
+    - relevantHistory_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Provenance.yaml
+  templatePointers:
+    id: /relevantHistory/-/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: requestedLocation
+  targetHints:
+    backref:
+    - requestedLocation_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /requestedLocation/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: requester_Device
+  targetHints:
+    backref:
+    - requester_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /requester/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: requester_Organization
+  targetHints:
+    backref:
+    - requester_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /requester/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: requester_Patient
+  targetHints:
+    backref:
+    - requester_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /requester/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: requester_Practitioner
+  targetHints:
+    backref:
+    - requester_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /requester/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: requester_PractitionerRole
+  targetHints:
+    backref:
+    - requester_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /requester/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: requester_RelatedPerson
+  targetHints:
+    backref:
+    - requester_transport
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /requester/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: input_valueReference
+  targetHints:
+    backref:
+    - transport_input
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /input/-/valueReference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: note_authorReference_Practitioner
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: note_authorReference_PractitionerRole
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: note_authorReference_Patient
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: note_authorReference_RelatedPerson
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: note_authorReference_Organization
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: output_valueReference
+  targetHints:
+    backref:
+    - transport_output
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /output/-/valueReference/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: reason_reference
+  targetHints:
+    backref:
+    - codeable_reference
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /reason/reference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: restriction_recipient_Patient
+  targetHints:
+    backref:
+    - recipient_transport_restriction
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /restriction/recipient/-/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: restriction_recipient_Practitioner
+  targetHints:
+    backref:
+    - recipient_transport_restriction
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /restriction/recipient/-/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: restriction_recipient_PractitionerRole
+  targetHints:
+    backref:
+    - recipient_transport_restriction
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /restriction/recipient/-/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: restriction_recipient_RelatedPerson
+  targetHints:
+    backref:
+    - recipient_transport_restriction
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /restriction/recipient/-/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: restriction_recipient_Group
+  targetHints:
+    backref:
+    - recipient_transport_restriction
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /restriction/recipient/-/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: restriction_recipient_Organization
+  targetHints:
+    backref:
+    - recipient_transport_restriction
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /restriction/recipient/-/reference
+  templateRequired:
+  - id
+properties:
+  _authoredOn:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``authoredOn``.
+  _completionTime:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``completionTime``.
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _implicitRules:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``implicitRules``.
+  _instantiatesCanonical:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``instantiatesCanonical``.
+  _instantiatesUri:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``instantiatesUri``.
+  _intent:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``intent``.
+  _language:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``language``.
+  _lastModified:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``lastModified``.
+  _priority:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``priority``.
+  _status:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``status``.
+  authoredOn:
+    description: The date and time this transport was created.
+    element_property: true
+    format: date-time
+    title: Transport Creation Date
+    type: string
+  basedOn:
+    backref: basedOn_transport
+    description: BasedOn refers to a higher-level authorization that triggered the
+      creation of the transport.  It references a "request" resource such as a ServiceRequest
+      or Transport, which is distinct from the "request" resource the Transport is
+      seeking to fulfill.  This latter resource is referenced by FocusOn.  For example,
+      based on a ServiceRequest (= BasedOn), a transport is created to fulfill a procedureRequest
+      ( = FocusOn ) to transport a specimen to the lab.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    items:
+      $ref: Reference.yaml
+    title: Request fulfilled by this transport
+    type: array
+  code:
+    $ref: CodeableConcept.yaml
+    binding_description: Codes to identify what the transport involves.  These will
+      typically be specific to a particular workflow.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/transport-code
+    binding_version: null
+    description: A name or code (or both) briefly describing what the transport involves.
+    element_property: true
+    title: Transport Type
+  completionTime:
+    description: Identifies the completion time of the event (the occurrence).
+    element_property: true
+    format: date-time
+    title: Completion time of the event (the occurrence)
+    type: string
+  contained:
+    description: These resources do not have an independent existence apart from the
+      resource that contains them - they cannot be identified independently, nor can
+      they have their own independent transaction scope. This is allowed to be a Parameters
+      resource if and only if it is referenced by a resource that provides context/meaning.
+    element_property: true
+    items:
+      $ref: Resource.yaml
+    title: Contained, inline Resources
+    type: array
+  currentLocation:
+    $ref: Reference.yaml
+    backref: currentLocation_transport
+    description: The current location for the entity to be transported.
+    element_property: true
+    enum_reference_types:
+    - Location
+    title: The entity current location
+  description:
+    description: A free-text description of what is to be performed.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Human-readable explanation of transport
+    type: string
+  encounter:
+    $ref: Reference.yaml
+    backref: transport
+    description: The healthcare event  (e.g. a patient and healthcare provider interaction)
+      during which this transport was created.
+    element_property: true
+    enum_reference_types:
+    - Encounter
+    title: Healthcare event during which this transport originated
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource. To make the use of extensions safe
+      and managable, there is a strict set of governance applied to the definition
+      and use of extensions. Though any implementer can define an extension, there
+      is a set of requirements that SHALL be met as part of the definition of the
+      extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  focus:
+    $ref: Reference.yaml
+    backref: focus_transport
+    description: The request being actioned or the resource being manipulated by this
+      transport.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    title: What transport is acting on
+  for_fhir:
+    $ref: Reference.yaml
+    backref: for_transport
+    description: '[Reserved word `for` renamed to `for_fhir`] The entity who benefits
+      from the performance of the service specified in the transport (e.g., the patient).'
+    element_property: true
+    enum_reference_types:
+    - Resource
+    title: Beneficiary of the Transport
+  groupIdentifier:
+    $ref: Identifier.yaml
+    description: A shared identifier common to multiple independent Request instances
+      that were activated/authorized more or less simultaneously by a single author.  The
+      presence of the same identifier on each request ties those requests together
+      and may have business ramifications in terms of reporting of results, billing,
+      etc.  E.g. a requisition number shared by a set of lab tests ordered together,
+      or a prescription number shared by all meds ordered at one time.
+    element_property: true
+    title: Requisition or grouper id
+  history:
+    $ref: Reference.yaml
+    backref: history_transport
+    description: The transport event prior to this one.
+    element_property: true
+    enum_reference_types:
+    - Transport
+    title: Parent (or preceding) transport
+  id:
+    description: The logical id of the resource, as used in the URL for the resource.
+      Once assigned, this value never changes.
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Logical id of this artifact
+    type: string
+  identifier:
+    description: Identifier for the transport event that is used to identify it across
+      multiple disparate systems.
+    element_property: true
+    items:
+      $ref: Identifier.yaml
+    title: External identifier
+    type: array
+  implicitRules:
+    description: A reference to a set of rules that were followed when the resource
+      was constructed, and which must be understood when processing the content. Often,
+      this is a reference to an implementation guide that defines the special rules
+      along with other profiles etc.
+    element_property: true
+    pattern: \S*
+    title: A set of rules under which this content was created
+    type: string
+  input:
+    description: Additional information that may be needed in the execution of the
+      transport.
+    element_property: true
+    items:
+      $ref: TransportInput.yaml
+    title: Information used to perform transport
+    type: array
+  instantiatesCanonical:
+    description: The URL pointing to a *FHIR*-defined protocol, guideline, orderset
+      or other definition that is adhered to in whole or in part by this Transport.
+    element_property: true
+    enum_reference_types:
+    - ActivityDefinition
+    pattern: \S*
+    title: Formal definition of transport
+    type: string
+  instantiatesUri:
+    description: The URL pointing to an *externally* maintained  protocol, guideline,
+      orderset or other definition that is adhered to in whole or in part by this
+      Transport.
+    element_property: true
+    pattern: \S*
+    title: Formal definition of transport
+    type: string
+  insurance:
+    backref: insurance_transport
+    description: Insurance plans, coverage extensions, pre-authorizations and/or pre-determinations
+      that may be relevant to the Transport.
+    element_property: true
+    enum_reference_types:
+    - Coverage
+    - ClaimResponse
+    items:
+      $ref: Reference.yaml
+    title: Associated insurance coverage
+    type: array
+  intent:
+    binding_description: Distinguishes whether the transport is a proposal, plan or
+      full order.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/transport-intent
+    binding_version: 5.0.0
+    description: Indicates the "level" of actionability associated with the Transport,
+      i.e. i+R[9]Cs this a proposed transport, a planned transport, an actionable
+      transport, etc.
+    element_property: true
+    element_required: true
+    enum_values:
+    - unknown
+    - proposal
+    - plan
+    - order
+    - original-order
+    - reflex-order
+    - filler-order
+    - instance-order
+    - option
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: unknown | proposal | plan | order | original-order | reflex-order | filler-order
+      | instance-order | option
+    type: string
+  language:
+    binding_description: IETF language tag for a human language
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/all-languages
+    binding_version: 5.0.0
+    description: The base language in which the resource is written.
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Language of the resource content
+    type: string
+  lastModified:
+    description: The date and time of last modification to this transport.
+    element_property: true
+    format: date-time
+    title: Transport Last Modified Date
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  location:
+    $ref: Reference.yaml
+    backref: location_transport
+    description: Principal physical location where this transport is performed.
+    element_property: true
+    enum_reference_types:
+    - Location
+    title: Where transport occurs
+  meta:
+    $ref: Meta.yaml
+    description: The metadata about the resource. This is content that is maintained
+      by the infrastructure. Changes to the content might not always be associated
+      with version changes to the resource.
+    element_property: true
+    title: Metadata about the resource
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource and that modifies the understanding
+      of the element that contains it and/or the understanding of the containing element's
+      descendants. Usually modifier elements provide negation or qualification. To
+      make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer is allowed
+      to define an extension, there is a set of requirements that SHALL be met as
+      part of the definition of the extension. Applications processing a resource
+      are required to check for modifier extensions.  Modifier extensions SHALL NOT
+      change the meaning of any elements on Resource or DomainResource (including
+      cannot change the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored
+    type: array
+  note:
+    description: Free-text information captured about the transport as it progresses.
+    element_property: true
+    items:
+      $ref: Annotation.yaml
+    title: Comments made about the transport
+    type: array
+  output:
+    description: Outputs produced by the Transport.
+    element_property: true
+    items:
+      $ref: TransportOutput.yaml
+    title: Information produced as part of transport
+    type: array
+  owner:
+    $ref: Reference.yaml
+    backref: owner_transport
+    description: Individual organization or Device currently responsible for transport
+      execution.
+    element_property: true
+    enum_reference_types:
+    - Practitioner
+    - PractitionerRole
+    - Organization
+    - CareTeam
+    - HealthcareService
+    - Patient
+    - Device
+    - RelatedPerson
+    title: Responsible individual
+  partOf:
+    backref: partOf_transport
+    description: A larger event of which this particular event is a component or step.
+    element_property: true
+    enum_reference_types:
+    - Transport
+    items:
+      $ref: Reference.yaml
+    title: Part of referenced event
+    type: array
+  performerType:
+    binding_description: The type(s) of transport performers allowed.
+    binding_strength: preferred
+    binding_uri: http://hl7.org/fhir/ValueSet/performer-role
+    binding_version: null
+    description: The kind of participant that should perform the transport.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Requested performer
+    type: array
+  priority:
+    binding_description: The priority of a transport (may affect service level applied
+      to the transport).
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/request-priority
+    binding_version: 5.0.0
+    description: Indicates how quickly the Transport should be addressed with respect
+      to other requests.
+    element_property: true
+    enum_values:
+    - routine
+    - urgent
+    - asap
+    - stat
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: routine | urgent | asap | stat
+    type: string
+  reason:
+    $ref: CodeableReference.yaml
+    backref: reason_transport
+    description: A resource reference indicating why this transport needs to be performed.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    title: Why transport is needed
+  relevantHistory:
+    backref: relevantHistory_transport
+    description: Links to Provenance records for past versions of this Transport that
+      identify key state transitions or updates that are likely to be relevant to
+      a user looking at the current version of the transport.
+    element_property: true
+    enum_reference_types:
+    - Provenance
+    items:
+      $ref: Reference.yaml
+    title: Key events in history of the Transport
+    type: array
+  requestedLocation:
+    $ref: Reference.yaml
+    backref: requestedLocation_transport
+    description: The desired or final location for the transport.
+    element_property: true
+    enum_reference_types:
+    - Location
+    title: The desired location
+  requester:
+    $ref: Reference.yaml
+    backref: requester_transport
+    description: The creator of the transport.
+    element_property: true
+    enum_reference_types:
+    - Device
+    - Organization
+    - Patient
+    - Practitioner
+    - PractitionerRole
+    - RelatedPerson
+    title: Who is asking for transport to be done
+  resourceType:
+    const: Transport
+    default: Transport
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  restriction:
+    $ref: TransportRestriction.yaml
+    description: If the Transport.focus is a request resource and the transport is
+      seeking fulfillment (i.e. is asking for the request to be actioned), this element
+      identifies any limitations on what parts of the referenced request should be
+      actioned.
+    element_property: true
+    title: Constraints on fulfillment transports
+  status:
+    binding_description: Status of the transport.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/transport-status
+    binding_version: 5.0.0
+    description: A code specifying the state of the transport event.
+    element_property: true
+    enum_values:
+    - in-progress
+    - completed
+    - abandoned
+    - cancelled
+    - planned
+    - entered-in-error
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: in-progress | completed | abandoned | cancelled | planned | entered-in-error
+    type: string
+  statusReason:
+    $ref: CodeableConcept.yaml
+    binding_description: Codes to identify the reason for current status.  These will
+      typically be specific to a particular workflow.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/transport-status-reason
+    binding_version: null
+    description: An explanation as to why this transport is held, failed, was refused,
+      etc.
+    element_property: true
+    title: Reason for current status
+  text:
+    $ref: Narrative.yaml
+    description: A human-readable narrative that contains a summary of the resource
+      and can be used to represent the content of the resource to a human. The narrative
+      need not encode all the structured data, but is required to contain sufficient
+      detail to make it "clinically safe" for a human to just read the narrative.
+      Resource definitions may define what content should be represented in the narrative
+      to ensure clinical safety.
+    element_property: true
+    title: Text summary of the resource, for human interpretation
+required:
+- currentLocation
+- requestedLocation
+title: Transport
+type: object

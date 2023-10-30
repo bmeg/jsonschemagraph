@@ -1,0 +1,101 @@
+$id: DetectedIssueEvidence
+additionalProperties: false
+description: Supporting evidence. Supporting evidence or manifestations that provide
+  the basis for identifying the detected issue such as a GuidanceResponse or MeasureReport.
+  [See https://hl7.org/fhir/R5/DetectedIssueEvidence.html] [See https://hl7.org/fhir/R5/DetectedIssueEvidence.html]
+links:
+- href: Resource/{id}
+  rel: detail
+  targetHints:
+    backref:
+    - detail_detected_issue_evidence
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /detail/-/reference
+  templateRequired:
+  - id
+properties:
+  code:
+    binding_description: Codes that describes the types of evidence for a detected
+      issue.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/manifestation-or-symptom
+    binding_version: null
+    description: A manifestation that led to the recording of this detected issue.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Manifestation
+    type: array
+  detail:
+    backref: detail_detected_issue_evidence
+    description: Links to resources that constitute evidence for the detected issue
+      such as a GuidanceResponse or MeasureReport.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    items:
+      $ref: Reference.yaml
+    title: Supporting information
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: DetectedIssueEvidence
+    default: DetectedIssueEvidence
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+title: DetectedIssueEvidence
+type: object

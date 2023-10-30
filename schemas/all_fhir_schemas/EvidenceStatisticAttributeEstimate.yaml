@@ -1,0 +1,186 @@
+$id: EvidenceStatisticAttributeEstimate
+additionalProperties: false
+description: An attribute of the Statistic. A statistical attribute of the statistic
+  such as a measure of heterogeneity. [See https://hl7.org/fhir/R5/EvidenceStatisticAttributeEstimate.html]
+  [See https://hl7.org/fhir/R5/EvidenceStatisticAttributeEstimate.html] [See https://hl7.org/fhir/R5/EvidenceStatisticAttributeEstimate.html]
+links:
+- href: Practitioner/{id}
+  rel: note_authorReference_Practitioner
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: note_authorReference_PractitionerRole
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: note_authorReference_Patient
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: note_authorReference_RelatedPerson
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: note_authorReference_Organization
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+properties:
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _level:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``level``.
+  attributeEstimate:
+    element_property: true
+    items:
+      $ref: EvidenceStatisticAttributeEstimate.yaml
+    title: A nested attribute estimate; which is the attribute estimate of an attribute
+      estimate
+    type: array
+  description:
+    description: Human-readable summary of the estimate.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Textual description of the attribute estimate
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  level:
+    description: Use 95 for a 95% confidence interval.
+    element_property: true
+    title: Level of confidence interval, e.g., 0.95 for 95% confidence interval
+    type: number
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  note:
+    element_property: true
+    items:
+      $ref: Annotation.yaml
+    title: Footnote or explanatory note about the estimate
+    type: array
+  quantity:
+    $ref: Quantity.yaml
+    element_property: true
+    title: The singular quantity of the attribute estimate, for attribute estimates
+      represented as single values; also used to report unit of measure
+  range:
+    $ref: Range.yaml
+    description: Lower bound of confidence interval.
+    element_property: true
+    title: Lower and upper bound values of the attribute estimate
+  resourceType:
+    const: EvidenceStatisticAttributeEstimate
+    default: EvidenceStatisticAttributeEstimate
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  type:
+    $ref: CodeableConcept.yaml
+    binding_description: null
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/attribute-estimate-type
+    binding_version: null
+    element_property: true
+    title: The type of attribute estimate, e.g., confidence interval or p value
+title: EvidenceStatisticAttributeEstimate
+type: object

@@ -1,0 +1,118 @@
+$id: NutritionProductInstance
+additionalProperties: false
+description: One or several physical instances or occurrences of the nutrition product.
+  Conveys instance-level information about this product item. One or several physical,
+  countable instances or occurrences of the product. [See https://hl7.org/fhir/R5/NutritionProductInstance.html]
+  [See https://hl7.org/fhir/R5/NutritionProductInstance.html]
+links: []
+properties:
+  _expiry:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``expiry``.
+  _lotNumber:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``lotNumber``.
+  _name:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``name``.
+  _useBy:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``useBy``.
+  biologicalSourceEvent:
+    $ref: Identifier.yaml
+    element_property: true
+    title: An identifier that supports traceability to the event during which material
+      in this product from one or more biological entities was obtained or pooled
+  expiry:
+    description: The time after which the product is no longer expected to be in proper
+      condition, or its use is not advised or not allowed.
+    element_property: true
+    format: date-time
+    title: The expiry date or date and time for the product
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  identifier:
+    element_property: true
+    items:
+      $ref: Identifier.yaml
+    title: The identifier for the physical instance, typically a serial number or
+      manufacturer number
+    type: array
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  lotNumber:
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: The identification of the batch or lot of the product
+    type: string
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  name:
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: The name for the specific product
+    type: string
+  quantity:
+    $ref: Quantity.yaml
+    description: The amount of items or instances that the resource considers, for
+      instance when referring to 2 identical units together.
+    element_property: true
+    title: The amount of items or instances
+  resourceType:
+    const: NutritionProductInstance
+    default: NutritionProductInstance
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  useBy:
+    description: The time after which the product is no longer expected to be in proper
+      condition, or its use is not advised or not allowed.
+    element_property: true
+    format: date-time
+    title: The date until which the product is expected to be good for consumption
+    type: string
+title: NutritionProductInstance
+type: object

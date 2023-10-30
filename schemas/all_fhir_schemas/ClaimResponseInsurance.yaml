@@ -1,0 +1,145 @@
+$id: ClaimResponseInsurance
+additionalProperties: false
+description: Patient insurance information. Financial instruments for reimbursement
+  for the health care products and services specified on the claim. [See https://hl7.org/fhir/R5/ClaimResponseInsurance.html]
+  [See https://hl7.org/fhir/R5/ClaimResponseInsurance.html]
+links:
+- href: ClaimResponse/{id}
+  rel: claimResponse
+  targetHints:
+    backref:
+    - claim_response_insurance
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: ClaimResponse.yaml
+  templatePointers:
+    id: /claimResponse/reference
+  templateRequired:
+  - id
+- href: Coverage/{id}
+  rel: coverage
+  targetHints:
+    backref:
+    - claim_response_insurance
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Coverage.yaml
+  templatePointers:
+    id: /coverage/reference
+  templateRequired:
+  - id
+properties:
+  _businessArrangement:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``businessArrangement``.
+  _focal:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``focal``.
+  _sequence:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``sequence``.
+  businessArrangement:
+    description: A business agreement number established between the provider and
+      the insurer for special business processing purposes.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Additional provider contract number
+    type: string
+  claimResponse:
+    $ref: Reference.yaml
+    backref: claim_response_insurance
+    description: The result of the adjudication of the line items for the Coverage
+      specified in this insurance.
+    element_property: true
+    enum_reference_types:
+    - ClaimResponse
+    title: Adjudication results
+  coverage:
+    $ref: Reference.yaml
+    backref: claim_response_insurance
+    description: Reference to the insurance card level information contained in the
+      Coverage resource. The coverage issuing insurer will use these details to locate
+      the patient's actual coverage within the insurer's information system.
+    element_property: true
+    enum_reference_types:
+    - Coverage
+    title: Insurance information
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  focal:
+    description: A flag to indicate that this Coverage is to be used for adjudication
+      of this claim when set to true.
+    element_property: true
+    element_required: true
+    title: Coverage to be used for adjudication
+    type: boolean
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: ClaimResponseInsurance
+    default: ClaimResponseInsurance
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  sequence:
+    description: A number to uniquely identify insurance entries and provide a sequence
+      of coverages to convey coordination of benefit order.
+    element_property: true
+    element_required: true
+    exclusiveMinimum: 0
+    title: Insurance instance identifier
+    type: integer
+required:
+- coverage
+title: ClaimResponseInsurance
+type: object

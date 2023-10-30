@@ -1,0 +1,97 @@
+$id: TestPlanDependency
+additionalProperties: false
+description: The required criteria to execute the test plan - e.g. preconditions,
+  previous tests. The required criteria to execute the test plan - e.g. preconditions,
+  previous tests... [See https://hl7.org/fhir/R5/TestPlanDependency.html] [See https://hl7.org/fhir/R5/TestPlanDependency.html]
+links:
+- href: Reference/{id}
+  rel: predecessor
+  targetHints:
+    backref:
+    - test_plan_dependency
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /predecessor/reference
+  templateRequired:
+  - id
+properties:
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  description:
+    description: A textual description of the criterium - what is needed for the dependency
+      to be considered met.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Description of the dependency criterium
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  predecessor:
+    $ref: Reference.yaml
+    backref: test_plan_dependency
+    description: Predecessor test plans - those that are expected to be successfully
+      performed as a dependency for the execution of this test plan.
+    element_property: true
+    enum_reference_types:
+    - Reference
+    title: Link to predecessor test plans
+  resourceType:
+    const: TestPlanDependency
+    default: TestPlanDependency
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+title: TestPlanDependency
+type: object

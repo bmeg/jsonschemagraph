@@ -1,0 +1,110 @@
+$id: ConceptMapGroupElement
+additionalProperties: false
+description: Mappings for a concept from the source set. Mappings for an individual
+  concept in the source to one or more concepts in the target. [See https://hl7.org/fhir/R5/ConceptMapGroupElement.html]
+  [See https://hl7.org/fhir/R5/ConceptMapGroupElement.html]
+links: []
+properties:
+  _code:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``code``.
+  _display:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``display``.
+  _noMap:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``noMap``.
+  _valueSet:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueSet``.
+  code:
+    description: Identity (code or path) or the element/item being mapped.
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Identifies element being mapped
+    type: string
+  display:
+    description: The display for the code. The display is only provided to help editors
+      when editing the concept map.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Display for the code
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  noMap:
+    description: If noMap = true this indicates that no mapping to a target concept
+      exists for this source concept.
+    element_property: true
+    title: No mapping to a target concept for this source concept
+    type: boolean
+  resourceType:
+    const: ConceptMapGroupElement
+    default: ConceptMapGroupElement
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  target:
+    description: A concept from the target value set that this concept maps to.
+    element_property: true
+    items:
+      $ref: ConceptMapGroupElementTarget.yaml
+    title: Concept in target system for element
+    type: array
+  valueSet:
+    description: The set of concepts from the ConceptMap.group.source code system
+      which are all being mapped to the target as part of this mapping rule.
+    element_property: true
+    enum_reference_types:
+    - ValueSet
+    pattern: \S*
+    title: Identifies the set of concepts being mapped
+    type: string
+title: ConceptMapGroupElement
+type: object

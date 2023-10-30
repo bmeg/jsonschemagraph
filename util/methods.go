@@ -1,8 +1,6 @@
 package util
 
 import (
-	"log"
-
 	"github.com/santhosh-tekuri/jsonschema/v5"
 )
 
@@ -15,6 +13,7 @@ func (s GraphSchema) ListClasses() []string {
 }
 
 func (s GraphSchema) GetClass(classID string) *jsonschema.Schema {
+	//fmt.Println("S.CLASSES", s.Classes)
 	if class, ok := s.Classes[classID]; ok {
 		return class
 	}
@@ -23,6 +22,6 @@ func (s GraphSchema) GetClass(classID string) *jsonschema.Schema {
 	if sch, err = s.compiler.Compile(classID); err == nil {
 		return sch
 	}
-	log.Printf("compile error: %s", err)
+	//log.Printf("compile error: %s", err)
 	return nil
 }

@@ -1,0 +1,271 @@
+$id: PlanDefinitionActor
+additionalProperties: false
+description: Actors within the plan. Actors represent the individuals or groups involved
+  in the execution of the defined set of activities. [See https://hl7.org/fhir/R5/PlanDefinitionActor.html]
+  [See https://hl7.org/fhir/R5/PlanDefinitionActor.html]
+links:
+- href: CareTeam/{id}
+  rel: option_typeReference_CareTeam
+  targetHints:
+    backref:
+    - plan_definition_actor_option
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: CareTeam.yaml
+  templatePointers:
+    id: /option/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: option_typeReference_Device
+  targetHints:
+    backref:
+    - plan_definition_actor_option
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /option/-/typeReference/reference
+  templateRequired:
+  - id
+- href: DeviceDefinition/{id}
+  rel: option_typeReference_DeviceDefinition
+  targetHints:
+    backref:
+    - plan_definition_actor_option
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: DeviceDefinition.yaml
+  templatePointers:
+    id: /option/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Endpoint/{id}
+  rel: option_typeReference_Endpoint
+  targetHints:
+    backref:
+    - plan_definition_actor_option
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Endpoint.yaml
+  templatePointers:
+    id: /option/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: option_typeReference_Group
+  targetHints:
+    backref:
+    - plan_definition_actor_option
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /option/-/typeReference/reference
+  templateRequired:
+  - id
+- href: HealthcareService/{id}
+  rel: option_typeReference_HealthcareService
+  targetHints:
+    backref:
+    - plan_definition_actor_option
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: HealthcareService.yaml
+  templatePointers:
+    id: /option/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: option_typeReference_Location
+  targetHints:
+    backref:
+    - plan_definition_actor_option
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /option/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: option_typeReference_Organization
+  targetHints:
+    backref:
+    - plan_definition_actor_option
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /option/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: option_typeReference_Patient
+  targetHints:
+    backref:
+    - plan_definition_actor_option
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /option/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: option_typeReference_Practitioner
+  targetHints:
+    backref:
+    - plan_definition_actor_option
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /option/-/typeReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: option_typeReference_PractitionerRole
+  targetHints:
+    backref:
+    - plan_definition_actor_option
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /option/-/typeReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: option_typeReference_RelatedPerson
+  targetHints:
+    backref:
+    - plan_definition_actor_option
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /option/-/typeReference/reference
+  templateRequired:
+  - id
+properties:
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _title:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``title``.
+  description:
+    description: A description of how the actor fits into the overall actions of the
+      plan definition.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Describes the actor
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  option:
+    description: The characteristics of the candidates that could serve as the actor.
+    element_property: true
+    items:
+      $ref: PlanDefinitionActorOption.yaml
+    title: Who or what can be this actor
+    type: array
+  resourceType:
+    const: PlanDefinitionActor
+    default: PlanDefinitionActor
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  title:
+    description: A descriptive label for the actor.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: User-visible title
+    type: string
+required:
+- option
+title: PlanDefinitionActor
+type: object

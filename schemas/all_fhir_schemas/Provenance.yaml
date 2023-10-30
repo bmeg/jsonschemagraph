@@ -1,0 +1,830 @@
+$id: Provenance
+additionalProperties: false
+description: Who, What, When for a set of resources. Provenance of a resource is a
+  record that describes entities and processes involved in producing and delivering
+  or otherwise influencing that resource. Provenance provides a critical foundation
+  for assessing authenticity, enabling trust, and allowing reproducibility. Provenance
+  assertions are a form of contextual metadata and can themselves become important
+  records with their own provenance. Provenance statement indicates clinical significance
+  in terms of confidence in authenticity, reliability, and trustworthiness, integrity,
+  and stage in lifecycle (e.g. Document Completion - has the artifact been legally
+  authenticated), all of which may impact security, privacy, and trust policies. [See
+  https://hl7.org/fhir/R5/Provenance.html]
+links:
+- href: CarePlan/{id}
+  rel: basedOn_CarePlan
+  targetHints:
+    backref:
+    - basedOn_provenance
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: CarePlan.yaml
+  templatePointers:
+    id: /basedOn/-/reference
+  templateRequired:
+  - id
+- href: DeviceRequest/{id}
+  rel: basedOn_DeviceRequest
+  targetHints:
+    backref:
+    - basedOn_provenance
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: DeviceRequest.yaml
+  templatePointers:
+    id: /basedOn/-/reference
+  templateRequired:
+  - id
+- href: ImmunizationRecommendation/{id}
+  rel: basedOn_ImmunizationRecommendation
+  targetHints:
+    backref:
+    - basedOn_provenance
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: ImmunizationRecommendation.yaml
+  templatePointers:
+    id: /basedOn/-/reference
+  templateRequired:
+  - id
+- href: MedicationRequest/{id}
+  rel: basedOn_MedicationRequest
+  targetHints:
+    backref:
+    - basedOn_provenance
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: MedicationRequest.yaml
+  templatePointers:
+    id: /basedOn/-/reference
+  templateRequired:
+  - id
+- href: NutritionOrder/{id}
+  rel: basedOn_NutritionOrder
+  targetHints:
+    backref:
+    - basedOn_provenance
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: NutritionOrder.yaml
+  templatePointers:
+    id: /basedOn/-/reference
+  templateRequired:
+  - id
+- href: ServiceRequest/{id}
+  rel: basedOn_ServiceRequest
+  targetHints:
+    backref:
+    - basedOn_provenance
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: ServiceRequest.yaml
+  templatePointers:
+    id: /basedOn/-/reference
+  templateRequired:
+  - id
+- href: Task/{id}
+  rel: basedOn_Task
+  targetHints:
+    backref:
+    - basedOn_provenance
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Task.yaml
+  templatePointers:
+    id: /basedOn/-/reference
+  templateRequired:
+  - id
+- href: Encounter/{id}
+  rel: encounter
+  targetHints:
+    backref:
+    - provenance
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Encounter.yaml
+  templatePointers:
+    id: /encounter/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: location
+  targetHints:
+    backref:
+    - provenance
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /location/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: patient
+  targetHints:
+    backref:
+    - provenance
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /patient/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: target
+  targetHints:
+    backref:
+    - target_provenance
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /target/-/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: agent_onBehalfOf_Practitioner
+  targetHints:
+    backref:
+    - onBehalfOf_provenance_agent
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /agent/-/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: agent_onBehalfOf_PractitionerRole
+  targetHints:
+    backref:
+    - onBehalfOf_provenance_agent
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /agent/-/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: agent_onBehalfOf_Organization
+  targetHints:
+    backref:
+    - onBehalfOf_provenance_agent
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /agent/-/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: CareTeam/{id}
+  rel: agent_onBehalfOf_CareTeam
+  targetHints:
+    backref:
+    - onBehalfOf_provenance_agent
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: CareTeam.yaml
+  templatePointers:
+    id: /agent/-/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: agent_onBehalfOf_Patient
+  targetHints:
+    backref:
+    - onBehalfOf_provenance_agent
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /agent/-/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: agent_who_Practitioner
+  targetHints:
+    backref:
+    - who_provenance_agent
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /agent/-/who/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: agent_who_PractitionerRole
+  targetHints:
+    backref:
+    - who_provenance_agent
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /agent/-/who/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: agent_who_Organization
+  targetHints:
+    backref:
+    - who_provenance_agent
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /agent/-/who/reference
+  templateRequired:
+  - id
+- href: CareTeam/{id}
+  rel: agent_who_CareTeam
+  targetHints:
+    backref:
+    - who_provenance_agent
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: CareTeam.yaml
+  templatePointers:
+    id: /agent/-/who/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: agent_who_Patient
+  targetHints:
+    backref:
+    - who_provenance_agent
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /agent/-/who/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: agent_who_Device
+  targetHints:
+    backref:
+    - who_provenance_agent
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /agent/-/who/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: agent_who_RelatedPerson
+  targetHints:
+    backref:
+    - who_provenance_agent
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /agent/-/who/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: authorization_reference
+  targetHints:
+    backref:
+    - codeable_reference
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /authorization/-/reference/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: entity_what
+  targetHints:
+    backref:
+    - provenance_entity
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /entity/-/what/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: signature_onBehalfOf_Practitioner
+  targetHints:
+    backref:
+    - onBehalfOf_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /signature/-/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: signature_onBehalfOf_PractitionerRole
+  targetHints:
+    backref:
+    - onBehalfOf_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /signature/-/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: signature_onBehalfOf_RelatedPerson
+  targetHints:
+    backref:
+    - onBehalfOf_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /signature/-/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: signature_onBehalfOf_Patient
+  targetHints:
+    backref:
+    - onBehalfOf_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /signature/-/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: signature_onBehalfOf_Device
+  targetHints:
+    backref:
+    - onBehalfOf_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /signature/-/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: signature_onBehalfOf_Organization
+  targetHints:
+    backref:
+    - onBehalfOf_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /signature/-/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: signature_who_Practitioner
+  targetHints:
+    backref:
+    - who_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /signature/-/who/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: signature_who_PractitionerRole
+  targetHints:
+    backref:
+    - who_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /signature/-/who/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: signature_who_RelatedPerson
+  targetHints:
+    backref:
+    - who_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /signature/-/who/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: signature_who_Patient
+  targetHints:
+    backref:
+    - who_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /signature/-/who/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: signature_who_Device
+  targetHints:
+    backref:
+    - who_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /signature/-/who/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: signature_who_Organization
+  targetHints:
+    backref:
+    - who_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /signature/-/who/reference
+  templateRequired:
+  - id
+properties:
+  _implicitRules:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``implicitRules``.
+  _language:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``language``.
+  _occurredDateTime:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``occurredDateTime``.
+  _policy:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``policy``.
+    type: array
+  _recorded:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``recorded``.
+  activity:
+    $ref: CodeableConcept.yaml
+    binding_description: Types of activities that are relevant for tracking event
+      history using Provenance.
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/provenance-history-record-activity
+    binding_version: null
+    description: An activity is something that occurs over a period of time and acts
+      upon or with entities; it may include consuming, processing, transforming, modifying,
+      relocating, using, or generating entities.
+    element_property: true
+    title: Activity that occurred
+  agent:
+    description: An actor taking a role in an activity  for which it can be assigned
+      some degree of responsibility for the activity taking place.
+    element_property: true
+    items:
+      $ref: ProvenanceAgent.yaml
+    title: Actor involved
+    type: array
+  authorization:
+    backref: authorization_provenance
+    binding_description: The authorized purposeOfUse for the activity.
+    binding_strength: example
+    binding_uri: http://terminology.hl7.org/ValueSet/v3-PurposeOfUse
+    binding_version: null
+    description: The authorization (e.g., PurposeOfUse) that was used during the event
+      being recorded.
+    element_property: true
+    items:
+      $ref: CodeableReference.yaml
+    title: Authorization (purposeOfUse) related to the event
+    type: array
+  basedOn:
+    backref: basedOn_provenance
+    description: Allows tracing of authorizatino for the events and tracking whether
+      proposals/recommendations were acted upon.
+    element_property: true
+    enum_reference_types:
+    - CarePlan
+    - DeviceRequest
+    - ImmunizationRecommendation
+    - MedicationRequest
+    - NutritionOrder
+    - ServiceRequest
+    - Task
+    items:
+      $ref: Reference.yaml
+    title: Workflow authorization within which this event occurred
+    type: array
+  contained:
+    description: These resources do not have an independent existence apart from the
+      resource that contains them - they cannot be identified independently, nor can
+      they have their own independent transaction scope. This is allowed to be a Parameters
+      resource if and only if it is referenced by a resource that provides context/meaning.
+    element_property: true
+    items:
+      $ref: Resource.yaml
+    title: Contained, inline Resources
+    type: array
+  encounter:
+    $ref: Reference.yaml
+    backref: provenance
+    description: This will typically be the encounter the event occurred, but some
+      events may be initiated prior to or after the official completion of an encounter
+      but still be tied to the context of the encounter (e.g. pre-admission lab tests).
+    element_property: true
+    enum_reference_types:
+    - Encounter
+    title: Encounter within which this event occurred or which the event is tightly
+      associated
+  entity:
+    element_property: true
+    items:
+      $ref: ProvenanceEntity.yaml
+    title: An entity used in this activity
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource. To make the use of extensions safe
+      and managable, there is a strict set of governance applied to the definition
+      and use of extensions. Though any implementer can define an extension, there
+      is a set of requirements that SHALL be met as part of the definition of the
+      extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: The logical id of the resource, as used in the URL for the resource.
+      Once assigned, this value never changes.
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Logical id of this artifact
+    type: string
+  implicitRules:
+    description: A reference to a set of rules that were followed when the resource
+      was constructed, and which must be understood when processing the content. Often,
+      this is a reference to an implementation guide that defines the special rules
+      along with other profiles etc.
+    element_property: true
+    pattern: \S*
+    title: A set of rules under which this content was created
+    type: string
+  language:
+    binding_description: IETF language tag for a human language
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/all-languages
+    binding_version: 5.0.0
+    description: The base language in which the resource is written.
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Language of the resource content
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  location:
+    $ref: Reference.yaml
+    backref: provenance
+    element_property: true
+    enum_reference_types:
+    - Location
+    title: Where the activity occurred, if relevant
+  meta:
+    $ref: Meta.yaml
+    description: The metadata about the resource. This is content that is maintained
+      by the infrastructure. Changes to the content might not always be associated
+      with version changes to the resource.
+    element_property: true
+    title: Metadata about the resource
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource and that modifies the understanding
+      of the element that contains it and/or the understanding of the containing element's
+      descendants. Usually modifier elements provide negation or qualification. To
+      make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer is allowed
+      to define an extension, there is a set of requirements that SHALL be met as
+      part of the definition of the extension. Applications processing a resource
+      are required to check for modifier extensions.  Modifier extensions SHALL NOT
+      change the meaning of any elements on Resource or DomainResource (including
+      cannot change the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored
+    type: array
+  occurredDateTime:
+    description: The period during which the activity occurred.
+    element_property: true
+    format: date-time
+    one_of_many: occurred
+    one_of_many_required: false
+    title: When the activity occurred
+    type: string
+  occurredPeriod:
+    $ref: Period.yaml
+    description: The period during which the activity occurred.
+    element_property: true
+    one_of_many: occurred
+    one_of_many_required: false
+    title: When the activity occurred
+  patient:
+    $ref: Reference.yaml
+    backref: provenance
+    description: The patient element is available to enable deterministic tracking
+      of activities that involve the patient as the subject of the data used in an
+      activity.
+    element_property: true
+    enum_reference_types:
+    - Patient
+    title: The patient is the subject of the data created/updated (.target) by the
+      activity
+  policy:
+    description: Policy or plan the activity was defined by. Typically, a single activity
+      may have multiple applicable policy documents, such as patient consent, guarantor
+      funding, etc.
+    element_property: true
+    items:
+      pattern: \S*
+      type: string
+    title: Policy or plan the activity was defined by
+    type: array
+  recorded:
+    description: The instant of time at which the activity was recorded.
+    element_property: true
+    format: date-time
+    title: When the activity was recorded / updated
+    type: string
+  resourceType:
+    const: Provenance
+    default: Provenance
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  signature:
+    description: A digital signature on the target Reference(s). The signer should
+      match a Provenance.agent. The purpose of the signature is indicated.
+    element_property: true
+    items:
+      $ref: Signature.yaml
+    title: Signature on target
+    type: array
+  target:
+    backref: target_provenance
+    description: The Reference(s) that were generated or updated by  the activity
+      described in this resource. A provenance can point to more than one target if
+      multiple resources were created/updated by the same activity.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    items:
+      $ref: Reference.yaml
+    title: Target Reference(s) (usually version specific)
+    type: array
+  text:
+    $ref: Narrative.yaml
+    description: A human-readable narrative that contains a summary of the resource
+      and can be used to represent the content of the resource to a human. The narrative
+      need not encode all the structured data, but is required to contain sufficient
+      detail to make it "clinically safe" for a human to just read the narrative.
+      Resource definitions may define what content should be represented in the narrative
+      to ensure clinical safety.
+    element_property: true
+    title: Text summary of the resource, for human interpretation
+required:
+- agent
+- target
+title: Provenance
+type: object

@@ -1,0 +1,111 @@
+$id: ExampleScenarioProcessStep
+additionalProperties: false
+description: Event within of the process. A significant action that occurs as part
+  of the process. [See https://hl7.org/fhir/R5/ExampleScenarioProcessStep.html]
+links: []
+properties:
+  _number:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``number``.
+  _pause:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``pause``.
+  _workflow:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``workflow``.
+  alternative:
+    description: Indicates an alternative step that can be taken instead of the sub-process,
+      scenario or operation.  E.g. to represent non-happy-path/exceptional/atypical
+      circumstances.
+    element_property: true
+    items:
+      $ref: ExampleScenarioProcessStepAlternative.yaml
+    title: Alternate non-typical step action
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  number:
+    description: The sequential number of the step, e.g. 1.2.5.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Sequential number of the step
+    type: string
+  operation:
+    $ref: ExampleScenarioProcessStepOperation.yaml
+    description: The step represents a single operation invoked on receiver by sender.
+    element_property: true
+    title: Step is simple action
+  pause:
+    description: If true, indicates that, following this step, there is a pause in
+      the flow and the subsequent step will occur at some later time (triggered by
+      some event).
+    element_property: true
+    title: Pause in the flow?
+    type: boolean
+  process:
+    $ref: ExampleScenarioProcess.yaml
+    description: Indicates that the step is a complex sub-process with its own steps.
+    element_property: true
+    title: Step is nested process
+  resourceType:
+    const: ExampleScenarioProcessStep
+    default: ExampleScenarioProcessStep
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  workflow:
+    description: Indicates that the step is defined by a seaparate scenario instance.
+    element_property: true
+    enum_reference_types:
+    - ExampleScenario
+    pattern: \S*
+    title: Step is nested workflow
+    type: string
+title: ExampleScenarioProcessStep
+type: object

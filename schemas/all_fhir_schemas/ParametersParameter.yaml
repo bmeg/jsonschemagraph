@@ -1,0 +1,1012 @@
+$id: ParametersParameter
+additionalProperties: false
+description: Operation Parameter. A parameter passed to or received from the operation.
+  [See https://hl7.org/fhir/R5/ParametersParameter.html] [See https://hl7.org/fhir/R5/ParametersParameter.html]
+  [See https://hl7.org/fhir/R5/ParametersParameter.html]
+links:
+- href: Reference/{id}
+  rel: valueReference
+  targetHints:
+    backref:
+    - parameters_parameter
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /valueReference/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: part_valueReference
+  targetHints:
+    backref:
+    - parameters_parameter
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /part/-/valueReference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: valueAnnotation_authorReference_Practitioner
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /valueAnnotation/authorReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: valueAnnotation_authorReference_PractitionerRole
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /valueAnnotation/authorReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: valueAnnotation_authorReference_Patient
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /valueAnnotation/authorReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: valueAnnotation_authorReference_RelatedPerson
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /valueAnnotation/authorReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: valueAnnotation_authorReference_Organization
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /valueAnnotation/authorReference/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: valueCodeableReference_reference
+  targetHints:
+    backref:
+    - codeable_reference
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /valueCodeableReference/reference/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: valueDataRequirement_subjectReference
+  targetHints:
+    backref:
+    - data_requirement
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /valueDataRequirement/subjectReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: valueExtendedContactDetail_organization
+  targetHints:
+    backref:
+    - extended_contact_detail
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /valueExtendedContactDetail/organization/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: valueRelatedArtifact_resourceReference
+  targetHints:
+    backref:
+    - related_artifact
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /valueRelatedArtifact/resourceReference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: valueSignature_onBehalfOf_Practitioner
+  targetHints:
+    backref:
+    - onBehalfOf_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /valueSignature/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: valueSignature_onBehalfOf_PractitionerRole
+  targetHints:
+    backref:
+    - onBehalfOf_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /valueSignature/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: valueSignature_onBehalfOf_RelatedPerson
+  targetHints:
+    backref:
+    - onBehalfOf_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /valueSignature/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: valueSignature_onBehalfOf_Patient
+  targetHints:
+    backref:
+    - onBehalfOf_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /valueSignature/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: valueSignature_onBehalfOf_Device
+  targetHints:
+    backref:
+    - onBehalfOf_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /valueSignature/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: valueSignature_onBehalfOf_Organization
+  targetHints:
+    backref:
+    - onBehalfOf_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /valueSignature/onBehalfOf/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: valueSignature_who_Practitioner
+  targetHints:
+    backref:
+    - who_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /valueSignature/who/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: valueSignature_who_PractitionerRole
+  targetHints:
+    backref:
+    - who_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /valueSignature/who/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: valueSignature_who_RelatedPerson
+  targetHints:
+    backref:
+    - who_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /valueSignature/who/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: valueSignature_who_Patient
+  targetHints:
+    backref:
+    - who_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /valueSignature/who/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: valueSignature_who_Device
+  targetHints:
+    backref:
+    - who_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /valueSignature/who/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: valueSignature_who_Organization
+  targetHints:
+    backref:
+    - who_signature
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /valueSignature/who/reference
+  templateRequired:
+  - id
+- href: Schedule/{id}
+  rel: valueTriggerDefinition_timingReference
+  targetHints:
+    backref:
+    - trigger_definition
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Schedule.yaml
+  templatePointers:
+    id: /valueTriggerDefinition/timingReference/reference
+  templateRequired:
+  - id
+- href: PlanDefinition/{id}
+  rel: valueUsageContext_valueReference_PlanDefinition
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PlanDefinition.yaml
+  templatePointers:
+    id: /valueUsageContext/valueReference/reference
+  templateRequired:
+  - id
+- href: ResearchStudy/{id}
+  rel: valueUsageContext_valueReference_ResearchStudy
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: ResearchStudy.yaml
+  templatePointers:
+    id: /valueUsageContext/valueReference/reference
+  templateRequired:
+  - id
+- href: InsurancePlan/{id}
+  rel: valueUsageContext_valueReference_InsurancePlan
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: InsurancePlan.yaml
+  templatePointers:
+    id: /valueUsageContext/valueReference/reference
+  templateRequired:
+  - id
+- href: HealthcareService/{id}
+  rel: valueUsageContext_valueReference_HealthcareService
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: HealthcareService.yaml
+  templatePointers:
+    id: /valueUsageContext/valueReference/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: valueUsageContext_valueReference_Group
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /valueUsageContext/valueReference/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: valueUsageContext_valueReference_Location
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /valueUsageContext/valueReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: valueUsageContext_valueReference_Organization
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /valueUsageContext/valueReference/reference
+  templateRequired:
+  - id
+properties:
+  _name:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``name``.
+  _valueBase64Binary:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueBase64Binary``.
+  _valueBoolean:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueBoolean``.
+  _valueCanonical:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueCanonical``.
+  _valueCode:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueCode``.
+  _valueDate:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueDate``.
+  _valueDateTime:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueDateTime``.
+  _valueDecimal:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueDecimal``.
+  _valueId:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueId``.
+  _valueInstant:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueInstant``.
+  _valueInteger:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueInteger``.
+  _valueInteger64:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueInteger64``.
+  _valueMarkdown:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueMarkdown``.
+  _valueOid:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueOid``.
+  _valuePositiveInt:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valuePositiveInt``.
+  _valueString:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueString``.
+  _valueTime:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueTime``.
+  _valueUnsignedInt:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueUnsignedInt``.
+  _valueUri:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueUri``.
+  _valueUrl:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueUrl``.
+  _valueUuid:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueUuid``.
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  name:
+    description: The name of the parameter (reference to the operation definition).
+    element_property: true
+    element_required: true
+    pattern: '[ \r\n\t\S]+'
+    title: Name from the definition
+    type: string
+  part:
+    description: A named part of a multi-part parameter.
+    element_property: true
+    items:
+      $ref: ParametersParameter.yaml
+    title: Named part of a multi-part parameter
+    type: array
+  resource:
+    $ref: Resource.yaml
+    description: Conveys the content if the parameter is a whole resource.
+    element_property: true
+    title: If parameter is a whole resource
+  resourceType:
+    const: ParametersParameter
+    default: ParametersParameter
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  valueAddress:
+    $ref: Address.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueAge:
+    $ref: Age.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueAnnotation:
+    $ref: Annotation.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueAttachment:
+    $ref: Attachment.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueAvailability:
+    $ref: Availability.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueBase64Binary:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    format: binary
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+    type: string
+  valueBoolean:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+    type: boolean
+  valueCanonical:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    pattern: \S*
+    title: If parameter is a data type
+    type: string
+  valueCode:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: If parameter is a data type
+    type: string
+  valueCodeableConcept:
+    $ref: CodeableConcept.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueCodeableReference:
+    $ref: CodeableReference.yaml
+    backref: parameters_parameter
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueCoding:
+    $ref: Coding.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueContactDetail:
+    $ref: ContactDetail.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueContactPoint:
+    $ref: ContactPoint.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueCount:
+    $ref: Count.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueDataRequirement:
+    $ref: DataRequirement.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueDate:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    format: date
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+    type: string
+  valueDateTime:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    format: date-time
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+    type: string
+  valueDecimal:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+    type: number
+  valueDistance:
+    $ref: Distance.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueDosage:
+    $ref: Dosage.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueDuration:
+    $ref: Duration.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueExpression:
+    $ref: Expression.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueExtendedContactDetail:
+    $ref: ExtendedContactDetail.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueHumanName:
+    $ref: HumanName.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueId:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    one_of_many: value
+    one_of_many_required: false
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: If parameter is a data type
+    type: string
+  valueIdentifier:
+    $ref: Identifier.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueInstant:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    format: date-time
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+    type: string
+  valueInteger:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+    type: integer
+  valueInteger64:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+    type: integer
+  valueMarkdown:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    pattern: \s*(\S|\s)*
+    title: If parameter is a data type
+    type: string
+  valueMeta:
+    $ref: Meta.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueMoney:
+    $ref: Money.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueOid:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    pattern: ^urn:oid:[0-2](\.(0|[1-9][0-9]*))+$
+    title: If parameter is a data type
+    type: string
+  valueParameterDefinition:
+    $ref: ParameterDefinition.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valuePeriod:
+    $ref: Period.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valuePositiveInt:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    exclusiveMinimum: 0
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+    type: integer
+  valueQuantity:
+    $ref: Quantity.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueRange:
+    $ref: Range.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueRatio:
+    $ref: Ratio.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueRatioRange:
+    $ref: RatioRange.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueReference:
+    $ref: Reference.yaml
+    backref: parameters_parameter
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    enum_reference_types:
+    - Reference
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueRelatedArtifact:
+    $ref: RelatedArtifact.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueSampledData:
+    $ref: SampledData.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueSignature:
+    $ref: Signature.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueString:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    pattern: '[ \r\n\t\S]+'
+    title: If parameter is a data type
+    type: string
+  valueTime:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    format: time
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+    type: string
+  valueTiming:
+    $ref: Timing.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueTriggerDefinition:
+    $ref: TriggerDefinition.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueUnsignedInt:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    minimum: 0
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+    type: integer
+  valueUri:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    pattern: \S*
+    title: If parameter is a data type
+    type: string
+  valueUrl:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    format: uri
+    maxLength: 65536
+    minLength: 1
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+    type: string
+  valueUsageContext:
+    $ref: UsageContext.yaml
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+  valueUuid:
+    description: Conveys the content if the parameter is a data type.
+    element_property: true
+    format: uuid
+    one_of_many: value
+    one_of_many_required: false
+    title: If parameter is a data type
+    type: string
+title: ParametersParameter
+type: object

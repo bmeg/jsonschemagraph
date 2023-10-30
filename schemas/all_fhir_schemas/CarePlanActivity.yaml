@@ -1,0 +1,364 @@
+$id: CarePlanActivity
+additionalProperties: false
+description: Action to occur or has occurred as part of plan. Identifies an action
+  that has occurred or is a planned action to occur as part of the plan. For example,
+  a medication to be used, lab tests to perform, self-monitoring that has occurred,
+  education etc. [See https://hl7.org/fhir/R5/CarePlanActivity.html]
+links:
+- href: Appointment/{id}
+  rel: plannedActivityReference_Appointment
+  targetHints:
+    backref:
+    - care_plan_activity
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Appointment.yaml
+  templatePointers:
+    id: /plannedActivityReference/reference
+  templateRequired:
+  - id
+- href: CommunicationRequest/{id}
+  rel: plannedActivityReference_CommunicationRequest
+  targetHints:
+    backref:
+    - care_plan_activity
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: CommunicationRequest.yaml
+  templatePointers:
+    id: /plannedActivityReference/reference
+  templateRequired:
+  - id
+- href: DeviceRequest/{id}
+  rel: plannedActivityReference_DeviceRequest
+  targetHints:
+    backref:
+    - care_plan_activity
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: DeviceRequest.yaml
+  templatePointers:
+    id: /plannedActivityReference/reference
+  templateRequired:
+  - id
+- href: MedicationRequest/{id}
+  rel: plannedActivityReference_MedicationRequest
+  targetHints:
+    backref:
+    - care_plan_activity
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: MedicationRequest.yaml
+  templatePointers:
+    id: /plannedActivityReference/reference
+  templateRequired:
+  - id
+- href: NutritionOrder/{id}
+  rel: plannedActivityReference_NutritionOrder
+  targetHints:
+    backref:
+    - care_plan_activity
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: NutritionOrder.yaml
+  templatePointers:
+    id: /plannedActivityReference/reference
+  templateRequired:
+  - id
+- href: Task/{id}
+  rel: plannedActivityReference_Task
+  targetHints:
+    backref:
+    - care_plan_activity
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Task.yaml
+  templatePointers:
+    id: /plannedActivityReference/reference
+  templateRequired:
+  - id
+- href: ServiceRequest/{id}
+  rel: plannedActivityReference_ServiceRequest
+  targetHints:
+    backref:
+    - care_plan_activity
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: ServiceRequest.yaml
+  templatePointers:
+    id: /plannedActivityReference/reference
+  templateRequired:
+  - id
+- href: VisionPrescription/{id}
+  rel: plannedActivityReference_VisionPrescription
+  targetHints:
+    backref:
+    - care_plan_activity
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: VisionPrescription.yaml
+  templatePointers:
+    id: /plannedActivityReference/reference
+  templateRequired:
+  - id
+- href: RequestOrchestration/{id}
+  rel: plannedActivityReference_RequestOrchestration
+  targetHints:
+    backref:
+    - care_plan_activity
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RequestOrchestration.yaml
+  templatePointers:
+    id: /plannedActivityReference/reference
+  templateRequired:
+  - id
+- href: ImmunizationRecommendation/{id}
+  rel: plannedActivityReference_ImmunizationRecommendation
+  targetHints:
+    backref:
+    - care_plan_activity
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: ImmunizationRecommendation.yaml
+  templatePointers:
+    id: /plannedActivityReference/reference
+  templateRequired:
+  - id
+- href: SupplyRequest/{id}
+  rel: plannedActivityReference_SupplyRequest
+  targetHints:
+    backref:
+    - care_plan_activity
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: SupplyRequest.yaml
+  templatePointers:
+    id: /plannedActivityReference/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: performedActivity_reference
+  targetHints:
+    backref:
+    - codeable_reference
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /performedActivity/-/reference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: progress_authorReference_Practitioner
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /progress/-/authorReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: progress_authorReference_PractitionerRole
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /progress/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: progress_authorReference_Patient
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /progress/-/authorReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: progress_authorReference_RelatedPerson
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /progress/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: progress_authorReference_Organization
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /progress/-/authorReference/reference
+  templateRequired:
+  - id
+properties:
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  performedActivity:
+    backref: performedActivity_care_plan_activity
+    binding_description: Identifies the results of the activity.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/care-plan-activity-performed
+    binding_version: null
+    description: "Identifies the activity that was performed. For example, an activity\
+      \ could be patient education, exercise, or a medication administration. The\
+      \ reference to an \"event\" resource, such as Procedure or Encounter or Observation,\
+      \ represents the activity that was performed. The requested activity can be\
+      \ conveyed using the CarePlan.activity.plannedActivityReference (a reference\
+      \ to a \u201Crequest\u201D resource)."
+    element_property: true
+    enum_reference_types:
+    - Resource
+    items:
+      $ref: CodeableReference.yaml
+    title: Results of the activity (concept, or Appointment, Encounter, Procedure,
+      etc.)
+    type: array
+  plannedActivityReference:
+    $ref: Reference.yaml
+    backref: care_plan_activity
+    description: The details of the proposed activity represented in a specific resource.
+    element_property: true
+    enum_reference_types:
+    - Appointment
+    - CommunicationRequest
+    - DeviceRequest
+    - MedicationRequest
+    - NutritionOrder
+    - Task
+    - ServiceRequest
+    - VisionPrescription
+    - RequestOrchestration
+    - ImmunizationRecommendation
+    - SupplyRequest
+    title: Activity that is intended to be part of the care plan
+  progress:
+    description: Notes about the adherence/status/progress of the activity.
+    element_property: true
+    items:
+      $ref: Annotation.yaml
+    title: Comments about the activity status/progress
+    type: array
+  resourceType:
+    const: CarePlanActivity
+    default: CarePlanActivity
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+title: CarePlanActivity
+type: object

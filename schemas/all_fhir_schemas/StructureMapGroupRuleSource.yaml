@@ -1,0 +1,176 @@
+$id: StructureMapGroupRuleSource
+additionalProperties: false
+description: Source inputs to the mapping. [See https://hl7.org/fhir/R5/StructureMapGroupRuleSource.html]
+  [See https://hl7.org/fhir/R5/StructureMapGroupRuleSource.html]
+links: []
+properties:
+  _check:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``check``.
+  _condition:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``condition``.
+  _context:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``context``.
+  _defaultValue:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``defaultValue``.
+  _element:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``element``.
+  _listMode:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``listMode``.
+  _logMessage:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``logMessage``.
+  _max:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``max``.
+  _min:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``min``.
+  _type:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``type``.
+  _variable:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``variable``.
+  check:
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: FHIRPath expression  - must be true or the mapping engine throws an error
+      instead of completing
+    type: string
+  condition:
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: FHIRPath expression  - must be true or the rule does not apply
+    type: string
+  context:
+    element_property: true
+    element_required: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Type or variable this rule applies to
+    type: string
+  defaultValue:
+    description: A value to use if there is no existing value in the source object.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Default value if no value exists
+    type: string
+  element:
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Optional field for this source
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  listMode:
+    binding_description: If field is a list, how to manage the source.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/map-source-list-mode
+    binding_version: 5.0.0
+    description: How to handle the list mode for this element.
+    element_property: true
+    enum_values:
+    - first
+    - not_first
+    - last
+    - not_last
+    - only_one
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: first | not_first | last | not_last | only_one
+    type: string
+  logMessage:
+    description: A FHIRPath expression which specifies a message to put in the transform
+      log when content matching the source rule is found.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Message to put in log if source exists (FHIRPath)
+    type: string
+  max:
+    description: Specified maximum cardinality for the element - a number or a "*".
+      This is optional; if present, it acts an implicit check on the input content
+      (* just serves as documentation; it's the default value).
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Specified maximum cardinality (number or *)
+    type: string
+  min:
+    description: Specified minimum cardinality for the element. This is optional;
+      if present, it acts an implicit check on the input content.
+    element_property: true
+    title: Specified minimum cardinality
+    type: integer
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: StructureMapGroupRuleSource
+    default: StructureMapGroupRuleSource
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  type:
+    description: Specified type for the element. This works as a condition on the
+      mapping - use for polymorphic elements.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Rule only applies if source has this type
+    type: string
+  variable:
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Named context for field, if a field is specified
+    type: string
+title: StructureMapGroupRuleSource
+type: object

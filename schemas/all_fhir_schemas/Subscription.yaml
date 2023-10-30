@@ -1,0 +1,425 @@
+$id: Subscription
+additionalProperties: false
+description: Notification about a SubscriptionTopic. The subscription resource describes
+  a particular client's request to be notified about a SubscriptionTopic. [See https://hl7.org/fhir/R5/Subscription.html]
+links:
+- href: CareTeam/{id}
+  rel: managingEntity_CareTeam
+  targetHints:
+    backref:
+    - subscription
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: CareTeam.yaml
+  templatePointers:
+    id: /managingEntity/reference
+  templateRequired:
+  - id
+- href: HealthcareService/{id}
+  rel: managingEntity_HealthcareService
+  targetHints:
+    backref:
+    - subscription
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: HealthcareService.yaml
+  templatePointers:
+    id: /managingEntity/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: managingEntity_Organization
+  targetHints:
+    backref:
+    - subscription
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /managingEntity/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: managingEntity_RelatedPerson
+  targetHints:
+    backref:
+    - subscription
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /managingEntity/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: managingEntity_Patient
+  targetHints:
+    backref:
+    - subscription
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /managingEntity/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: managingEntity_Practitioner
+  targetHints:
+    backref:
+    - subscription
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /managingEntity/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: managingEntity_PractitionerRole
+  targetHints:
+    backref:
+    - subscription
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /managingEntity/reference
+  templateRequired:
+  - id
+properties:
+  _content:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``content``.
+  _contentType:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``contentType``.
+  _end:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``end``.
+  _endpoint:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``endpoint``.
+  _heartbeatPeriod:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``heartbeatPeriod``.
+  _implicitRules:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``implicitRules``.
+  _language:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``language``.
+  _maxCount:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``maxCount``.
+  _name:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``name``.
+  _reason:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``reason``.
+  _status:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``status``.
+  _timeout:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``timeout``.
+  _topic:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``topic``.
+  channelType:
+    $ref: Coding.yaml
+    binding_description: The type of method used to execute a subscription.
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/subscription-channel-type
+    binding_version: null
+    description: The type of channel to send notifications on.
+    element_property: true
+    title: Channel type for notifications
+  contact:
+    description: Contact details for a human to contact about the subscription. The
+      primary use of this for system administrator troubleshooting.
+    element_property: true
+    items:
+      $ref: ContactPoint.yaml
+    title: Contact details for source (e.g. troubleshooting)
+    type: array
+  contained:
+    description: These resources do not have an independent existence apart from the
+      resource that contains them - they cannot be identified independently, nor can
+      they have their own independent transaction scope. This is allowed to be a Parameters
+      resource if and only if it is referenced by a resource that provides context/meaning.
+    element_property: true
+    items:
+      $ref: Resource.yaml
+    title: Contained, inline Resources
+    type: array
+  content:
+    binding_description: Codes to represent how much resource content to send in the
+      notification payload.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/subscription-payload-content
+    binding_version: 5.0.0
+    description: How much of the resource content to deliver in the notification payload.
+      The choices are an empty payload, only the resource id, or the full resource
+      content.
+    element_property: true
+    enum_values:
+    - empty
+    - id-only
+    - full-resource
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: empty | id-only | full-resource
+    type: string
+  contentType:
+    binding_description: BCP 13 (RFCs 2045, 2046, 2047, 4288, 4289 and 2049)
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/mimetypes
+    binding_version: 5.0.0
+    description: 'The MIME type to send the payload in - e.g., `application/fhir+xml`
+      or `application/fhir+json`. Note that:  * clients may request notifications
+      in a specific FHIR version by using the [FHIR Version Parameter](http.html#version-parameter)
+      - e.g., `application/fhir+json; fhirVersion=4.0`.  * additional MIME types can
+      be allowed by channels - e.g., `text/plain` and `text/html` are defined by the
+      Email channel.'
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: MIME type to send, or omit for no payload
+    type: string
+  end:
+    description: The time for the server to turn the subscription off.
+    element_property: true
+    format: date-time
+    title: When to automatically delete the subscription
+    type: string
+  endpoint:
+    description: The url that describes the actual end-point to send notifications
+      to.
+    element_property: true
+    format: uri
+    maxLength: 65536
+    minLength: 1
+    title: Where the channel points to
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource. To make the use of extensions safe
+      and managable, there is a strict set of governance applied to the definition
+      and use of extensions. Though any implementer can define an extension, there
+      is a set of requirements that SHALL be met as part of the definition of the
+      extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  filterBy:
+    description: The filter properties to be applied to narrow the subscription topic
+      stream.  When multiple filters are applied, evaluates to true if all the conditions
+      applicable to that resource are met; otherwise it returns false (i.e., logical
+      AND).
+    element_property: true
+    items:
+      $ref: SubscriptionFilterBy.yaml
+    title: Criteria for narrowing the subscription topic stream
+    type: array
+  heartbeatPeriod:
+    description: If present, a 'heartbeat' notification (keep-alive) is sent via this
+      channel with an interval period equal to this elements integer value in seconds.  If
+      not present, a heartbeat notification is not sent.
+    element_property: true
+    minimum: 0
+    title: Interval in seconds to send 'heartbeat' notification
+    type: integer
+  id:
+    description: The logical id of the resource, as used in the URL for the resource.
+      Once assigned, this value never changes.
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Logical id of this artifact
+    type: string
+  identifier:
+    description: A formal identifier that is used to identify this code system when
+      it is represented in other formats, or referenced in a specification, model,
+      design or an instance.
+    element_property: true
+    items:
+      $ref: Identifier.yaml
+    title: Additional identifiers (business identifier)
+    type: array
+  implicitRules:
+    description: A reference to a set of rules that were followed when the resource
+      was constructed, and which must be understood when processing the content. Often,
+      this is a reference to an implementation guide that defines the special rules
+      along with other profiles etc.
+    element_property: true
+    pattern: \S*
+    title: A set of rules under which this content was created
+    type: string
+  language:
+    binding_description: IETF language tag for a human language
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/all-languages
+    binding_version: 5.0.0
+    description: The base language in which the resource is written.
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Language of the resource content
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  managingEntity:
+    $ref: Reference.yaml
+    backref: subscription
+    description: Entity with authorization to make subsequent revisions to the Subscription
+      and also determines what data the subscription is authorized to disclose.
+    element_property: true
+    enum_reference_types:
+    - CareTeam
+    - HealthcareService
+    - Organization
+    - RelatedPerson
+    - Patient
+    - Practitioner
+    - PractitionerRole
+    title: Entity responsible for Subscription changes
+  maxCount:
+    description: If present, the maximum number of events that will be included in
+      a notification bundle. Note that this is not a strict limit on the number of
+      entries in a bundle, as dependent resources can be included.
+    element_property: true
+    exclusiveMinimum: 0
+    title: Maximum number of events that can be combined in a single notification
+    type: integer
+  meta:
+    $ref: Meta.yaml
+    description: The metadata about the resource. This is content that is maintained
+      by the infrastructure. Changes to the content might not always be associated
+      with version changes to the resource.
+    element_property: true
+    title: Metadata about the resource
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource and that modifies the understanding
+      of the element that contains it and/or the understanding of the containing element's
+      descendants. Usually modifier elements provide negation or qualification. To
+      make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer is allowed
+      to define an extension, there is a set of requirements that SHALL be met as
+      part of the definition of the extension. Applications processing a resource
+      are required to check for modifier extensions.  Modifier extensions SHALL NOT
+      change the meaning of any elements on Resource or DomainResource (including
+      cannot change the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored
+    type: array
+  name:
+    description: A natural language name identifying the subscription.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Human readable name for this subscription
+    type: string
+  parameter:
+    description: Channel-dependent information to send as part of the notification
+      (e.g., HTTP Headers).
+    element_property: true
+    items:
+      $ref: SubscriptionParameter.yaml
+    title: Channel type
+    type: array
+  reason:
+    description: A description of why this subscription is defined.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Description of why this subscription was created
+    type: string
+  resourceType:
+    const: Subscription
+    default: Subscription
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  status:
+    binding_description: The status of a subscription.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/subscription-status
+    binding_version: 5.0.0
+    description: The status of the subscription, which marks the server state for
+      managing the subscription.
+    element_property: true
+    element_required: true
+    enum_values:
+    - requested
+    - active
+    - error
+    - 'off'
+    - entered-in-error
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: requested | active | error | off | entered-in-error
+    type: string
+  text:
+    $ref: Narrative.yaml
+    description: A human-readable narrative that contains a summary of the resource
+      and can be used to represent the content of the resource to a human. The narrative
+      need not encode all the structured data, but is required to contain sufficient
+      detail to make it "clinically safe" for a human to just read the narrative.
+      Resource definitions may define what content should be represented in the narrative
+      to ensure clinical safety.
+    element_property: true
+    title: Text summary of the resource, for human interpretation
+  timeout:
+    description: If present, the maximum amount of time a server will allow before
+      failing a notification attempt.
+    element_property: true
+    minimum: 0
+    title: Timeout in seconds to attempt notification delivery
+    type: integer
+  topic:
+    description: The reference to the subscription topic to be notified about.
+    element_property: true
+    element_required: true
+    enum_reference_types:
+    - SubscriptionTopic
+    pattern: \S*
+    title: Reference to the subscription topic being subscribed to
+    type: string
+required:
+- channelType
+title: Subscription
+type: object

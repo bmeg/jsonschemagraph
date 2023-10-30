@@ -1,0 +1,120 @@
+$id: ManufacturedItemDefinitionComponent
+additionalProperties: false
+description: Physical parts of the manufactured item, that it is intrisically made
+  from. This is distinct from the ingredients that are part of its chemical makeup.
+  [See https://hl7.org/fhir/R5/ManufacturedItemDefinitionComponent.html] [See https://hl7.org/fhir/R5/ManufacturedItemDefinitionComponent.html]
+  [See https://hl7.org/fhir/R5/ManufacturedItemDefinitionComponent.html]
+links:
+- href: Binary/{id}
+  rel: property_valueReference
+  targetHints:
+    backref:
+    - manufactured_item_definition_property
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Binary.yaml
+  templatePointers:
+    id: /property/-/valueReference/reference
+  templateRequired:
+  - id
+properties:
+  amount:
+    element_property: true
+    items:
+      $ref: Quantity.yaml
+    title: The measurable amount of total quantity of all substances in the component,
+      expressable in different ways (e.g. by mass or volume)
+    type: array
+  component:
+    element_property: true
+    items:
+      $ref: ManufacturedItemDefinitionComponent.yaml
+    title: A component that this component contains or is made from
+    type: array
+  constituent:
+    element_property: true
+    items:
+      $ref: ManufacturedItemDefinitionComponentConstituent.yaml
+    title: A reference to a constituent of the manufactured item as a whole, linked
+      here so that its component location within the item can be indicated. This not
+      where the item's ingredient are primarily stated (for which see Ingredient.for
+      or ManufacturedItemDefinition.ingredient)
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  function:
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: The function of this component within the item e.g. delivers active ingredient,
+      masks taste
+    type: array
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  property:
+    element_property: true
+    items:
+      $ref: ManufacturedItemDefinitionProperty.yaml
+    title: General characteristics of this component
+    type: array
+  resourceType:
+    const: ManufacturedItemDefinitionComponent
+    default: ManufacturedItemDefinitionComponent
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  type:
+    $ref: CodeableConcept.yaml
+    element_property: true
+    title: Defining type of the component e.g. shell, layer, ink
+required:
+- type
+title: ManufacturedItemDefinitionComponent
+type: object

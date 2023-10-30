@@ -1,0 +1,461 @@
+$id: EvidenceReportSection
+additionalProperties: false
+description: Composition is broken into sections. The root of the sections that make
+  up the composition. [See https://hl7.org/fhir/R5/EvidenceReportSection.html] [See
+  https://hl7.org/fhir/R5/EvidenceReportSection.html]
+links:
+- href: Patient/{id}
+  rel: author_Patient
+  targetHints:
+    backref:
+    - author_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /author/-/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: author_Practitioner
+  targetHints:
+    backref:
+    - author_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /author/-/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: author_PractitionerRole
+  targetHints:
+    backref:
+    - author_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /author/-/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: author_RelatedPerson
+  targetHints:
+    backref:
+    - author_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /author/-/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: author_Device
+  targetHints:
+    backref:
+    - author_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /author/-/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: author_Group
+  targetHints:
+    backref:
+    - author_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /author/-/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: author_Organization
+  targetHints:
+    backref:
+    - author_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /author/-/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: entryReference
+  targetHints:
+    backref:
+    - entryReference_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /entryReference/-/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: focusReference
+  targetHints:
+    backref:
+    - focusReference_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /focusReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: section_author_Patient
+  targetHints:
+    backref:
+    - author_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /section/-/author/-/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: section_author_Practitioner
+  targetHints:
+    backref:
+    - author_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /section/-/author/-/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: section_author_PractitionerRole
+  targetHints:
+    backref:
+    - author_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /section/-/author/-/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: section_author_RelatedPerson
+  targetHints:
+    backref:
+    - author_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /section/-/author/-/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: section_author_Device
+  targetHints:
+    backref:
+    - author_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /section/-/author/-/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: section_author_Group
+  targetHints:
+    backref:
+    - author_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /section/-/author/-/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: section_author_Organization
+  targetHints:
+    backref:
+    - author_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /section/-/author/-/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: section_entryReference
+  targetHints:
+    backref:
+    - entryReference_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /section/-/entryReference/-/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: section_focusReference
+  targetHints:
+    backref:
+    - focusReference_evidence_report_section
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /section/-/focusReference/reference
+  templateRequired:
+  - id
+properties:
+  _mode:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``mode``.
+  _title:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``title``.
+  author:
+    backref: author_evidence_report_section
+    description: Identifies who is responsible for the information in this section,
+      not necessarily who typed it in.
+    element_property: true
+    enum_reference_types:
+    - Patient
+    - Practitioner
+    - PractitionerRole
+    - RelatedPerson
+    - Device
+    - Group
+    - Organization
+    items:
+      $ref: Reference.yaml
+    title: Who and/or what authored the section
+    type: array
+  emptyReason:
+    $ref: CodeableConcept.yaml
+    binding_description: If a section is empty, why it is empty.
+    binding_strength: preferred
+    binding_uri: http://hl7.org/fhir/ValueSet/list-empty-reason
+    binding_version: null
+    description: If the section is empty, why the list is empty. An empty section
+      typically has some text explaining the empty reason.
+    element_property: true
+    title: Why the section is empty
+  entryClassifier:
+    binding_description: Commonly used classifiers for evidence sets.
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/evidence-classifier-code
+    binding_version: null
+    description: Specifies any type of classification of the evidence report.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Extensible classifiers as content
+    type: array
+  entryQuantity:
+    element_property: true
+    items:
+      $ref: Quantity.yaml
+    title: Quantity as content
+    type: array
+  entryReference:
+    backref: entryReference_evidence_report_section
+    description: A reference to the actual resource from which the narrative in the
+      section is derived.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    items:
+      $ref: Reference.yaml
+    title: Reference to resources as content
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  focus:
+    $ref: CodeableConcept.yaml
+    binding_description: Evidence Report Section Type.
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/evidence-report-section
+    binding_version: null
+    description: A code identifying the kind of content contained within the section.
+      This should be consistent with the section title.
+    element_property: true
+    title: Classification of section (recommended)
+  focusReference:
+    $ref: Reference.yaml
+    backref: focusReference_evidence_report_section
+    description: A definitional Resource identifying the kind of content contained
+      within the section. This should be consistent with the section title.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    title: Classification of section by Resource
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  mode:
+    binding_description: The processing mode that applies to this section.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/list-mode
+    binding_version: 5.0.0
+    description: How the entry list was prepared - whether it is a working list that
+      is suitable for being maintained on an ongoing basis, or if it represents a
+      snapshot of a list of items from another source, or whether it is a prepared
+      list where items may be marked as added, modified or deleted.
+    element_property: true
+    enum_values:
+    - working
+    - snapshot
+    - changes
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: working | snapshot | changes
+    type: string
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  orderedBy:
+    $ref: CodeableConcept.yaml
+    binding_description: What order applies to the items in the entry.
+    binding_strength: preferred
+    binding_uri: http://hl7.org/fhir/ValueSet/list-order
+    binding_version: null
+    description: Specifies the order applied to the items in the section entries.
+    element_property: true
+    title: Order of section entries
+  resourceType:
+    const: EvidenceReportSection
+    default: EvidenceReportSection
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  section:
+    description: A nested sub-section within this section.
+    element_property: true
+    items:
+      $ref: EvidenceReportSection.yaml
+    title: Nested Section
+    type: array
+  text:
+    $ref: Narrative.yaml
+    description: A human-readable narrative that contains the attested content of
+      the section, used to represent the content of the resource to a human. The narrative
+      need not encode all the structured data, but is peferred to contain sufficient
+      detail to make it acceptable for a human to just read the narrative.
+    element_property: true
+    title: Text summary of the section, for human interpretation
+  title:
+    description: The label for this particular section.  This will be part of the
+      rendered content for the document, and is often used to build a table of contents.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Label for section (e.g. for ToC)
+    type: string
+title: EvidenceReportSection
+type: object

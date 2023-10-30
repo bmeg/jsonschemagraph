@@ -1,0 +1,100 @@
+$id: DeviceDefinitionUdiDeviceIdentifier
+additionalProperties: false
+description: Unique Device Identifier (UDI) Barcode string. Unique device identifier
+  (UDI) assigned to device label or package.  Note that the Device may include multiple
+  udiCarriers as it either may include just the udiCarrier for the jurisdiction it
+  is sold, or for multiple jurisdictions it could have been sold. [See https://hl7.org/fhir/R5/DeviceDefinitionUdiDeviceIdentifier.html]
+  [See https://hl7.org/fhir/R5/DeviceDefinitionUdiDeviceIdentifier.html]
+links: []
+properties:
+  _deviceIdentifier:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``deviceIdentifier``.
+  _issuer:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``issuer``.
+  _jurisdiction:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``jurisdiction``.
+  deviceIdentifier:
+    element_property: true
+    element_required: true
+    pattern: '[ \r\n\t\S]+'
+    title: The identifier that is to be associated with every Device that references
+      this DeviceDefintiion for the issuer and jurisdiction provided in the DeviceDefinition.udiDeviceIdentifier
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  issuer:
+    element_property: true
+    element_required: true
+    pattern: \S*
+    title: The organization that assigns the identifier algorithm
+    type: string
+  jurisdiction:
+    element_property: true
+    element_required: true
+    pattern: \S*
+    title: The jurisdiction to which the deviceIdentifier applies
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  marketDistribution:
+    description: Indicates where and when the device is available on the market.
+    element_property: true
+    items:
+      $ref: DeviceDefinitionUdiDeviceIdentifierMarketDistribution.yaml
+    title: Indicates whether and when the device is available on the market
+    type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: DeviceDefinitionUdiDeviceIdentifier
+    default: DeviceDefinitionUdiDeviceIdentifier
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+title: DeviceDefinitionUdiDeviceIdentifier
+type: object

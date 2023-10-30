@@ -1,0 +1,215 @@
+$id: EvidenceVariableCharacteristicTimeFromEvent
+additionalProperties: false
+description: Timing in which the characteristic is determined. [See https://hl7.org/fhir/R5/EvidenceVariableCharacteristicTimeFromEvent.html]
+  [See https://hl7.org/fhir/R5/EvidenceVariableCharacteristicTimeFromEvent.html]
+links:
+- href: Reference/{id}
+  rel: eventReference
+  targetHints:
+    backref:
+    - evidence_variable_characteristic_time_from_event
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /eventReference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: note_authorReference_Practitioner
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: note_authorReference_PractitionerRole
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: note_authorReference_Patient
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: note_authorReference_RelatedPerson
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: note_authorReference_Organization
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+properties:
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _eventDateTime:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``eventDateTime``.
+  _eventId:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``eventId``.
+  description:
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Human readable description
+    type: string
+  eventCodeableConcept:
+    $ref: CodeableConcept.yaml
+    element_property: true
+    one_of_many: event
+    one_of_many_required: false
+    title: The event used as a base point (reference point) in time
+  eventDateTime:
+    element_property: true
+    format: date-time
+    one_of_many: event
+    one_of_many_required: false
+    title: The event used as a base point (reference point) in time
+    type: string
+  eventId:
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    one_of_many: event
+    one_of_many_required: false
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: The event used as a base point (reference point) in time
+    type: string
+  eventReference:
+    $ref: Reference.yaml
+    backref: evidence_variable_characteristic_time_from_event
+    element_property: true
+    enum_reference_types:
+    - Reference
+    one_of_many: event
+    one_of_many_required: false
+    title: The event used as a base point (reference point) in time
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  note:
+    description: A human-readable string to clarify or explain concepts about the
+      timeFromEvent.
+    element_property: true
+    items:
+      $ref: Annotation.yaml
+    title: Used for footnotes or explanatory notes
+    type: array
+  quantity:
+    $ref: Quantity.yaml
+    element_property: true
+    title: Used to express the observation at a defined amount of time before or after
+      the event
+  range:
+    $ref: Range.yaml
+    element_property: true
+    title: Used to express the observation within a period before and/or after the
+      event
+  resourceType:
+    const: EvidenceVariableCharacteristicTimeFromEvent
+    default: EvidenceVariableCharacteristicTimeFromEvent
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+title: EvidenceVariableCharacteristicTimeFromEvent
+type: object

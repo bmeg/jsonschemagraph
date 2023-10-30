@@ -1,0 +1,109 @@
+$id: CapabilityStatementRestResourceOperation
+additionalProperties: false
+description: Definition of a resource operation. Definition of an operation or a named
+  query together with its parameters and their meaning and type. Consult the definition
+  of the operation for details about how to invoke the operation, and the parameters.
+  [See https://hl7.org/fhir/R5/CapabilityStatementRestResourceOperation.html] [See
+  https://hl7.org/fhir/R5/CapabilityStatementRestResourceOperation.html] [See https://hl7.org/fhir/R5/CapabilityStatementRestResourceOperation.html]
+links: []
+properties:
+  _definition:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``definition``.
+  _documentation:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``documentation``.
+  _name:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``name``.
+  definition:
+    description: Where the formal definition can be found. If a server references
+      the base definition of an Operation (i.e. from the specification itself such
+      as ```http://hl7.org/fhir/OperationDefinition/ValueSet-expand```), that means
+      it supports the full capabilities of the operation - e.g. both GET and POST
+      invocation.  If it only supports a subset, it must define its own custom [OperationDefinition](operationdefinition.html#)
+      with a 'base' of the original OperationDefinition.  The custom definition would
+      describe the specific subset of functionality supported.
+    element_property: true
+    element_required: true
+    enum_reference_types:
+    - OperationDefinition
+    pattern: \S*
+    title: The defined operation/query
+    type: string
+  documentation:
+    description: Documentation that describes anything special about the operation
+      behavior, possibly detailing different behavior for system, type and instance-level
+      invocation of the operation.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Specific details about operation behavior
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  name:
+    description: The name of the operation or query. For an operation, this name is
+      prefixed with $ and used in the URL. For a query, this is the name used in the
+      _query parameter when the query is called. This SHOULD be the same as the OperationDefinition.code
+      of the defining OperationDefinition.  However, it can sometimes differ if necessary
+      to disambiguate when a server supports multiple OperationDefinition that happen
+      to share the same code.
+    element_property: true
+    element_required: true
+    pattern: '[ \r\n\t\S]+'
+    title: Name by which the operation/query is invoked
+    type: string
+  resourceType:
+    const: CapabilityStatementRestResourceOperation
+    default: CapabilityStatementRestResourceOperation
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+title: CapabilityStatementRestResourceOperation
+type: object

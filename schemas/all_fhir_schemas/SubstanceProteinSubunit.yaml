@@ -1,0 +1,136 @@
+$id: SubstanceProteinSubunit
+additionalProperties: false
+description: This subclause refers to the description of each subunit constituting
+  the SubstanceProtein. A subunit is a linear sequence of amino acids linked through
+  peptide bonds. The Subunit information shall be provided when the finished SubstanceProtein
+  is a complex of multiple sequences; subunits are not used to delineate domains within
+  a single sequence. Subunits are listed in order of decreasing length; sequences
+  of the same length will be ordered by decreasing molecular weight; subunits that
+  have identical sequences will be repeated multiple times. [See https://hl7.org/fhir/R5/SubstanceProteinSubunit.html]
+  [See https://hl7.org/fhir/R5/SubstanceProteinSubunit.html]
+links: []
+properties:
+  _cTerminalModification:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``cTerminalModification``.
+  _length:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``length``.
+  _nTerminalModification:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``nTerminalModification``.
+  _sequence:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``sequence``.
+  _subunit:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``subunit``.
+  cTerminalModification:
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: The modification at the C-terminal shall be specified
+    type: string
+  cTerminalModificationId:
+    $ref: Identifier.yaml
+    element_property: true
+    title: Unique identifier for molecular fragment modification based on the ISO
+      11238 Substance ID
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  length:
+    element_property: true
+    title: Length of linear sequences of amino acids contained in the subunit
+    type: integer
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  nTerminalModification:
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: The name of the fragment modified at the N-terminal of the SubstanceProtein
+      shall be specified
+    type: string
+  nTerminalModificationId:
+    $ref: Identifier.yaml
+    element_property: true
+    title: Unique identifier for molecular fragment modification based on the ISO
+      11238 Substance ID
+  resourceType:
+    const: SubstanceProteinSubunit
+    default: SubstanceProteinSubunit
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  sequence:
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: The sequence information shall be provided enumerating the amino acids
+      from N- to C-terminal end using standard single-letter amino acid codes. Uppercase
+      shall be used for L-amino acids and lowercase for D-amino acids. Transcribed
+      SubstanceProteins will always be described using the translated sequence; for
+      synthetic peptide containing amino acids that are not represented with a single
+      letter code an X should be used within the sequence. The modified amino acids
+      will be distinguished by their position in the sequence
+    type: string
+  sequenceAttachment:
+    $ref: Attachment.yaml
+    element_property: true
+    title: The sequence information shall be provided enumerating the amino acids
+      from N- to C-terminal end using standard single-letter amino acid codes. Uppercase
+      shall be used for L-amino acids and lowercase for D-amino acids. Transcribed
+      SubstanceProteins will always be described using the translated sequence; for
+      synthetic peptide containing amino acids that are not represented with a single
+      letter code an X should be used within the sequence. The modified amino acids
+      will be distinguished by their position in the sequence
+  subunit:
+    element_property: true
+    title: Index of primary sequences of amino acids linked through peptide bonds
+      in order of decreasing length. Sequences of the same length will be ordered
+      by molecular weight. Subunits that have identical sequences will be repeated
+      and have sequential subscripts
+    type: integer
+title: SubstanceProteinSubunit
+type: object

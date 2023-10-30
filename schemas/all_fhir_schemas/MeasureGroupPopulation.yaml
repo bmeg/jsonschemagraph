@@ -1,0 +1,148 @@
+$id: MeasureGroupPopulation
+additionalProperties: false
+description: Population criteria. A population criteria for the measure. [See https://hl7.org/fhir/R5/MeasureGroupPopulation.html]
+  [See https://hl7.org/fhir/R5/MeasureGroupPopulation.html]
+links:
+- href: Group/{id}
+  rel: groupDefinition
+  targetHints:
+    backref:
+    - measure_group_population
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /groupDefinition/reference
+  templateRequired:
+  - id
+properties:
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _inputPopulationId:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``inputPopulationId``.
+  _linkId:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``linkId``.
+  aggregateMethod:
+    $ref: CodeableConcept.yaml
+    binding_description: null
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/measure-aggregate-method
+    binding_version: null
+    description: Specifies which method should be used to aggregate measure observation
+      values. For most scoring types, this is implied by scoring (e.g. a proportion
+      measure counts members of the populations). For continuous variables, however,
+      this information must be specified to ensure correct calculation.
+    element_property: true
+    title: Aggregation method for a measure score (e.g. sum, average, median, minimum,
+      maximum, count)
+  code:
+    $ref: CodeableConcept.yaml
+    binding_description: The type of population.
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/measure-population
+    binding_version: null
+    description: The type of population criteria.
+    element_property: true
+    title: initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion
+      | denominator-exception | measure-population | measure-population-exclusion
+      | measure-observation
+  criteria:
+    $ref: Expression.yaml
+    description: An expression that specifies the criteria for the population, typically
+      the name of an expression in a library.
+    element_property: true
+    title: The criteria that defines this population
+  description:
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: The human readable description of this population criteria
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  groupDefinition:
+    $ref: Reference.yaml
+    backref: measure_group_population
+    description: A Group resource that defines this population as a set of characteristics.
+    element_property: true
+    enum_reference_types:
+    - Group
+    title: A group resource that defines this population
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  inputPopulationId:
+    description: The id of a population element in this measure that provides the
+      input for this population criteria. In most cases, the scoring structure of
+      the measure implies specific relationships (e.g. the Numerator uses the Denominator
+      as the source in a proportion scoring). In some cases, however, multiple possible
+      choices exist and must be resolved explicitly. For example in a ratio measure
+      with multiple initial populations, the denominator must specify which population
+      should be used as the starting point.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Which population
+    type: string
+  linkId:
+    description: An identifier that is unique within the Measure allowing linkage
+      to the equivalent population in a MeasureReport resource.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for population in measure
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: MeasureGroupPopulation
+    default: MeasureGroupPopulation
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+title: MeasureGroupPopulation
+type: object

@@ -1,0 +1,158 @@
+$id: ConceptMapGroupUnmapped
+additionalProperties: false
+description: What to do when there is no mapping target for the source concept and
+  ConceptMap.group.element.noMap is not true. What to do when there is no mapping
+  to a target concept from the source concept and ConceptMap.group.element.noMap is
+  not true. This provides the "default" to be applied when there is no target concept
+  mapping specified or the expansion of ConceptMap.group.element.target.valueSet is
+  empty. [See https://hl7.org/fhir/R5/ConceptMapGroupUnmapped.html] [See https://hl7.org/fhir/R5/ConceptMapGroupUnmapped.html]
+links: []
+properties:
+  _code:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``code``.
+  _display:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``display``.
+  _mode:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``mode``.
+  _otherMap:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``otherMap``.
+  _relationship:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``relationship``.
+  _valueSet:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueSet``.
+  code:
+    description: The fixed code to use when the mode = 'fixed'  - all unmapped codes
+      are mapped to a single fixed code.
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Fixed code when mode = fixed
+    type: string
+  display:
+    description: The display for the code. The display is only provided to help editors
+      when editing the concept map.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Display for the code
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  mode:
+    binding_description: Defines which action to take if there is no match in the
+      group.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode
+    binding_version: 5.0.0
+    description: 'Defines which action to take if there is no match for the source
+      concept in the target system designated for the group. One of 3 actions are
+      possible: use the unmapped source code (this is useful when doing a mapping
+      between versions, and only a few codes have changed), use a fixed code (a default
+      code), or alternatively, a reference to a different concept map can be provided
+      (by canonical URL).'
+    element_property: true
+    element_required: true
+    enum_values:
+    - use-source-code
+    - fixed
+    - other-map
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: use-source-code | fixed | other-map
+    type: string
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  otherMap:
+    description: The canonical reference to an additional ConceptMap resource instance
+      to use for mapping if this ConceptMap resource contains no matching mapping
+      for the source concept.
+    element_property: true
+    enum_reference_types:
+    - ConceptMap
+    pattern: \S*
+    title: canonical reference to an additional ConceptMap to use for mapping if the
+      source concept is unmapped
+    type: string
+  relationship:
+    binding_description: The default relationship value to apply between the source
+      and target concepts when no concept mapping is specified.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/concept-map-relationship
+    binding_version: 5.0.0
+    description: The default relationship value to apply between the source and target
+      concepts when the source code is unmapped and the mode is 'fixed' or 'use-source-code'.
+    element_property: true
+    enum_values:
+    - related-to
+    - equivalent
+    - source-is-narrower-than-target
+    - source-is-broader-than-target
+    - not-related-to
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: related-to | equivalent | source-is-narrower-than-target | source-is-broader-than-target
+      | not-related-to
+    type: string
+  resourceType:
+    const: ConceptMapGroupUnmapped
+    default: ConceptMapGroupUnmapped
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  valueSet:
+    description: The set of fixed codes to use when the mode = 'fixed'  - all unmapped
+      codes are mapped to each of the fixed codes.
+    element_property: true
+    enum_reference_types:
+    - ValueSet
+    pattern: \S*
+    title: Fixed code set when mode = fixed
+    type: string
+title: ConceptMapGroupUnmapped
+type: object

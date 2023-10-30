@@ -1,0 +1,134 @@
+$id: MessageHeaderSource
+additionalProperties: false
+description: Message source application. The source application from which this message
+  originated. [See https://hl7.org/fhir/R5/MessageHeaderSource.html] [See https://hl7.org/fhir/R5/MessageHeaderSource.html]
+links:
+- href: Endpoint/{id}
+  rel: endpointReference
+  targetHints:
+    backref:
+    - message_header_source
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Endpoint.yaml
+  templatePointers:
+    id: /endpointReference/reference
+  templateRequired:
+  - id
+properties:
+  _endpointUrl:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``endpointUrl``.
+  _name:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``name``.
+  _software:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``software``.
+  _version:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``version``.
+  contact:
+    $ref: ContactPoint.yaml
+    description: An e-mail, phone, website or other contact point to use to resolve
+      issues with message communications.
+    element_property: true
+    title: Human contact for problems
+  endpointReference:
+    $ref: Reference.yaml
+    backref: message_header_source
+    description: Identifies the routing target to send acknowledgements to.
+    element_property: true
+    enum_reference_types:
+    - Endpoint
+    one_of_many: endpoint
+    one_of_many_required: false
+    title: Actual source address or Endpoint resource
+  endpointUrl:
+    description: Identifies the routing target to send acknowledgements to.
+    element_property: true
+    format: uri
+    maxLength: 65536
+    minLength: 1
+    one_of_many: endpoint
+    one_of_many_required: false
+    title: Actual source address or Endpoint resource
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  name:
+    description: Human-readable name for the source system.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Name of system
+    type: string
+  resourceType:
+    const: MessageHeaderSource
+    default: MessageHeaderSource
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  software:
+    description: May include configuration or other information useful in debugging.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Name of software running the system
+    type: string
+  version:
+    description: Can convey versions of multiple systems in situations where a message
+      passes through multiple hands.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Version of software running
+    type: string
+title: MessageHeaderSource
+type: object

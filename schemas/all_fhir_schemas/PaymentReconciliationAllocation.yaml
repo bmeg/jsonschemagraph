@@ -1,0 +1,441 @@
+$id: PaymentReconciliationAllocation
+additionalProperties: false
+description: Settlement particulars. Distribution of the payment amount for a previously
+  acknowledged payable. [See https://hl7.org/fhir/R5/PaymentReconciliationAllocation.html]
+  [See https://hl7.org/fhir/R5/PaymentReconciliationAllocation.html]
+links:
+- href: Account/{id}
+  rel: account
+  targetHints:
+    backref:
+    - account_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Account.yaml
+  templatePointers:
+    id: /account/reference
+  templateRequired:
+  - id
+- href: Encounter/{id}
+  rel: encounter
+  targetHints:
+    backref:
+    - encounter_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Encounter.yaml
+  templatePointers:
+    id: /encounter/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: payee_Practitioner
+  targetHints:
+    backref:
+    - payee_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /payee/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: payee_PractitionerRole
+  targetHints:
+    backref:
+    - payee_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /payee/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: payee_Organization
+  targetHints:
+    backref:
+    - payee_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /payee/reference
+  templateRequired:
+  - id
+- href: ClaimResponse/{id}
+  rel: response
+  targetHints:
+    backref:
+    - payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: ClaimResponse.yaml
+  templatePointers:
+    id: /response/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: responsible
+  targetHints:
+    backref:
+    - responsible_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /responsible/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: submitter_Practitioner
+  targetHints:
+    backref:
+    - submitter_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /submitter/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: submitter_PractitionerRole
+  targetHints:
+    backref:
+    - submitter_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /submitter/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: submitter_Organization
+  targetHints:
+    backref:
+    - submitter_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /submitter/reference
+  templateRequired:
+  - id
+- href: Claim/{id}
+  rel: target_Claim
+  targetHints:
+    backref:
+    - target_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Claim.yaml
+  templatePointers:
+    id: /target/reference
+  templateRequired:
+  - id
+- href: Account/{id}
+  rel: target_Account
+  targetHints:
+    backref:
+    - target_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Account.yaml
+  templatePointers:
+    id: /target/reference
+  templateRequired:
+  - id
+- href: Invoice/{id}
+  rel: target_Invoice
+  targetHints:
+    backref:
+    - target_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Invoice.yaml
+  templatePointers:
+    id: /target/reference
+  templateRequired:
+  - id
+- href: ChargeItem/{id}
+  rel: target_ChargeItem
+  targetHints:
+    backref:
+    - target_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: ChargeItem.yaml
+  templatePointers:
+    id: /target/reference
+  templateRequired:
+  - id
+- href: Encounter/{id}
+  rel: target_Encounter
+  targetHints:
+    backref:
+    - target_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Encounter.yaml
+  templatePointers:
+    id: /target/reference
+  templateRequired:
+  - id
+- href: Contract/{id}
+  rel: target_Contract
+  targetHints:
+    backref:
+    - target_payment_reconciliation_allocation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Contract.yaml
+  templatePointers:
+    id: /target/reference
+  templateRequired:
+  - id
+properties:
+  _date:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``date``.
+  _targetItemPositiveInt:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``targetItemPositiveInt``.
+  _targetItemString:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``targetItemString``.
+  account:
+    $ref: Reference.yaml
+    backref: account_payment_reconciliation_allocation
+    description: The Account to which this payment applies, may be completed by the
+      receiver, used for search.
+    element_property: true
+    enum_reference_types:
+    - Account
+    title: Applied-to account
+  amount:
+    $ref: Money.yaml
+    description: The monetary amount allocated from the total payment to the payable.
+    element_property: true
+    title: Amount allocated to this payable
+  date:
+    description: The date from the response resource containing a commitment to pay.
+    element_property: true
+    format: date
+    title: Date of commitment to pay
+    type: string
+  encounter:
+    $ref: Reference.yaml
+    backref: encounter_payment_reconciliation_allocation
+    description: The Encounter to which this payment applies, may be completed by
+      the receiver, used for search.
+    element_property: true
+    enum_reference_types:
+    - Encounter
+    title: Applied-to encounter
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  identifier:
+    $ref: Identifier.yaml
+    description: Unique identifier for the current payment item for the referenced
+      payable.
+    element_property: true
+    title: Business identifier of the payment detail
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  payee:
+    $ref: Reference.yaml
+    backref: payee_payment_reconciliation_allocation
+    description: The party which is receiving the payment.
+    element_property: true
+    enum_reference_types:
+    - Practitioner
+    - PractitionerRole
+    - Organization
+    title: Recipient of the payment
+  predecessor:
+    $ref: Identifier.yaml
+    description: Unique identifier for the prior payment item for the referenced payable.
+    element_property: true
+    title: Business identifier of the prior payment detail
+  resourceType:
+    const: PaymentReconciliationAllocation
+    default: PaymentReconciliationAllocation
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  response:
+    $ref: Reference.yaml
+    backref: payment_reconciliation_allocation
+    description: A resource, such as a ClaimResponse, which contains a commitment
+      to payment.
+    element_property: true
+    enum_reference_types:
+    - ClaimResponse
+    title: Response committing to a payment
+  responsible:
+    $ref: Reference.yaml
+    backref: responsible_payment_reconciliation_allocation
+    description: A reference to the individual who is responsible for inquiries regarding
+      the response and its payment.
+    element_property: true
+    enum_reference_types:
+    - PractitionerRole
+    title: Contact for the response
+  submitter:
+    $ref: Reference.yaml
+    backref: submitter_payment_reconciliation_allocation
+    description: The party which submitted the claim or financial transaction.
+    element_property: true
+    enum_reference_types:
+    - Practitioner
+    - PractitionerRole
+    - Organization
+    title: Submitter of the request
+  target:
+    $ref: Reference.yaml
+    backref: target_payment_reconciliation_allocation
+    description: Specific resource to which the payment/adjustment/advance applies.
+    element_property: true
+    enum_reference_types:
+    - Claim
+    - Account
+    - Invoice
+    - ChargeItem
+    - Encounter
+    - Contract
+    title: Subject of the payment
+  targetItemIdentifier:
+    $ref: Identifier.yaml
+    description: ' Identifies the claim line item, encounter or other sub-element
+      being paid. Note payment may be partial, that is not match the then outstanding
+      balance or amount incurred.'
+    element_property: true
+    one_of_many: targetItem
+    one_of_many_required: false
+    title: Sub-element of the subject
+  targetItemPositiveInt:
+    description: ' Identifies the claim line item, encounter or other sub-element
+      being paid. Note payment may be partial, that is not match the then outstanding
+      balance or amount incurred.'
+    element_property: true
+    exclusiveMinimum: 0
+    one_of_many: targetItem
+    one_of_many_required: false
+    title: Sub-element of the subject
+    type: integer
+  targetItemString:
+    description: ' Identifies the claim line item, encounter or other sub-element
+      being paid. Note payment may be partial, that is not match the then outstanding
+      balance or amount incurred.'
+    element_property: true
+    one_of_many: targetItem
+    one_of_many_required: false
+    pattern: '[ \r\n\t\S]+'
+    title: Sub-element of the subject
+    type: string
+  type:
+    $ref: CodeableConcept.yaml
+    binding_description: null
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/payment-type
+    binding_version: null
+    description: Code to indicate the nature of the payment.
+    element_property: true
+    title: Category of payment
+title: PaymentReconciliationAllocation
+type: object

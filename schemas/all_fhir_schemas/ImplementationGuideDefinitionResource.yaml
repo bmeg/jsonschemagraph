@@ -1,0 +1,163 @@
+$id: ImplementationGuideDefinitionResource
+additionalProperties: false
+description: Resource in the implementation guide. A resource that is part of the
+  implementation guide. Conformance resources (value set, structure definition, capability
+  statements etc.) are obvious candidates for inclusion, but any kind of resource
+  can be included as an example resource. [See https://hl7.org/fhir/R5/ImplementationGuideDefinitionResource.html]
+  [See https://hl7.org/fhir/R5/ImplementationGuideDefinitionResource.html]
+links:
+- href: Resource/{id}
+  rel: reference
+  targetHints:
+    backref:
+    - implementation_guide_definition_resource
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /reference/reference
+  templateRequired:
+  - id
+properties:
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _fhirVersion:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``fhirVersion``.
+    type: array
+  _groupingId:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``groupingId``.
+  _isExample:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``isExample``.
+  _name:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``name``.
+  _profile:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``profile``.
+    type: array
+  description:
+    description: A description of the reason that a resource has been included in
+      the implementation guide.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Reason why included in guide
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhirVersion:
+    binding_description: All published FHIR Versions.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/FHIR-version
+    binding_version: 5.0.0
+    description: Indicates the FHIR Version(s) this artifact is intended to apply
+      to. If no versions are specified, the resource is assumed to apply to all the
+      versions stated in ImplementationGuide.fhirVersion.
+    element_property: true
+    items:
+      pattern: ^[^\s]+(\s[^\s]+)*$
+      type: string
+    title: Versions this applies to (if different to IG)
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  groupingId:
+    description: Reference to the id of the grouping this resource appears in.
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Grouping this is part of
+    type: string
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  isExample:
+    description: If true, indicates the resource is an example instance.
+    element_property: true
+    title: Is this an example
+    type: boolean
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  name:
+    description: A human assigned name for the resource. All resources SHOULD have
+      a name, but the name may be extracted from the resource (e.g. ValueSet.name).
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Human readable name for the resource
+    type: string
+  profile:
+    description: If present, indicates profile(s) the instance is valid against.
+    element_property: true
+    enum_reference_types:
+    - StructureDefinition
+    items:
+      pattern: \S*
+      type: string
+    title: Profile(s) this is an example of
+    type: array
+  reference:
+    $ref: Reference.yaml
+    backref: implementation_guide_definition_resource
+    description: Where this resource is found.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    title: Location of the resource
+  resourceType:
+    const: ImplementationGuideDefinitionResource
+    default: ImplementationGuideDefinitionResource
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+required:
+- reference
+title: ImplementationGuideDefinitionResource
+type: object

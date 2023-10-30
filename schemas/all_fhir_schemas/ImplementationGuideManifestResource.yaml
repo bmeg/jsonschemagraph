@@ -1,0 +1,124 @@
+$id: ImplementationGuideManifestResource
+additionalProperties: false
+description: Resource in the implementation guide. A resource that is part of the
+  implementation guide. Conformance resources (value set, structure definition, capability
+  statements etc.) are obvious candidates for inclusion, but any kind of resource
+  can be included as an example resource. [See https://hl7.org/fhir/R5/ImplementationGuideManifestResource.html]
+  [See https://hl7.org/fhir/R5/ImplementationGuideManifestResource.html]
+links:
+- href: Resource/{id}
+  rel: reference
+  targetHints:
+    backref:
+    - implementation_guide_manifest_resource
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /reference/reference
+  templateRequired:
+  - id
+properties:
+  _isExample:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``isExample``.
+  _profile:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``profile``.
+    type: array
+  _relativePath:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``relativePath``.
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  isExample:
+    description: If true, indicates the resource is an example instance.
+    element_property: true
+    title: Is this an example
+    type: boolean
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  profile:
+    description: If present, indicates profile(s) the instance is valid against.
+    element_property: true
+    enum_reference_types:
+    - StructureDefinition
+    items:
+      pattern: \S*
+      type: string
+    title: Profile(s) this is an example of
+    type: array
+  reference:
+    $ref: Reference.yaml
+    backref: implementation_guide_manifest_resource
+    description: Where this resource is found.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    title: Location of the resource
+  relativePath:
+    description: The relative path for primary page for this resource within the IG.
+    element_property: true
+    format: uri
+    maxLength: 65536
+    minLength: 1
+    title: Relative path for page in IG
+    type: string
+  resourceType:
+    const: ImplementationGuideManifestResource
+    default: ImplementationGuideManifestResource
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+required:
+- reference
+title: ImplementationGuideManifestResource
+type: object

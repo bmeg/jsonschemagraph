@@ -1,0 +1,249 @@
+$id: QuestionnaireItemEnableWhen
+additionalProperties: false
+description: Only allow data when. A constraint indicating that this item should only
+  be enabled (displayed/allow answers to be captured) when the specified condition
+  is true. [See https://hl7.org/fhir/R5/QuestionnaireItemEnableWhen.html] [See https://hl7.org/fhir/R5/QuestionnaireItemEnableWhen.html]
+links:
+- href: Resource/{id}
+  rel: answerReference
+  targetHints:
+    backref:
+    - questionnaire_item_enable_when
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /answerReference/reference
+  templateRequired:
+  - id
+properties:
+  _answerBoolean:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``answerBoolean``.
+  _answerDate:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``answerDate``.
+  _answerDateTime:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``answerDateTime``.
+  _answerDecimal:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``answerDecimal``.
+  _answerInteger:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``answerInteger``.
+  _answerString:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``answerString``.
+  _answerTime:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``answerTime``.
+  _operator:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``operator``.
+  _question:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``question``.
+  answerBoolean:
+    description: A value that the referenced question is tested using the specified
+      operator in order for the item to be enabled.  If there are multiple answers,
+      a match on any of the answers suffices.  If different behavior is desired (all
+      must match, at least 2 must match, etc.), consider using the enableWhenExpression
+      extension.
+    element_property: true
+    one_of_many: answer
+    one_of_many_required: true
+    title: Value for question comparison based on operator
+    type: boolean
+  answerCoding:
+    $ref: Coding.yaml
+    description: A value that the referenced question is tested using the specified
+      operator in order for the item to be enabled.  If there are multiple answers,
+      a match on any of the answers suffices.  If different behavior is desired (all
+      must match, at least 2 must match, etc.), consider using the enableWhenExpression
+      extension.
+    element_property: true
+    one_of_many: answer
+    one_of_many_required: true
+    title: Value for question comparison based on operator
+  answerDate:
+    description: A value that the referenced question is tested using the specified
+      operator in order for the item to be enabled.  If there are multiple answers,
+      a match on any of the answers suffices.  If different behavior is desired (all
+      must match, at least 2 must match, etc.), consider using the enableWhenExpression
+      extension.
+    element_property: true
+    format: date
+    one_of_many: answer
+    one_of_many_required: true
+    title: Value for question comparison based on operator
+    type: string
+  answerDateTime:
+    description: A value that the referenced question is tested using the specified
+      operator in order for the item to be enabled.  If there are multiple answers,
+      a match on any of the answers suffices.  If different behavior is desired (all
+      must match, at least 2 must match, etc.), consider using the enableWhenExpression
+      extension.
+    element_property: true
+    format: date-time
+    one_of_many: answer
+    one_of_many_required: true
+    title: Value for question comparison based on operator
+    type: string
+  answerDecimal:
+    description: A value that the referenced question is tested using the specified
+      operator in order for the item to be enabled.  If there are multiple answers,
+      a match on any of the answers suffices.  If different behavior is desired (all
+      must match, at least 2 must match, etc.), consider using the enableWhenExpression
+      extension.
+    element_property: true
+    one_of_many: answer
+    one_of_many_required: true
+    title: Value for question comparison based on operator
+    type: number
+  answerInteger:
+    description: A value that the referenced question is tested using the specified
+      operator in order for the item to be enabled.  If there are multiple answers,
+      a match on any of the answers suffices.  If different behavior is desired (all
+      must match, at least 2 must match, etc.), consider using the enableWhenExpression
+      extension.
+    element_property: true
+    one_of_many: answer
+    one_of_many_required: true
+    title: Value for question comparison based on operator
+    type: integer
+  answerQuantity:
+    $ref: Quantity.yaml
+    description: A value that the referenced question is tested using the specified
+      operator in order for the item to be enabled.  If there are multiple answers,
+      a match on any of the answers suffices.  If different behavior is desired (all
+      must match, at least 2 must match, etc.), consider using the enableWhenExpression
+      extension.
+    element_property: true
+    one_of_many: answer
+    one_of_many_required: true
+    title: Value for question comparison based on operator
+  answerReference:
+    $ref: Reference.yaml
+    backref: questionnaire_item_enable_when
+    description: A value that the referenced question is tested using the specified
+      operator in order for the item to be enabled.  If there are multiple answers,
+      a match on any of the answers suffices.  If different behavior is desired (all
+      must match, at least 2 must match, etc.), consider using the enableWhenExpression
+      extension.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    one_of_many: answer
+    one_of_many_required: true
+    title: Value for question comparison based on operator
+  answerString:
+    description: A value that the referenced question is tested using the specified
+      operator in order for the item to be enabled.  If there are multiple answers,
+      a match on any of the answers suffices.  If different behavior is desired (all
+      must match, at least 2 must match, etc.), consider using the enableWhenExpression
+      extension.
+    element_property: true
+    one_of_many: answer
+    one_of_many_required: true
+    pattern: '[ \r\n\t\S]+'
+    title: Value for question comparison based on operator
+    type: string
+  answerTime:
+    description: A value that the referenced question is tested using the specified
+      operator in order for the item to be enabled.  If there are multiple answers,
+      a match on any of the answers suffices.  If different behavior is desired (all
+      must match, at least 2 must match, etc.), consider using the enableWhenExpression
+      extension.
+    element_property: true
+    format: time
+    one_of_many: answer
+    one_of_many_required: true
+    title: Value for question comparison based on operator
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  operator:
+    binding_description: The criteria by which a question is enabled.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/questionnaire-enable-operator
+    binding_version: 5.0.0
+    description: Specifies the criteria by which the question is enabled.
+    element_property: true
+    element_required: true
+    enum_values:
+    - exists
+    - '='
+    - '!='
+    - '>'
+    - <
+    - '>='
+    - <=
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: exists | = | != | > | < | >= | <=
+    type: string
+  question:
+    description: The linkId for the question whose answer (or lack of answer) governs
+      whether this item is enabled.
+    element_property: true
+    element_required: true
+    pattern: '[ \r\n\t\S]+'
+    title: The linkId of question that determines whether item is enabled/disabled
+    type: string
+  resourceType:
+    const: QuestionnaireItemEnableWhen
+    default: QuestionnaireItemEnableWhen
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+title: QuestionnaireItemEnableWhen
+type: object

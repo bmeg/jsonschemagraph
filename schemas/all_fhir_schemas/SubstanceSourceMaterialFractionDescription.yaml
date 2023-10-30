@@ -1,0 +1,84 @@
+$id: SubstanceSourceMaterialFractionDescription
+additionalProperties: false
+description: Many complex materials are fractions of parts of plants, animals, or
+  minerals. Fraction elements are often necessary to define both Substances and Specified
+  Group 1 Substances. For substances derived from Plants, fraction information will
+  be captured at the Substance information level ( . Oils, Juices and Exudates). Additional
+  information for Extracts, such as extraction solvent composition, will be captured
+  at the Specified Substance Group 1 information level. For plasma-derived products
+  fraction information will be captured at the Substance and the Specified Substance
+  Group 1 levels. [See https://hl7.org/fhir/R5/SubstanceSourceMaterialFractionDescription.html]
+  [See https://hl7.org/fhir/R5/SubstanceSourceMaterialFractionDescription.html]
+links: []
+properties:
+  _fraction:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``fraction``.
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  fraction:
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: This element is capturing information about the fraction of a plant part,
+      or human plasma for fractionation
+    type: string
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  materialType:
+    $ref: CodeableConcept.yaml
+    element_property: true
+    title: The specific type of the material constituting the component. For Herbal
+      preparations the particulars of the extracts (liquid/dry) is described in Specified
+      Substance Group 1
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: SubstanceSourceMaterialFractionDescription
+    default: SubstanceSourceMaterialFractionDescription
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+title: SubstanceSourceMaterialFractionDescription
+type: object

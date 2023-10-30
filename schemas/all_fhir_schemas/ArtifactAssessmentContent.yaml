@@ -1,0 +1,331 @@
+$id: ArtifactAssessmentContent
+additionalProperties: false
+description: Comment, classifier, or rating content. A component comment, classifier,
+  or rating of the artifact. [See https://hl7.org/fhir/R5/ArtifactAssessmentContent.html]
+  [See https://hl7.org/fhir/R5/ArtifactAssessmentContent.html] [See https://hl7.org/fhir/R5/ArtifactAssessmentContent.html]
+links:
+- href: Patient/{id}
+  rel: author_Patient
+  targetHints:
+    backref:
+    - artifact_assessment_content
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /author/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: author_Practitioner
+  targetHints:
+    backref:
+    - artifact_assessment_content
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /author/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: author_PractitionerRole
+  targetHints:
+    backref:
+    - artifact_assessment_content
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /author/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: author_Organization
+  targetHints:
+    backref:
+    - artifact_assessment_content
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /author/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: author_Device
+  targetHints:
+    backref:
+    - artifact_assessment_content
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /author/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: component_author_Patient
+  targetHints:
+    backref:
+    - artifact_assessment_content
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /component/-/author/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: component_author_Practitioner
+  targetHints:
+    backref:
+    - artifact_assessment_content
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /component/-/author/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: component_author_PractitionerRole
+  targetHints:
+    backref:
+    - artifact_assessment_content
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /component/-/author/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: component_author_Organization
+  targetHints:
+    backref:
+    - artifact_assessment_content
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /component/-/author/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: component_author_Device
+  targetHints:
+    backref:
+    - artifact_assessment_content
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /component/-/author/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: relatedArtifact_resourceReference
+  targetHints:
+    backref:
+    - related_artifact
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /relatedArtifact/-/resourceReference/reference
+  templateRequired:
+  - id
+properties:
+  _freeToShare:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``freeToShare``.
+  _informationType:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``informationType``.
+  _path:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``path``.
+    type: array
+  _summary:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``summary``.
+  author:
+    $ref: Reference.yaml
+    backref: artifact_assessment_content
+    description: Indicates who or what authored the content.
+    element_property: true
+    enum_reference_types:
+    - Patient
+    - Practitioner
+    - PractitionerRole
+    - Organization
+    - Device
+    title: Who authored the content
+  classifier:
+    binding_description: null
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/certainty-rating
+    binding_version: null
+    description: Represents a rating, classifier, or assessment of the artifact.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Rating, classifier, or assessment
+    type: array
+  component:
+    description: If the informationType is container, the components of the content.
+    element_property: true
+    items:
+      $ref: ArtifactAssessmentContent.yaml
+    title: Contained content
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  freeToShare:
+    description: Acceptable to publicly share the comment, classifier or rating.
+    element_property: true
+    title: Acceptable to publicly share the resource content
+    type: boolean
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  informationType:
+    binding_description: null
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/artifactassessment-information-type
+    binding_version: 5.0.0
+    description: The type of information this component of the content represents.
+    element_property: true
+    enum_values:
+    - comment
+    - classifier
+    - rating
+    - container
+    - response
+    - change-request
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: comment | classifier | rating | container | response | change-request
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  path:
+    description: A URI that points to what the comment is about, such as a line of
+      text in the CQL, or a specific element in a resource.
+    element_property: true
+    items:
+      pattern: \S*
+      type: string
+    title: What the comment is directed to
+    type: array
+  quantity:
+    $ref: Quantity.yaml
+    description: A quantitative rating of the artifact.
+    element_property: true
+    title: Quantitative rating
+  relatedArtifact:
+    description: Additional related artifacts that provide supporting documentation,
+      additional evidence, or further information related to the content.
+    element_property: true
+    items:
+      $ref: RelatedArtifact.yaml
+    title: Additional information
+    type: array
+  resourceType:
+    const: ArtifactAssessmentContent
+    default: ArtifactAssessmentContent
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  summary:
+    description: A brief summary of the content of this component.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Brief summary of the content
+    type: string
+  type:
+    $ref: CodeableConcept.yaml
+    binding_description: null
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/certainty-type
+    binding_version: null
+    description: Indicates what type of content this component represents.
+    element_property: true
+    title: What type of content
+title: ArtifactAssessmentContent
+type: object

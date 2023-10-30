@@ -1,0 +1,133 @@
+$id: SubscriptionTopicResourceTriggerQueryCriteria
+additionalProperties: false
+description: Query based trigger rule. The FHIR query based rules that the server
+  should use to determine when to trigger a notification for this subscription topic.
+  [See https://hl7.org/fhir/R5/SubscriptionTopicResourceTriggerQueryCriteria.html]
+  [See https://hl7.org/fhir/R5/SubscriptionTopicResourceTriggerQueryCriteria.html]
+links: []
+properties:
+  _current:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``current``.
+  _previous:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``previous``.
+  _requireBoth:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``requireBoth``.
+  _resultForCreate:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``resultForCreate``.
+  _resultForDelete:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``resultForDelete``.
+  current:
+    description: The FHIR query based rules are applied to the current resource state
+      (e.g., state after an update).
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Rule applied to current resource state
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  previous:
+    description: The FHIR query based rules are applied to the previous resource state
+      (e.g., state before an update).
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Rule applied to previous resource state
+    type: string
+  requireBoth:
+    description: If set to `true`, both the `current` and `previous` query criteria
+      must evaluate `true` to trigger a notification for this topic.  If set to `false`
+      or not present, a notification for this topic will be triggered if either the
+      `current` or `previous` tests evaluate to `true`.
+    element_property: true
+    title: Both must be true flag
+    type: boolean
+  resourceType:
+    const: SubscriptionTopicResourceTriggerQueryCriteria
+    default: SubscriptionTopicResourceTriggerQueryCriteria
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  resultForCreate:
+    binding_description: Behavior a server can exhibit when a criteria state does
+      not exist (e.g., state prior to a create or after a delete).
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior
+    binding_version: 5.0.0
+    description: For `create` interactions, should the `previous` criteria count as
+      an automatic pass or an automatic fail. If not present, the testing behavior
+      during `create` interactions is unspecified (server discretion).
+    element_property: true
+    enum_values:
+    - test-passes
+    - test-fails
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: test-passes | test-fails
+    type: string
+  resultForDelete:
+    binding_description: Behavior a server can exhibit when a criteria state does
+      not exist (e.g., state prior to a create or after a delete).
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior
+    binding_version: 5.0.0
+    description: For 'delete' interactions, should the 'current' query criteria count
+      as an automatic pass or an automatic fail. If not present, the testing behavior
+      during `delete` interactions is unspecified (server discretion).
+    element_property: true
+    enum_values:
+    - test-passes
+    - test-fails
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: test-passes | test-fails
+    type: string
+title: SubscriptionTopicResourceTriggerQueryCriteria
+type: object

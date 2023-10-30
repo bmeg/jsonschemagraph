@@ -1,0 +1,652 @@
+$id: NutritionOrder
+additionalProperties: false
+description: Diet, formula or nutritional supplement request. A request to supply
+  a diet, formula feeding (enteral) or oral nutritional supplement to a patient/resident.
+  [See https://hl7.org/fhir/R5/NutritionOrder.html]
+links:
+- href: AllergyIntolerance/{id}
+  rel: allergyIntolerance
+  targetHints:
+    backref:
+    - allergyIntolerance_nutrition_order
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: AllergyIntolerance.yaml
+  templatePointers:
+    id: /allergyIntolerance/-/reference
+  templateRequired:
+  - id
+- href: CarePlan/{id}
+  rel: basedOn_CarePlan
+  targetHints:
+    backref:
+    - basedOn_nutrition_order
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: CarePlan.yaml
+  templatePointers:
+    id: /basedOn/-/reference
+  templateRequired:
+  - id
+- href: NutritionOrder/{id}
+  rel: basedOn_NutritionOrder
+  targetHints:
+    backref:
+    - basedOn_nutrition_order
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: NutritionOrder.yaml
+  templatePointers:
+    id: /basedOn/-/reference
+  templateRequired:
+  - id
+- href: ServiceRequest/{id}
+  rel: basedOn_ServiceRequest
+  targetHints:
+    backref:
+    - basedOn_nutrition_order
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: ServiceRequest.yaml
+  templatePointers:
+    id: /basedOn/-/reference
+  templateRequired:
+  - id
+- href: Encounter/{id}
+  rel: encounter
+  targetHints:
+    backref:
+    - nutrition_order
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Encounter.yaml
+  templatePointers:
+    id: /encounter/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: orderer_Practitioner
+  targetHints:
+    backref:
+    - orderer_nutrition_order
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /orderer/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: orderer_PractitionerRole
+  targetHints:
+    backref:
+    - orderer_nutrition_order
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /orderer/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: subject_Patient
+  targetHints:
+    backref:
+    - subject_nutrition_order
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /subject/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: subject_Group
+  targetHints:
+    backref:
+    - subject_nutrition_order
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /subject/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: supportingInformation
+  targetHints:
+    backref:
+    - supportingInformation_nutrition_order
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /supportingInformation/-/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: note_authorReference_Practitioner
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: note_authorReference_PractitionerRole
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: note_authorReference_Patient
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: note_authorReference_RelatedPerson
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: note_authorReference_Organization
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: performer_reference
+  targetHints:
+    backref:
+    - codeable_reference
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /performer/-/reference/reference
+  templateRequired:
+  - id
+properties:
+  _dateTime:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``dateTime``.
+  _implicitRules:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``implicitRules``.
+  _instantiates:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``instantiates``.
+    type: array
+  _instantiatesCanonical:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``instantiatesCanonical``.
+    type: array
+  _instantiatesUri:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``instantiatesUri``.
+    type: array
+  _intent:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``intent``.
+  _language:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``language``.
+  _outsideFoodAllowed:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``outsideFoodAllowed``.
+  _priority:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``priority``.
+  _status:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``status``.
+  allergyIntolerance:
+    backref: allergyIntolerance_nutrition_order
+    description: A link to a record of allergies or intolerances  which should be
+      included in the nutrition order.
+    element_property: true
+    enum_reference_types:
+    - AllergyIntolerance
+    items:
+      $ref: Reference.yaml
+    title: List of the patient's food and nutrition-related allergies and intolerances
+    type: array
+  basedOn:
+    backref: basedOn_nutrition_order
+    description: A plan or request that is fulfilled in whole or in part by this nutrition
+      order.
+    element_property: true
+    enum_reference_types:
+    - CarePlan
+    - NutritionOrder
+    - ServiceRequest
+    items:
+      $ref: Reference.yaml
+    title: What this order fulfills
+    type: array
+  contained:
+    description: These resources do not have an independent existence apart from the
+      resource that contains them - they cannot be identified independently, nor can
+      they have their own independent transaction scope. This is allowed to be a Parameters
+      resource if and only if it is referenced by a resource that provides context/meaning.
+    element_property: true
+    items:
+      $ref: Resource.yaml
+    title: Contained, inline Resources
+    type: array
+  dateTime:
+    description: The date and time that this nutrition order was requested.
+    element_property: true
+    element_required: true
+    format: date-time
+    title: Date and time the nutrition order was requested
+    type: string
+  encounter:
+    $ref: Reference.yaml
+    backref: nutrition_order
+    description: An encounter that provides additional information about the healthcare
+      context in which this request is made.
+    element_property: true
+    enum_reference_types:
+    - Encounter
+    title: The encounter associated with this nutrition order
+  enteralFormula:
+    $ref: NutritionOrderEnteralFormula.yaml
+    description: Feeding provided through the gastrointestinal tract via a tube, catheter,
+      or stoma that delivers nutrition distal to the oral cavity.
+    element_property: true
+    title: Enteral formula components
+  excludeFoodModifier:
+    binding_description: Codes used to indicate the type of food that should NOT be
+      given to the patient.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/food-type
+    binding_version: null
+    description: "This modifier is used to convey Order-specific modifier about the\
+      \ type of oral food or oral fluids that should not be given. These can be derived\
+      \ from patient allergies, intolerances, or preferences such as No Red Meat,\
+      \ No Soy or No Wheat or  Gluten-Free.  While it should not be necessary to repeat\
+      \ allergy or intolerance information captured in the referenced AllergyIntolerance\
+      \ resource in the excludeFoodModifier, this element may be used to convey additional\
+      \ specificity related to foods that should be eliminated from the patient\u2019\
+      s diet for any reason.  This modifier applies to the entire nutrition order\
+      \ inclusive of the oral diet, nutritional supplements and enteral formula feedings."
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Order-specific modifier about the type of food that should not be given
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource. To make the use of extensions safe
+      and managable, there is a strict set of governance applied to the definition
+      and use of extensions. Though any implementer can define an extension, there
+      is a set of requirements that SHALL be met as part of the definition of the
+      extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  foodPreferenceModifier:
+    binding_description: Medical, cultural or ethical food preferences to help with
+      catering requirements.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/encounter-diet
+    binding_version: null
+    description: This modifier is used to convey order-specific modifiers about the
+      type of food that should be given. These can be derived from patient allergies,
+      intolerances, or preferences such as Halal, Vegan or Kosher. This modifier applies
+      to the entire nutrition order inclusive of the oral diet, nutritional supplements
+      and enteral formula feedings.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Order-specific modifier about the type of food that should be given
+    type: array
+  groupIdentifier:
+    $ref: Identifier.yaml
+    description: A shared identifier common to all nutrition orders that were authorized
+      more or less simultaneously by a single author, representing the composite or
+      group identifier.
+    element_property: true
+    title: Composite Request ID
+  id:
+    description: The logical id of the resource, as used in the URL for the resource.
+      Once assigned, this value never changes.
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Logical id of this artifact
+    type: string
+  identifier:
+    description: Identifiers assigned to this order by the order sender or by the
+      order receiver.
+    element_property: true
+    items:
+      $ref: Identifier.yaml
+    title: Identifiers assigned to this order
+    type: array
+  implicitRules:
+    description: A reference to a set of rules that were followed when the resource
+      was constructed, and which must be understood when processing the content. Often,
+      this is a reference to an implementation guide that defines the special rules
+      along with other profiles etc.
+    element_property: true
+    pattern: \S*
+    title: A set of rules under which this content was created
+    type: string
+  instantiates:
+    description: The URL pointing to a protocol, guideline, orderset or other definition
+      that is adhered to in whole or in part by this NutritionOrder.
+    element_property: true
+    items:
+      pattern: \S*
+      type: string
+    title: Instantiates protocol or definition
+    type: array
+  instantiatesCanonical:
+    description: The URL pointing to a FHIR-defined protocol, guideline, orderset
+      or other definition that is adhered to in whole or in part by this NutritionOrder.
+    element_property: true
+    enum_reference_types:
+    - ActivityDefinition
+    - PlanDefinition
+    items:
+      pattern: \S*
+      type: string
+    title: Instantiates FHIR protocol or definition
+    type: array
+  instantiatesUri:
+    description: The URL pointing to an externally maintained protocol, guideline,
+      orderset or other definition that is adhered to in whole or in part by this
+      NutritionOrder.
+    element_property: true
+    items:
+      pattern: \S*
+      type: string
+    title: Instantiates external protocol or definition
+    type: array
+  intent:
+    binding_description: Codes indicating the degree of authority/intentionality associated
+      with a nutrition order.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/request-intent
+    binding_version: 5.0.0
+    description: Indicates the level of authority/intentionality associated with the
+      NutrionOrder and where the request fits into the workflow chain.
+    element_property: true
+    element_required: true
+    enum_values:
+    - proposal
+    - plan
+    - directive
+    - order
+    - original-order
+    - reflex-order
+    - filler-order
+    - instance-order
+    - option
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: proposal | plan | directive | order | original-order | reflex-order | filler-order
+      | instance-order | option
+    type: string
+  language:
+    binding_description: IETF language tag for a human language
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/all-languages
+    binding_version: 5.0.0
+    description: The base language in which the resource is written.
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Language of the resource content
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  meta:
+    $ref: Meta.yaml
+    description: The metadata about the resource. This is content that is maintained
+      by the infrastructure. Changes to the content might not always be associated
+      with version changes to the resource.
+    element_property: true
+    title: Metadata about the resource
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource and that modifies the understanding
+      of the element that contains it and/or the understanding of the containing element's
+      descendants. Usually modifier elements provide negation or qualification. To
+      make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer is allowed
+      to define an extension, there is a set of requirements that SHALL be met as
+      part of the definition of the extension. Applications processing a resource
+      are required to check for modifier extensions.  Modifier extensions SHALL NOT
+      change the meaning of any elements on Resource or DomainResource (including
+      cannot change the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored
+    type: array
+  note:
+    description: Comments made about the {{title}} by the requester, performer, subject
+      or other participants.
+    element_property: true
+    items:
+      $ref: Annotation.yaml
+    title: Comments
+    type: array
+  oralDiet:
+    $ref: NutritionOrderOralDiet.yaml
+    description: Diet given orally in contrast to enteral (tube) feeding.
+    element_property: true
+    title: Oral diet components
+  orderer:
+    $ref: Reference.yaml
+    backref: orderer_nutrition_order
+    description: The practitioner that holds legal responsibility for ordering the
+      diet, nutritional supplement, or formula feedings.
+    element_property: true
+    enum_reference_types:
+    - Practitioner
+    - PractitionerRole
+    title: Who ordered the diet, formula or nutritional supplement
+  outsideFoodAllowed:
+    description: This modifier is used to convey whether a food item is allowed to
+      be brought in by the patient and/or family.  If set to true, indicates that
+      the receiving system does not need to supply the food item.
+    element_property: true
+    title: Capture when a food item is brought in by the patient and/or family
+    type: boolean
+  performer:
+    backref: performer_nutrition_order
+    description: The specified desired performer of the nutrition order.
+    element_property: true
+    enum_reference_types:
+    - CareTeam
+    - Practitioner
+    - PractitionerRole
+    - RelatedPerson
+    - Patient
+    - Organization
+    items:
+      $ref: CodeableReference.yaml
+    title: Who is desired to perform the administration of what is being ordered
+    type: array
+  priority:
+    binding_description: Identifies the level of importance to be assigned to actioning
+      the request.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/request-priority
+    binding_version: 5.0.0
+    description: Indicates how quickly the Nutrition Order should be addressed with
+      respect to other        requests.
+    element_property: true
+    enum_values:
+    - routine
+    - urgent
+    - asap
+    - stat
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: routine | urgent | asap | stat
+    type: string
+  resourceType:
+    const: NutritionOrder
+    default: NutritionOrder
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  status:
+    binding_description: Codes identifying the lifecycle stage of the nutrition order.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/request-status
+    binding_version: 5.0.0
+    description: The workflow status of the nutrition order/request.
+    element_property: true
+    element_required: true
+    enum_values:
+    - draft
+    - active
+    - on-hold
+    - revoked
+    - completed
+    - entered-in-error
+    - unknown
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: draft | active | on-hold | revoked | completed | entered-in-error | unknown
+    type: string
+  subject:
+    $ref: Reference.yaml
+    backref: subject_nutrition_order
+    description: The person or set of individuals who needs the nutrition order for
+      an oral diet, nutritional supplement and/or enteral or formula feeding.
+    element_property: true
+    enum_reference_types:
+    - Patient
+    - Group
+    title: Who requires the diet, formula or nutritional supplement
+  supplement:
+    description: Oral nutritional products given in order to add further nutritional
+      value to the patient's diet.
+    element_property: true
+    items:
+      $ref: NutritionOrderSupplement.yaml
+    title: Supplement components
+    type: array
+  supportingInformation:
+    backref: supportingInformation_nutrition_order
+    description: Information to support fulfilling (i.e. dispensing or administering)
+      of the nutrition,        for example, patient height and weight).
+    element_property: true
+    enum_reference_types:
+    - Resource
+    items:
+      $ref: Reference.yaml
+    title: Information to support fulfilling of the nutrition order
+    type: array
+  text:
+    $ref: Narrative.yaml
+    description: A human-readable narrative that contains a summary of the resource
+      and can be used to represent the content of the resource to a human. The narrative
+      need not encode all the structured data, but is required to contain sufficient
+      detail to make it "clinically safe" for a human to just read the narrative.
+      Resource definitions may define what content should be represented in the narrative
+      to ensure clinical safety.
+    element_property: true
+    title: Text summary of the resource, for human interpretation
+required:
+- subject
+title: NutritionOrder
+type: object

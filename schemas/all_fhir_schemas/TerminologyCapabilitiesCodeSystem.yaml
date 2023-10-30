@@ -1,0 +1,112 @@
+$id: TerminologyCapabilitiesCodeSystem
+additionalProperties: false
+description: A code system supported by the server. Identifies a code system that
+  is supported by the server. If there is a no code system URL, then this declares
+  the general assumptions a client can make about support for any CodeSystem resource.
+  [See https://hl7.org/fhir/R5/TerminologyCapabilitiesCodeSystem.html] [See https://hl7.org/fhir/R5/TerminologyCapabilitiesCodeSystem.html]
+links: []
+properties:
+  _content:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``content``.
+  _subsumption:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``subsumption``.
+  _uri:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``uri``.
+  content:
+    binding_description: The extent of the content of the code system (the concepts
+      and codes it defines) are represented in a code system resource.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/codesystem-content-mode
+    binding_version: 5.0.0
+    description: The extent of the content of the code system (the concepts and codes
+      it defines) are represented in this resource instance.
+    element_property: true
+    element_required: true
+    enum_values:
+    - not-present
+    - example
+    - fragment
+    - complete
+    - supplement
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: not-present | example | fragment | complete | supplement
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: TerminologyCapabilitiesCodeSystem
+    default: TerminologyCapabilitiesCodeSystem
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  subsumption:
+    description: True if subsumption is supported for this version of the code system.
+    element_property: true
+    title: Whether subsumption is supported
+    type: boolean
+  uri:
+    element_property: true
+    enum_reference_types:
+    - CodeSystem
+    pattern: \S*
+    title: Canonical identifier for the code system, represented as a URI
+    type: string
+  version:
+    description: For the code system, a list of versions that are supported by the
+      server.
+    element_property: true
+    items:
+      $ref: TerminologyCapabilitiesCodeSystemVersion.yaml
+    title: Version of Code System supported
+    type: array
+title: TerminologyCapabilitiesCodeSystem
+type: object

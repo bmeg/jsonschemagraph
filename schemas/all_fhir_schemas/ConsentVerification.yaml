@@ -1,0 +1,191 @@
+$id: ConsentVerification
+additionalProperties: false
+description: 'Consent Verified by patient or family. Whether a treatment instruction
+  (e.g. artificial respiration: yes or no) was verified with the patient, his/her
+  family or another authorized person. [See https://hl7.org/fhir/R5/ConsentVerification.html]'
+links:
+- href: Organization/{id}
+  rel: verifiedBy_Organization
+  targetHints:
+    backref:
+    - consent_verification
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /verifiedBy/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: verifiedBy_Practitioner
+  targetHints:
+    backref:
+    - consent_verification
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /verifiedBy/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: verifiedBy_PractitionerRole
+  targetHints:
+    backref:
+    - consent_verification
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /verifiedBy/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: verifiedWith_Patient
+  targetHints:
+    backref:
+    - consent_verification
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /verifiedWith/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: verifiedWith_RelatedPerson
+  targetHints:
+    backref:
+    - consent_verification
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /verifiedWith/reference
+  templateRequired:
+  - id
+properties:
+  _verificationDate:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``verificationDate``.
+    type: array
+  _verified:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``verified``.
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: ConsentVerification
+    default: ConsentVerification
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  verificationDate:
+    description: Date(s) verification was collected.
+    element_property: true
+    items:
+      format: date-time
+      type: string
+    title: When consent verified
+    type: array
+  verificationType:
+    $ref: CodeableConcept.yaml
+    binding_description: Types of Verification/Validation.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/consent-verification
+    binding_version: null
+    description: Extensible list of verification type starting with verification and
+      re-validation.
+    element_property: true
+    title: Business case of verification
+  verified:
+    description: Has the instruction been verified.
+    element_property: true
+    element_required: true
+    title: Has been verified
+    type: boolean
+  verifiedBy:
+    $ref: Reference.yaml
+    backref: consent_verification
+    description: The person who conducted the verification/validation of the Grantor
+      decision.
+    element_property: true
+    enum_reference_types:
+    - Organization
+    - Practitioner
+    - PractitionerRole
+    title: Person conducting verification
+  verifiedWith:
+    $ref: Reference.yaml
+    backref: consent_verification
+    description: Who verified the instruction (Patient, Relative or other Authorized
+      Person).
+    element_property: true
+    enum_reference_types:
+    - Patient
+    - RelatedPerson
+    title: Person who verified
+title: ConsentVerification
+type: object

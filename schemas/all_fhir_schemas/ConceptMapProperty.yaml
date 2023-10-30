@@ -1,0 +1,129 @@
+$id: ConceptMapProperty
+additionalProperties: false
+description: Additional properties of the mapping. A property defines a slot through
+  which additional information can be provided about a map from source -> target.
+  [See https://hl7.org/fhir/R5/ConceptMapProperty.html]
+links: []
+properties:
+  _code:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``code``.
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _system:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``system``.
+  _type:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``type``.
+  _uri:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``uri``.
+  code:
+    description: A code that is used to identify the property. The code is used internally
+      (in ConceptMap.group.element.target.property.code) and also in the $translate
+      operation.
+    element_property: true
+    element_required: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Identifies the property on the mappings, and when referred to in the $translate
+      operation
+    type: string
+  description:
+    description: A description of the property - why it is defined, and how its value
+      might be used.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Why the property is defined, and/or what it conveys
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: ConceptMapProperty
+    default: ConceptMapProperty
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  system:
+    description: The CodeSystem that defines the codes from which values of type ```code```
+      in property values.
+    element_property: true
+    enum_reference_types:
+    - CodeSystem
+    pattern: \S*
+    title: The CodeSystem from which code values come
+    type: string
+  type:
+    binding_description: The type of a property value.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/conceptmap-property-type
+    binding_version: 5.0.0
+    description: The type of the property value.
+    element_property: true
+    element_required: true
+    enum_values:
+    - Coding
+    - string
+    - integer
+    - boolean
+    - dateTime
+    - decimal
+    - code
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Coding | string | integer | boolean | dateTime | decimal | code
+    type: string
+  uri:
+    description: Reference to the formal meaning of the property.
+    element_property: true
+    pattern: \S*
+    title: Formal identifier for the property
+    type: string
+title: ConceptMapProperty
+type: object

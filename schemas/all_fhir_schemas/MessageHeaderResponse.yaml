@@ -1,0 +1,112 @@
+$id: MessageHeaderResponse
+additionalProperties: false
+description: If this is a reply to prior message. Information about the message that
+  this message is a response to.  Only present if this message is a response. [See
+  https://hl7.org/fhir/R5/MessageHeaderResponse.html] [See https://hl7.org/fhir/R5/MessageHeaderResponse.html]
+links:
+- href: OperationOutcome/{id}
+  rel: details
+  targetHints:
+    backref:
+    - message_header_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: OperationOutcome.yaml
+  templatePointers:
+    id: /details/reference
+  templateRequired:
+  - id
+properties:
+  _code:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``code``.
+  code:
+    binding_description: The kind of response to a message.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/response-code
+    binding_version: 5.0.0
+    description: Code that identifies the type of response to the message - whether
+      it was successful or not, and whether it should be resent or not.
+    element_property: true
+    element_required: true
+    enum_values:
+    - ok
+    - transient-error
+    - fatal-error
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: ok | transient-error | fatal-error
+    type: string
+  details:
+    $ref: Reference.yaml
+    backref: message_header_response
+    description: Full details of any issues found in the message.
+    element_property: true
+    enum_reference_types:
+    - OperationOutcome
+    title: Specific list of hints/warnings/errors
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  identifier:
+    $ref: Identifier.yaml
+    description: The Bundle.identifier of the message to which this message is a response.
+    element_property: true
+    title: Bundle.identifier of original message
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: MessageHeaderResponse
+    default: MessageHeaderResponse
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+required:
+- identifier
+title: MessageHeaderResponse
+type: object

@@ -1,0 +1,119 @@
+$id: MeasureSupplementalData
+additionalProperties: false
+description: What other data should be reported with the measure. The supplemental
+  data criteria for the measure report, specified as either the name of a valid CQL
+  expression within a referenced library, or a valid FHIR Resource Path. [See https://hl7.org/fhir/R5/MeasureSupplementalData.html]
+links: []
+properties:
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _linkId:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``linkId``.
+  code:
+    $ref: CodeableConcept.yaml
+    binding_description: Meaning of the supplemental data.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/measure-supplemental-data-example
+    binding_version: null
+    description: Indicates a meaning for the supplemental data. This can be as simple
+      as a unique identifier, or it can establish meaning in a broader context by
+      drawing from a terminology, allowing supplemental data to be correlated across
+      measures.
+    element_property: true
+    title: Meaning of the supplemental data
+  criteria:
+    $ref: Expression.yaml
+    description: The criteria for the supplemental data. This is typically the name
+      of a valid expression defined within a referenced library, but it may also be
+      a path to a specific data element. The criteria defines the data to be returned
+      for this element.
+    element_property: true
+    title: Expression describing additional data to be reported
+  description:
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: The human readable description of this supplemental data
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  linkId:
+    description: An identifier that is unique within the Measure allowing linkage
+      to the equivalent item in a MeasureReport resource.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for supplementalData in measure
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: MeasureSupplementalData
+    default: MeasureSupplementalData
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  usage:
+    binding_description: The intended usage for supplemental data elements in the
+      measure.
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/measure-data-usage
+    binding_version: null
+    description: An indicator of the intended usage for the supplemental data element.
+      Supplemental data indicates the data is additional information requested to
+      augment the measure information. Risk adjustment factor indicates the data is
+      additional information used to calculate risk adjustment factors when applying
+      a risk model to the measure calculation.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: supplemental-data | risk-adjustment-factor
+    type: array
+required:
+- criteria
+title: MeasureSupplementalData
+type: object

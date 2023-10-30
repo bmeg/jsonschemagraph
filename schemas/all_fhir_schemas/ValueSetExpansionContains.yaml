@@ -1,0 +1,149 @@
+$id: ValueSetExpansionContains
+additionalProperties: false
+description: Codes in the value set. The codes that are contained in the value set
+  expansion. [See https://hl7.org/fhir/R5/ValueSetExpansionContains.html] [See https://hl7.org/fhir/R5/ValueSetExpansionContains.html]
+  [See https://hl7.org/fhir/R5/ValueSetExpansionContains.html]
+links: []
+properties:
+  _abstract:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``abstract``.
+  _code:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``code``.
+  _display:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``display``.
+  _inactive:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``inactive``.
+  _system:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``system``.
+  _version:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``version``.
+  abstract:
+    description: If true, this entry is included in the expansion for navigational
+      purposes, and the user cannot select the code directly as a proper value.
+    element_property: true
+    title: If user cannot select this entry
+    type: boolean
+  code:
+    description: The code for this item in the expansion hierarchy. If this code is
+      missing the entry in the hierarchy is a place holder (abstract) and does not
+      represent a valid code in the value set.
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Code - if blank, this is not a selectable code
+    type: string
+  contains:
+    description: Other codes and entries contained under this entry in the hierarchy.
+    element_property: true
+    items:
+      $ref: ValueSetExpansionContains.yaml
+    title: Codes contained under this entry
+    type: array
+  designation:
+    description: Additional representations for this item - other languages, aliases,
+      specialized purposes, used for particular purposes, etc. These are relevant
+      when the conditions of the expansion do not fix to a single correct representation.
+    element_property: true
+    items:
+      $ref: ValueSetComposeIncludeConceptDesignation.yaml
+    title: Additional representations for this item
+    type: array
+  display:
+    description: The recommended display for this item in the expansion.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: User display for the concept
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  inactive:
+    description: If the concept is inactive in the code system that defines it. Inactive
+      codes are those that are no longer to be used, but are maintained by the code
+      system for understanding legacy data. It might not be known or specified whether
+      a concept is inactive (and it may depend on the context of use).
+    element_property: true
+    title: If concept is inactive in the code system
+    type: boolean
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  property:
+    description: A property value for this concept.
+    element_property: true
+    items:
+      $ref: ValueSetExpansionContainsProperty.yaml
+    title: Property value for the concept
+    type: array
+  resourceType:
+    const: ValueSetExpansionContains
+    default: ValueSetExpansionContains
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  system:
+    description: An absolute URI which is the code system in which the code for this
+      item in the expansion is defined.
+    element_property: true
+    pattern: \S*
+    title: System value for the code
+    type: string
+  version:
+    description: The version of the code system from this code was taken. Note that
+      a well-maintained code system does not need the version reported, because the
+      meaning of codes is consistent across versions. However this cannot consistently
+      be assured, and when the meaning is not guaranteed to be consistent, the version
+      SHOULD be exchanged.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Version in which this code/display is defined
+    type: string
+title: ValueSetExpansionContains
+type: object

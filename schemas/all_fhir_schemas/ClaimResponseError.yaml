@@ -1,0 +1,121 @@
+$id: ClaimResponseError
+additionalProperties: false
+description: Processing errors. Errors encountered during the processing of the adjudication.
+  [See https://hl7.org/fhir/R5/ClaimResponseError.html] [See https://hl7.org/fhir/R5/ClaimResponseError.html]
+links: []
+properties:
+  _detailSequence:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``detailSequence``.
+  _expression:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``expression``.
+    type: array
+  _itemSequence:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``itemSequence``.
+  _subDetailSequence:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``subDetailSequence``.
+  code:
+    $ref: CodeableConcept.yaml
+    binding_description: The adjudication error codes.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/adjudication-error
+    binding_version: null
+    description: An error code, from a specified code system, which details why the
+      claim could not be adjudicated.
+    element_property: true
+    title: Error code detailing processing issues
+  detailSequence:
+    description: The sequence number of the detail within the line item submitted
+      which contains the error. This value is omitted when the error occurs outside
+      of the item structure.
+    element_property: true
+    exclusiveMinimum: 0
+    title: Detail sequence number
+    type: integer
+  expression:
+    description: A [simple subset of FHIRPath](fhirpath.html#simple) limited to element
+      names, repetition indicators and the default child accessor that identifies
+      one of the elements in the resource that caused this issue to be raised.
+    element_property: true
+    items:
+      pattern: '[ \r\n\t\S]+'
+      type: string
+    title: FHIRPath of element(s) related to issue
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  itemSequence:
+    description: The sequence number of the line item submitted which contains the
+      error. This value is omitted when the error occurs outside of the item structure.
+    element_property: true
+    exclusiveMinimum: 0
+    title: Item sequence number
+    type: integer
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: ClaimResponseError
+    default: ClaimResponseError
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  subDetailSequence:
+    description: The sequence number of the sub-detail within the detail within the
+      line item submitted which contains the error. This value is omitted when the
+      error occurs outside of the item structure.
+    element_property: true
+    exclusiveMinimum: 0
+    title: Subdetail sequence number
+    type: integer
+required:
+- code
+title: ClaimResponseError
+type: object

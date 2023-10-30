@@ -1,0 +1,245 @@
+$id: InventoryItemCharacteristic
+additionalProperties: false
+description: Characteristic of the item. The descriptive or identifying characteristics
+  of the item. [See https://hl7.org/fhir/R5/InventoryItemCharacteristic.html]
+links:
+- href: Practitioner/{id}
+  rel: valueAnnotation_authorReference_Practitioner
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /valueAnnotation/authorReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: valueAnnotation_authorReference_PractitionerRole
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /valueAnnotation/authorReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: valueAnnotation_authorReference_Patient
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /valueAnnotation/authorReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: valueAnnotation_authorReference_RelatedPerson
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /valueAnnotation/authorReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: valueAnnotation_authorReference_Organization
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /valueAnnotation/authorReference/reference
+  templateRequired:
+  - id
+properties:
+  _valueBoolean:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueBoolean``.
+  _valueDateTime:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueDateTime``.
+  _valueDecimal:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueDecimal``.
+  _valueInteger:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueInteger``.
+  _valueString:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueString``.
+  _valueUrl:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueUrl``.
+  characteristicType:
+    $ref: CodeableConcept.yaml
+    description: The type of characteristic that is being defined.
+    element_property: true
+    title: The characteristic that is being defined
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: InventoryItemCharacteristic
+    default: InventoryItemCharacteristic
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  valueAddress:
+    $ref: Address.yaml
+    element_property: true
+    one_of_many: value
+    one_of_many_required: true
+    title: The value of the attribute
+  valueAnnotation:
+    $ref: Annotation.yaml
+    element_property: true
+    one_of_many: value
+    one_of_many_required: true
+    title: The value of the attribute
+  valueBoolean:
+    element_property: true
+    one_of_many: value
+    one_of_many_required: true
+    title: The value of the attribute
+    type: boolean
+  valueCodeableConcept:
+    $ref: CodeableConcept.yaml
+    element_property: true
+    one_of_many: value
+    one_of_many_required: true
+    title: The value of the attribute
+  valueDateTime:
+    element_property: true
+    format: date-time
+    one_of_many: value
+    one_of_many_required: true
+    title: The value of the attribute
+    type: string
+  valueDecimal:
+    element_property: true
+    one_of_many: value
+    one_of_many_required: true
+    title: The value of the attribute
+    type: number
+  valueDuration:
+    $ref: Duration.yaml
+    element_property: true
+    one_of_many: value
+    one_of_many_required: true
+    title: The value of the attribute
+  valueInteger:
+    element_property: true
+    one_of_many: value
+    one_of_many_required: true
+    title: The value of the attribute
+    type: integer
+  valueQuantity:
+    $ref: Quantity.yaml
+    element_property: true
+    one_of_many: value
+    one_of_many_required: true
+    title: The value of the attribute
+  valueRange:
+    $ref: Range.yaml
+    element_property: true
+    one_of_many: value
+    one_of_many_required: true
+    title: The value of the attribute
+  valueRatio:
+    $ref: Ratio.yaml
+    element_property: true
+    one_of_many: value
+    one_of_many_required: true
+    title: The value of the attribute
+  valueString:
+    element_property: true
+    one_of_many: value
+    one_of_many_required: true
+    pattern: '[ \r\n\t\S]+'
+    title: The value of the attribute
+    type: string
+  valueUrl:
+    element_property: true
+    format: uri
+    maxLength: 65536
+    minLength: 1
+    one_of_many: value
+    one_of_many_required: true
+    title: The value of the attribute
+    type: string
+required:
+- characteristicType
+title: InventoryItemCharacteristic
+type: object

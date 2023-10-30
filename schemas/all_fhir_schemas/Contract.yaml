@@ -1,0 +1,972 @@
+$id: Contract
+additionalProperties: false
+description: Legal Agreement. Legally enforceable, formally recorded unilateral or
+  bilateral directive i.e., a policy or agreement. [See https://hl7.org/fhir/R5/Contract.html]
+links:
+- href: Patient/{id}
+  rel: author_Patient
+  targetHints:
+    backref:
+    - author_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /author/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: author_Practitioner
+  targetHints:
+    backref:
+    - author_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /author/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: author_PractitionerRole
+  targetHints:
+    backref:
+    - author_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /author/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: author_Organization
+  targetHints:
+    backref:
+    - author_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /author/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: authority
+  targetHints:
+    backref:
+    - authority_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /authority/-/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: domain
+  targetHints:
+    backref:
+    - domain_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /domain/-/reference
+  templateRequired:
+  - id
+- href: Contract/{id}
+  rel: instantiatesCanonical
+  targetHints:
+    backref:
+    - instantiatesCanonical_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Contract.yaml
+  templatePointers:
+    id: /instantiatesCanonical/reference
+  templateRequired:
+  - id
+- href: Composition/{id}
+  rel: legallyBindingReference_Composition
+  targetHints:
+    backref:
+    - legallyBindingReference_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Composition.yaml
+  templatePointers:
+    id: /legallyBindingReference/reference
+  templateRequired:
+  - id
+- href: DocumentReference/{id}
+  rel: legallyBindingReference_DocumentReference
+  targetHints:
+    backref:
+    - legallyBindingReference_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: DocumentReference.yaml
+  templatePointers:
+    id: /legallyBindingReference/reference
+  templateRequired:
+  - id
+- href: QuestionnaireResponse/{id}
+  rel: legallyBindingReference_QuestionnaireResponse
+  targetHints:
+    backref:
+    - legallyBindingReference_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: QuestionnaireResponse.yaml
+  templatePointers:
+    id: /legallyBindingReference/reference
+  templateRequired:
+  - id
+- href: Contract/{id}
+  rel: legallyBindingReference_Contract
+  targetHints:
+    backref:
+    - legallyBindingReference_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Contract.yaml
+  templatePointers:
+    id: /legallyBindingReference/reference
+  templateRequired:
+  - id
+- href: Provenance/{id}
+  rel: relevantHistory
+  targetHints:
+    backref:
+    - relevantHistory_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Provenance.yaml
+  templatePointers:
+    id: /relevantHistory/-/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: site
+  targetHints:
+    backref:
+    - site_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /site/-/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: subject
+  targetHints:
+    backref:
+    - subject_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /subject/-/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: supportingInfo
+  targetHints:
+    backref:
+    - supportingInfo_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /supportingInfo/-/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: topicReference
+  targetHints:
+    backref:
+    - topicReference_contract
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /topicReference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: contentDefinition_publisher_Practitioner
+  targetHints:
+    backref:
+    - contract_content_definition
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /contentDefinition/publisher/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: contentDefinition_publisher_PractitionerRole
+  targetHints:
+    backref:
+    - contract_content_definition
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /contentDefinition/publisher/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: contentDefinition_publisher_Organization
+  targetHints:
+    backref:
+    - contract_content_definition
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /contentDefinition/publisher/reference
+  templateRequired:
+  - id
+- href: Composition/{id}
+  rel: friendly_contentReference_Composition
+  targetHints:
+    backref:
+    - contract_friendly
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Composition.yaml
+  templatePointers:
+    id: /friendly/-/contentReference/reference
+  templateRequired:
+  - id
+- href: DocumentReference/{id}
+  rel: friendly_contentReference_DocumentReference
+  targetHints:
+    backref:
+    - contract_friendly
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: DocumentReference.yaml
+  templatePointers:
+    id: /friendly/-/contentReference/reference
+  templateRequired:
+  - id
+- href: QuestionnaireResponse/{id}
+  rel: friendly_contentReference_QuestionnaireResponse
+  targetHints:
+    backref:
+    - contract_friendly
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: QuestionnaireResponse.yaml
+  templatePointers:
+    id: /friendly/-/contentReference/reference
+  templateRequired:
+  - id
+- href: Composition/{id}
+  rel: legal_contentReference_Composition
+  targetHints:
+    backref:
+    - contract_legal
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Composition.yaml
+  templatePointers:
+    id: /legal/-/contentReference/reference
+  templateRequired:
+  - id
+- href: DocumentReference/{id}
+  rel: legal_contentReference_DocumentReference
+  targetHints:
+    backref:
+    - contract_legal
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: DocumentReference.yaml
+  templatePointers:
+    id: /legal/-/contentReference/reference
+  templateRequired:
+  - id
+- href: QuestionnaireResponse/{id}
+  rel: legal_contentReference_QuestionnaireResponse
+  targetHints:
+    backref:
+    - contract_legal
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: QuestionnaireResponse.yaml
+  templatePointers:
+    id: /legal/-/contentReference/reference
+  templateRequired:
+  - id
+- href: DocumentReference/{id}
+  rel: rule_contentReference
+  targetHints:
+    backref:
+    - contract_rule
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: DocumentReference.yaml
+  templatePointers:
+    id: /rule/-/contentReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: signer_party_Organization
+  targetHints:
+    backref:
+    - contract_signer
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /signer/-/party/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: signer_party_Patient
+  targetHints:
+    backref:
+    - contract_signer
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /signer/-/party/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: signer_party_Practitioner
+  targetHints:
+    backref:
+    - contract_signer
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /signer/-/party/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: signer_party_PractitionerRole
+  targetHints:
+    backref:
+    - contract_signer
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /signer/-/party/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: signer_party_RelatedPerson
+  targetHints:
+    backref:
+    - contract_signer
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /signer/-/party/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: term_topicReference
+  targetHints:
+    backref:
+    - contract_term
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /term/-/topicReference/reference
+  templateRequired:
+  - id
+properties:
+  _alias:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``alias``.
+    type: array
+  _implicitRules:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``implicitRules``.
+  _instantiatesUri:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``instantiatesUri``.
+  _issued:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``issued``.
+  _language:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``language``.
+  _name:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``name``.
+  _status:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``status``.
+  _subtitle:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``subtitle``.
+  _title:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``title``.
+  _url:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``url``.
+  _version:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``version``.
+  alias:
+    description: Alternative representation of the title for this Contract definition,
+      derivative, or instance in any legal state., e.g., a domain specific contract
+      number related to legislation.
+    element_property: true
+    items:
+      pattern: '[ \r\n\t\S]+'
+      type: string
+    title: Acronym or short name
+    type: array
+  applies:
+    $ref: Period.yaml
+    description: Relevant time or time-period when this Contract is applicable.
+    element_property: true
+    title: Effective time
+  author:
+    $ref: Reference.yaml
+    backref: author_contract
+    description: The individual or organization that authored the Contract definition,
+      derivative, or instance in any legal state.
+    element_property: true
+    enum_reference_types:
+    - Patient
+    - Practitioner
+    - PractitionerRole
+    - Organization
+    title: Source of Contract
+  authority:
+    backref: authority_contract
+    description: A formally or informally recognized grouping of people, principals,
+      organizations, or jurisdictions formed for the purpose of achieving some form
+      of collective action such as the promulgation, administration and enforcement
+      of contracts and policies.
+    element_property: true
+    enum_reference_types:
+    - Organization
+    items:
+      $ref: Reference.yaml
+    title: Authority under which this Contract has standing
+    type: array
+  contained:
+    description: These resources do not have an independent existence apart from the
+      resource that contains them - they cannot be identified independently, nor can
+      they have their own independent transaction scope. This is allowed to be a Parameters
+      resource if and only if it is referenced by a resource that provides context/meaning.
+    element_property: true
+    items:
+      $ref: Resource.yaml
+    title: Contained, inline Resources
+    type: array
+  contentDefinition:
+    $ref: ContractContentDefinition.yaml
+    description: Precusory content developed with a focus and intent of supporting
+      the formation a Contract instance, which may be associated with and transformable
+      into a Contract.
+    element_property: true
+    title: Contract precursor content
+  contentDerivative:
+    $ref: CodeableConcept.yaml
+    binding_description: This is an example set of Content Derivative type codes,
+      which represent the minimal content derived from the basal information source.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/contract-content-derivative
+    binding_version: null
+    description: The minimal content derived from the basal information source at
+      a specific stage in its lifecycle.
+    element_property: true
+    title: Content derived from the basal information
+  domain:
+    backref: domain_contract
+    description: Recognized governance framework or system operating with a circumscribed
+      scope in accordance with specified principles, policies, processes or procedures
+      for managing rights, actions, or behaviors of parties or principals relative
+      to resources.
+    element_property: true
+    enum_reference_types:
+    - Location
+    items:
+      $ref: Reference.yaml
+    title: A sphere of control governed by an authoritative jurisdiction, organization,
+      or person
+    type: array
+  expirationType:
+    $ref: CodeableConcept.yaml
+    binding_description: Codes for the Cessation of Contracts.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/contract-expiration-type
+    binding_version: null
+    description: Event resulting in discontinuation or termination of this Contract
+      instance by one or more parties to the contract.
+    element_property: true
+    title: Contract cessation cause
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource. To make the use of extensions safe
+      and managable, there is a strict set of governance applied to the definition
+      and use of extensions. Though any implementer can define an extension, there
+      is a set of requirements that SHALL be met as part of the definition of the
+      extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  friendly:
+    description: The "patient friendly language" versionof the Contract in whole or
+      in parts. "Patient friendly language" means the representation of the Contract
+      and Contract Provisions in a manner that is readily accessible and understandable
+      by a layperson in accordance with best practices for communication styles that
+      ensure that those agreeing to or signing the Contract understand the roles,
+      actions, obligations, responsibilities, and implication of the agreement.
+    element_property: true
+    items:
+      $ref: ContractFriendly.yaml
+    title: Contract Friendly Language
+    type: array
+  id:
+    description: The logical id of the resource, as used in the URL for the resource.
+      Once assigned, this value never changes.
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Logical id of this artifact
+    type: string
+  identifier:
+    description: Unique identifier for this Contract or a derivative that references
+      a Source Contract.
+    element_property: true
+    items:
+      $ref: Identifier.yaml
+    title: Contract number
+    type: array
+  implicitRules:
+    description: A reference to a set of rules that were followed when the resource
+      was constructed, and which must be understood when processing the content. Often,
+      this is a reference to an implementation guide that defines the special rules
+      along with other profiles etc.
+    element_property: true
+    pattern: \S*
+    title: A set of rules under which this content was created
+    type: string
+  instantiatesCanonical:
+    $ref: Reference.yaml
+    backref: instantiatesCanonical_contract
+    description: The URL pointing to a FHIR-defined Contract Definition that is adhered
+      to in whole or part by this Contract.
+    element_property: true
+    enum_reference_types:
+    - Contract
+    title: Source Contract Definition
+  instantiatesUri:
+    description: The URL pointing to an externally maintained definition that is adhered
+      to in whole or in part by this Contract.
+    element_property: true
+    pattern: \S*
+    title: External Contract Definition
+    type: string
+  issued:
+    description: When this  Contract was issued.
+    element_property: true
+    format: date-time
+    title: When this Contract was issued
+    type: string
+  language:
+    binding_description: IETF language tag for a human language
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/all-languages
+    binding_version: 5.0.0
+    description: The base language in which the resource is written.
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Language of the resource content
+    type: string
+  legal:
+    description: List of Legal expressions or representations of this Contract.
+    element_property: true
+    items:
+      $ref: ContractLegal.yaml
+    title: Contract Legal Language
+    type: array
+  legalState:
+    $ref: CodeableConcept.yaml
+    binding_description: Detailed codes for the legal state of a contract.
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/contract-legalstate
+    binding_version: null
+    description: Legal states of the formation of a legal instrument, which is a formally
+      executed written document that can be formally attributed to its author, records
+      and formally expresses a legally enforceable act, process, or contractual duty,
+      obligation, or right, and therefore evidences that act, process, or agreement.
+    element_property: true
+    title: Negotiation status
+  legallyBindingAttachment:
+    $ref: Attachment.yaml
+    description: 'Legally binding Contract: This is the signed and legally recognized
+      representation of the Contract, which is considered the "source of truth" and
+      which would be the basis for legal action related to enforcement of this Contract.'
+    element_property: true
+    one_of_many: legallyBinding
+    one_of_many_required: false
+    title: Binding Contract
+  legallyBindingReference:
+    $ref: Reference.yaml
+    backref: legallyBindingReference_contract
+    description: 'Legally binding Contract: This is the signed and legally recognized
+      representation of the Contract, which is considered the "source of truth" and
+      which would be the basis for legal action related to enforcement of this Contract.'
+    element_property: true
+    enum_reference_types:
+    - Composition
+    - DocumentReference
+    - QuestionnaireResponse
+    - Contract
+    one_of_many: legallyBinding
+    one_of_many_required: false
+    title: Binding Contract
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  meta:
+    $ref: Meta.yaml
+    description: The metadata about the resource. This is content that is maintained
+      by the infrastructure. Changes to the content might not always be associated
+      with version changes to the resource.
+    element_property: true
+    title: Metadata about the resource
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource and that modifies the understanding
+      of the element that contains it and/or the understanding of the containing element's
+      descendants. Usually modifier elements provide negation or qualification. To
+      make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer is allowed
+      to define an extension, there is a set of requirements that SHALL be met as
+      part of the definition of the extension. Applications processing a resource
+      are required to check for modifier extensions.  Modifier extensions SHALL NOT
+      change the meaning of any elements on Resource or DomainResource (including
+      cannot change the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored
+    type: array
+  name:
+    description: A natural language name identifying this Contract definition, derivative,
+      or instance in any legal state. Provides additional information about its content.
+      This name should be usable as an identifier for the module by machine processing
+      applications such as code generation.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Computer friendly designation
+    type: string
+  relevantHistory:
+    backref: relevantHistory_contract
+    description: Links to Provenance records for past versions of this Contract definition,
+      derivative, or instance, which identify key state transitions or updates that
+      are likely to be relevant to a user looking at the current version of the Contract.  The
+      Provenance.entity indicates the target that was changed in the update (see [Provenance.entity](provenance-definitions.html#Provenance.entity)).
+    element_property: true
+    enum_reference_types:
+    - Provenance
+    items:
+      $ref: Reference.yaml
+    title: Key event in Contract History
+    type: array
+  resourceType:
+    const: Contract
+    default: Contract
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  rule:
+    description: List of Computable Policy Rule Language Representations of this Contract.
+    element_property: true
+    items:
+      $ref: ContractRule.yaml
+    title: Computable Contract Language
+    type: array
+  scope:
+    $ref: CodeableConcept.yaml
+    binding_description: Codes for the range of legal concerns.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/contract-scope
+    binding_version: null
+    description: A selector of legal concerns for this Contract definition, derivative,
+      or instance in any legal state.
+    element_property: true
+    title: Range of Legal Concerns
+  signer:
+    description: Parties with legal standing in the Contract, including the principal
+      parties, the grantor(s) and grantee(s), which are any person or organization
+      bound by the contract, and any ancillary parties, which facilitate the execution
+      of the contract such as a notary or witness.
+    element_property: true
+    items:
+      $ref: ContractSigner.yaml
+    title: Contract Signatory
+    type: array
+  site:
+    backref: site_contract
+    description: Sites in which the contract is complied with,  exercised, or in force.
+    element_property: true
+    enum_reference_types:
+    - Location
+    items:
+      $ref: Reference.yaml
+    title: Specific Location
+    type: array
+  status:
+    binding_description: A code specifying the state of the resource instance.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/contract-status
+    binding_version: 5.0.0
+    description: The status of the resource instance.
+    element_property: true
+    enum_values:
+    - amended
+    - appended
+    - cancelled
+    - disputed
+    - entered-in-error
+    - executable
+    - +
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: amended | appended | cancelled | disputed | entered-in-error | executable
+      +
+    type: string
+  subType:
+    binding_description: Detailed codes within the above.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/contract-subtype
+    binding_version: null
+    description: Sub-category for the Contract that distinguishes the kinds of systems
+      that would be interested in the Contract within the context of the Contract's
+      scope.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Subtype within the context of type
+    type: array
+  subject:
+    backref: subject_contract
+    description: The target entity impacted by or of interest to parties to the agreement.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    items:
+      $ref: Reference.yaml
+    title: Contract Target Entity
+    type: array
+  subtitle:
+    description: A more detailed or qualifying explanatory or alternate user-friendly
+      title for this Contract definition, derivative, or instance in any legal state.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Subordinate Friendly name
+    type: string
+  supportingInfo:
+    backref: supportingInfo_contract
+    description: Information that may be needed by/relevant to the performer in their
+      execution of this term action.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    items:
+      $ref: Reference.yaml
+    title: Extra Information
+    type: array
+  term:
+    description: One or more Contract Provisions, which may be related and conveyed
+      as a group, and may contain nested groups.
+    element_property: true
+    items:
+      $ref: ContractTerm.yaml
+    title: Contract Term List
+    type: array
+  text:
+    $ref: Narrative.yaml
+    description: A human-readable narrative that contains a summary of the resource
+      and can be used to represent the content of the resource to a human. The narrative
+      need not encode all the structured data, but is required to contain sufficient
+      detail to make it "clinically safe" for a human to just read the narrative.
+      Resource definitions may define what content should be represented in the narrative
+      to ensure clinical safety.
+    element_property: true
+    title: Text summary of the resource, for human interpretation
+  title:
+    description: A short, descriptive, user-friendly title for this Contract definition,
+      derivative, or instance in any legal state.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Human Friendly name
+    type: string
+  topicCodeableConcept:
+    $ref: CodeableConcept.yaml
+    description: Narrows the range of legal concerns to focus on the achievement of
+      specific contractual objectives.
+    element_property: true
+    one_of_many: topic
+    one_of_many_required: false
+    title: Focus of contract interest
+  topicReference:
+    $ref: Reference.yaml
+    backref: topicReference_contract
+    description: Narrows the range of legal concerns to focus on the achievement of
+      specific contractual objectives.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    one_of_many: topic
+    one_of_many_required: false
+    title: Focus of contract interest
+  type:
+    $ref: CodeableConcept.yaml
+    binding_description: List of overall contract codes.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/contract-type
+    binding_version: null
+    description: A high-level category for the legal instrument, whether constructed
+      as a Contract definition, derivative, or instance in any legal state.  Provides
+      additional information about its content within the context of the Contract's
+      scope to distinguish the kinds of systems that would be interested in the contract.
+    element_property: true
+    title: Legal instrument category
+  url:
+    description: Canonical identifier for this contract, represented as a URI (globally
+      unique).
+    element_property: true
+    pattern: \S*
+    title: Basal definition
+    type: string
+  version:
+    description: An edition identifier used for business purposes to label business
+      significant variants.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Business edition
+    type: string
+title: Contract
+type: object

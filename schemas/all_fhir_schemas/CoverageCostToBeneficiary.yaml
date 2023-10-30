@@ -1,0 +1,133 @@
+$id: CoverageCostToBeneficiary
+additionalProperties: false
+description: Patient payments for services/products. A suite of codes indicating the
+  cost category and associated amount which have been detailed in the policy and may
+  have been  included on the health card. [See https://hl7.org/fhir/R5/CoverageCostToBeneficiary.html]
+links: []
+properties:
+  category:
+    $ref: CodeableConcept.yaml
+    binding_description: null
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/ex-benefitcategory
+    binding_version: null
+    description: Code to identify the general type of benefits under which products
+      and services are provided.
+    element_property: true
+    title: Benefit classification
+  exception:
+    description: A suite of codes indicating exceptions or reductions to patient costs
+      and their effective periods.
+    element_property: true
+    items:
+      $ref: CoverageCostToBeneficiaryException.yaml
+    title: Exceptions for patient payments
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  network:
+    $ref: CodeableConcept.yaml
+    binding_description: null
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/benefit-network
+    binding_version: null
+    description: Is a flag to indicate whether the benefits refer to in-network providers
+      or out-of-network providers.
+    element_property: true
+    title: In or out of network
+  resourceType:
+    const: CoverageCostToBeneficiary
+    default: CoverageCostToBeneficiary
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  term:
+    $ref: CodeableConcept.yaml
+    binding_description: null
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/benefit-term
+    binding_version: null
+    description: The term or period of the values such as 'maximum lifetime benefit'
+      or 'maximum annual visits'.
+    element_property: true
+    title: Annual or lifetime
+  type:
+    $ref: CodeableConcept.yaml
+    binding_description: The types of services to which patient copayments are specified.
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/coverage-copay-type
+    binding_version: null
+    description: The category of patient centric costs associated with treatment.
+    element_property: true
+    title: Cost category
+  unit:
+    $ref: CodeableConcept.yaml
+    binding_description: null
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/benefit-unit
+    binding_version: null
+    description: Indicates if the benefits apply to an individual or to the family.
+    element_property: true
+    title: Individual or family
+  valueMoney:
+    $ref: Money.yaml
+    description: The amount due from the patient for the cost category.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: The amount or percentage due from the beneficiary
+  valueQuantity:
+    $ref: Quantity.yaml
+    description: The amount due from the patient for the cost category.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: The amount or percentage due from the beneficiary
+title: CoverageCostToBeneficiary
+type: object

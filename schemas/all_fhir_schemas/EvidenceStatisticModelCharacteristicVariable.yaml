@@ -1,0 +1,138 @@
+$id: EvidenceStatisticModelCharacteristicVariable
+additionalProperties: false
+description: A variable adjusted for in the adjusted analysis. [See https://hl7.org/fhir/R5/EvidenceStatisticModelCharacteristicVariable.html]
+  [See https://hl7.org/fhir/R5/EvidenceStatisticModelCharacteristicVariable.html]
+links:
+- href: Group/{id}
+  rel: variableDefinition_Group
+  targetHints:
+    backref:
+    - evidence_statistic_model_characteristic_variable
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /variableDefinition/reference
+  templateRequired:
+  - id
+- href: EvidenceVariable/{id}
+  rel: variableDefinition_EvidenceVariable
+  targetHints:
+    backref:
+    - evidence_statistic_model_characteristic_variable
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: EvidenceVariable.yaml
+  templatePointers:
+    id: /variableDefinition/reference
+  templateRequired:
+  - id
+properties:
+  _handling:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``handling``.
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  handling:
+    binding_description: null
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/variable-handling
+    binding_version: 5.0.0
+    description: How the variable is classified for use in adjusted analysis.
+    element_property: true
+    enum_values:
+    - continuous
+    - dichotomous
+    - ordinal
+    - polychotomous
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: continuous | dichotomous | ordinal | polychotomous
+    type: string
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: EvidenceStatisticModelCharacteristicVariable
+    default: EvidenceStatisticModelCharacteristicVariable
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  valueCategory:
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Description for grouping of ordinal or polychotomous variables
+    type: array
+  valueQuantity:
+    element_property: true
+    items:
+      $ref: Quantity.yaml
+    title: Discrete value for grouping of ordinal or polychotomous variables
+    type: array
+  valueRange:
+    element_property: true
+    items:
+      $ref: Range.yaml
+    title: Range of values for grouping of ordinal or polychotomous variables
+    type: array
+  variableDefinition:
+    $ref: Reference.yaml
+    backref: evidence_statistic_model_characteristic_variable
+    element_property: true
+    enum_reference_types:
+    - Group
+    - EvidenceVariable
+    title: Description of the variable
+required:
+- variableDefinition
+title: EvidenceStatisticModelCharacteristicVariable
+type: object

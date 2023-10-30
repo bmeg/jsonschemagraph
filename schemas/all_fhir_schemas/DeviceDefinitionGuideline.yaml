@@ -1,0 +1,231 @@
+$id: DeviceDefinitionGuideline
+additionalProperties: false
+description: Information aimed at providing directions for the usage of this model
+  of device. [See https://hl7.org/fhir/R5/DeviceDefinitionGuideline.html]
+links:
+- href: Resource/{id}
+  rel: relatedArtifact_resourceReference
+  targetHints:
+    backref:
+    - related_artifact
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /relatedArtifact/-/resourceReference/reference
+  templateRequired:
+  - id
+- href: PlanDefinition/{id}
+  rel: useContext_valueReference_PlanDefinition
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PlanDefinition.yaml
+  templatePointers:
+    id: /useContext/-/valueReference/reference
+  templateRequired:
+  - id
+- href: ResearchStudy/{id}
+  rel: useContext_valueReference_ResearchStudy
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: ResearchStudy.yaml
+  templatePointers:
+    id: /useContext/-/valueReference/reference
+  templateRequired:
+  - id
+- href: InsurancePlan/{id}
+  rel: useContext_valueReference_InsurancePlan
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: InsurancePlan.yaml
+  templatePointers:
+    id: /useContext/-/valueReference/reference
+  templateRequired:
+  - id
+- href: HealthcareService/{id}
+  rel: useContext_valueReference_HealthcareService
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: HealthcareService.yaml
+  templatePointers:
+    id: /useContext/-/valueReference/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: useContext_valueReference_Group
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /useContext/-/valueReference/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: useContext_valueReference_Location
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /useContext/-/valueReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: useContext_valueReference_Organization
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /useContext/-/valueReference/reference
+  templateRequired:
+  - id
+properties:
+  _intendedUse:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``intendedUse``.
+  _usageInstruction:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``usageInstruction``.
+  contraindication:
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: A specific situation when a device should not be used because it may cause
+      harm
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  indication:
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: A clinical condition for which the device was designed to be used
+    type: array
+  intendedUse:
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: A description of the general purpose or medical use of the device or its
+      function
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  relatedArtifact:
+    element_property: true
+    items:
+      $ref: RelatedArtifact.yaml
+    title: A source of information or reference for this guideline
+    type: array
+  resourceType:
+    const: DeviceDefinitionGuideline
+    default: DeviceDefinitionGuideline
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  usageInstruction:
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Detailed written and visual directions for the user on how to use the device
+    type: string
+  useContext:
+    element_property: true
+    items:
+      $ref: UsageContext.yaml
+    title: The circumstances that form the setting for using the device
+    type: array
+  warning:
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Specific hazard alert information that a user needs to know before using
+      the device
+    type: array
+title: DeviceDefinitionGuideline
+type: object

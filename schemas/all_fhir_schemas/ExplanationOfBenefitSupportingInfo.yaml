@@ -1,0 +1,197 @@
+$id: ExplanationOfBenefitSupportingInfo
+additionalProperties: false
+description: Supporting information. Additional information codes regarding exceptions,
+  special considerations, the condition, situation, prior or concurrent issues. [See
+  https://hl7.org/fhir/R5/ExplanationOfBenefitSupportingInfo.html] [See https://hl7.org/fhir/R5/ExplanationOfBenefitSupportingInfo.html]
+links:
+- href: Resource/{id}
+  rel: valueReference
+  targetHints:
+    backref:
+    - explanation_of_benefit_supporting_info
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /valueReference/reference
+  templateRequired:
+  - id
+properties:
+  _sequence:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``sequence``.
+  _timingDate:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``timingDate``.
+  _valueBoolean:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueBoolean``.
+  _valueString:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueString``.
+  category:
+    $ref: CodeableConcept.yaml
+    binding_description: The valuset used for additional information category codes.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/claim-informationcategory
+    binding_version: null
+    description: 'The general class of the information supplied: information; exception;
+      accident, employment; onset, etc.'
+    element_property: true
+    title: Classification of the supplied information
+  code:
+    $ref: CodeableConcept.yaml
+    binding_description: The valuset used for additional information codes.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/claim-exception
+    binding_version: null
+    description: System and code pertaining to the specific information regarding
+      special conditions relating to the setting, treatment or patient  for which
+      care is sought.
+    element_property: true
+    title: Type of information
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  reason:
+    $ref: Coding.yaml
+    binding_description: Reason codes for the missing teeth.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/missing-tooth-reason
+    binding_version: null
+    description: Provides the reason in the situation where a reason code is required
+      in addition to the content.
+    element_property: true
+    title: Explanation for the information
+  resourceType:
+    const: ExplanationOfBenefitSupportingInfo
+    default: ExplanationOfBenefitSupportingInfo
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  sequence:
+    description: A number to uniquely identify supporting information entries.
+    element_property: true
+    element_required: true
+    exclusiveMinimum: 0
+    title: Information instance identifier
+    type: integer
+  timingDate:
+    description: The date when or period to which this information refers.
+    element_property: true
+    format: date
+    one_of_many: timing
+    one_of_many_required: false
+    title: When it occurred
+    type: string
+  timingPeriod:
+    $ref: Period.yaml
+    description: The date when or period to which this information refers.
+    element_property: true
+    one_of_many: timing
+    one_of_many_required: false
+    title: When it occurred
+  valueAttachment:
+    $ref: Attachment.yaml
+    description: Additional data or information such as resources, documents, images
+      etc. including references to the data or the actual inclusion of the data.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: Data to be provided
+  valueBoolean:
+    description: Additional data or information such as resources, documents, images
+      etc. including references to the data or the actual inclusion of the data.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: Data to be provided
+    type: boolean
+  valueIdentifier:
+    $ref: Identifier.yaml
+    description: Additional data or information such as resources, documents, images
+      etc. including references to the data or the actual inclusion of the data.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: Data to be provided
+  valueQuantity:
+    $ref: Quantity.yaml
+    description: Additional data or information such as resources, documents, images
+      etc. including references to the data or the actual inclusion of the data.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: Data to be provided
+  valueReference:
+    $ref: Reference.yaml
+    backref: explanation_of_benefit_supporting_info
+    description: Additional data or information such as resources, documents, images
+      etc. including references to the data or the actual inclusion of the data.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    one_of_many: value
+    one_of_many_required: false
+    title: Data to be provided
+  valueString:
+    description: Additional data or information such as resources, documents, images
+      etc. including references to the data or the actual inclusion of the data.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    pattern: '[ \r\n\t\S]+'
+    title: Data to be provided
+    type: string
+required:
+- category
+title: ExplanationOfBenefitSupportingInfo
+type: object

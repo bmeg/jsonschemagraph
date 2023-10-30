@@ -1,0 +1,583 @@
+$id: MedicinalProductDefinition
+additionalProperties: false
+description: Detailed definition of a medicinal product. A medicinal product, being
+  a substance or combination of substances that is intended to treat, prevent or diagnose
+  a disease, or to restore, correct or modify physiological functions by exerting
+  a pharmacological, immunological or metabolic action. This resource is intended
+  to define and detail such products and their properties, for uses other than direct
+  patient care (e.g. regulatory use, or drug catalogs). [See https://hl7.org/fhir/R5/MedicinalProductDefinition.html]
+links:
+- href: DocumentReference/{id}
+  rel: attachedDocument
+  targetHints:
+    backref:
+    - attachedDocument_medicinal_product_definition
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: DocumentReference.yaml
+  templatePointers:
+    id: /attachedDocument/-/reference
+  templateRequired:
+  - id
+- href: ResearchStudy/{id}
+  rel: clinicalTrial
+  targetHints:
+    backref:
+    - clinicalTrial_medicinal_product_definition
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: ResearchStudy.yaml
+  templatePointers:
+    id: /clinicalTrial/-/reference
+  templateRequired:
+  - id
+- href: ManufacturedItemDefinition/{id}
+  rel: comprisedOf_ManufacturedItemDefinition
+  targetHints:
+    backref:
+    - comprisedOf_medicinal_product_definition
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: ManufacturedItemDefinition.yaml
+  templatePointers:
+    id: /comprisedOf/-/reference
+  templateRequired:
+  - id
+- href: DeviceDefinition/{id}
+  rel: comprisedOf_DeviceDefinition
+  targetHints:
+    backref:
+    - comprisedOf_medicinal_product_definition
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: DeviceDefinition.yaml
+  templatePointers:
+    id: /comprisedOf/-/reference
+  templateRequired:
+  - id
+- href: DocumentReference/{id}
+  rel: masterFile
+  targetHints:
+    backref:
+    - masterFile_medicinal_product_definition
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: DocumentReference.yaml
+  templatePointers:
+    id: /masterFile/-/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: contact_contact_Organization
+  targetHints:
+    backref:
+    - medicinal_product_definition_contact
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /contact/-/contact/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: contact_contact_PractitionerRole
+  targetHints:
+    backref:
+    - medicinal_product_definition_contact
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /contact/-/contact/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: impurity_reference
+  targetHints:
+    backref:
+    - codeable_reference
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /impurity/-/reference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: operation_organization
+  targetHints:
+    backref:
+    - organization_medicinal_product_definition_operation
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /operation/-/organization/-/reference
+  templateRequired:
+  - id
+properties:
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _implicitRules:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``implicitRules``.
+  _indication:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``indication``.
+  _language:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``language``.
+  _statusDate:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``statusDate``.
+  _version:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``version``.
+  additionalMonitoringIndicator:
+    $ref: CodeableConcept.yaml
+    binding_description: Extra measures defined for a Medicinal Product, such as heightened
+      reporting requirements (e.g. Black Triangle Monitoring).
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/medicinal-product-additional-monitoring
+    binding_version: null
+    description: Whether the Medicinal Product is subject to additional monitoring
+      for regulatory reasons, such as heightened reporting requirements.
+    element_property: true
+    title: Whether the Medicinal Product is subject to additional monitoring for regulatory
+      reasons
+  attachedDocument:
+    backref: attachedDocument_medicinal_product_definition
+    description: Additional information or supporting documentation about the medicinal
+      product.
+    element_property: true
+    enum_reference_types:
+    - DocumentReference
+    items:
+      $ref: Reference.yaml
+    title: Additional documentation about the medicinal product
+    type: array
+  characteristic:
+    description: Allows the key product features to be recorded, such as "sugar free",
+      "modified release", "parallel import".
+    element_property: true
+    items:
+      $ref: MedicinalProductDefinitionCharacteristic.yaml
+    title: Key product features such as "sugar free", "modified release"
+    type: array
+  classification:
+    binding_description: This value set includes codes from the Anatomical Therapeutic
+      Chemical Classification System - provided as an exemplar value set.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/medicinal-product-classification
+    binding_version: null
+    description: Allows the product to be classified by various systems, commonly
+      WHO ATC.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Allows the product to be classified by various systems
+    type: array
+  clinicalTrial:
+    backref: clinicalTrial_medicinal_product_definition
+    element_property: true
+    enum_reference_types:
+    - ResearchStudy
+    items:
+      $ref: Reference.yaml
+    title: Clinical trials or studies that this product is involved in
+    type: array
+  code:
+    binding_description: A coded concept that defines the type of a medication.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/medication-codes
+    binding_version: null
+    description: A code that this product is known by, usually within some formal
+      terminology, perhaps assigned by a third party (i.e. not the manufacturer or
+      regulator). Products (types of medications) tend to be known by identifiers
+      during development and within regulatory process. However when they are prescribed
+      they tend to be identified by codes. The same product may be have multiple codes,
+      applied to it by multiple organizations.
+    element_property: true
+    items:
+      $ref: Coding.yaml
+    title: A code that this product is known by, within some formal terminology
+    type: array
+  combinedPharmaceuticalDoseForm:
+    $ref: CodeableConcept.yaml
+    binding_description: Dose forms for a product as a whole, considering all individual
+      parts, but before any mixing
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/combined-dose-form
+    binding_version: null
+    description: The dose form for a single part product, or combined form of a multiple
+      part product. This is one concept that describes all the components. It does
+      not represent the form with components physically mixed, if that might be necessary,
+      for which see (AdministrableProductDefinition.administrableDoseForm).
+    element_property: true
+    title: The dose form for a single part product, or combined form of a multiple
+      part product
+  comprisedOf:
+    backref: comprisedOf_medicinal_product_definition
+    description: Types of medicinal manufactured items and/or devices that this product
+      consists of, such as tablets, capsule, or syringes. Used as a direct link when
+      the item's packaging is not being recorded (see also PackagedProductDefinition.package.containedItem.item).
+    element_property: true
+    enum_reference_types:
+    - ManufacturedItemDefinition
+    - DeviceDefinition
+    items:
+      $ref: Reference.yaml
+    title: Types of medicinal manufactured items and/or devices that this product
+      consists of, such as tablets, capsule, or syringes
+    type: array
+  contact:
+    element_property: true
+    items:
+      $ref: MedicinalProductDefinitionContact.yaml
+    title: A product specific contact, person (in a role), or an organization
+    type: array
+  contained:
+    description: These resources do not have an independent existence apart from the
+      resource that contains them - they cannot be identified independently, nor can
+      they have their own independent transaction scope. This is allowed to be a Parameters
+      resource if and only if it is referenced by a resource that provides context/meaning.
+    element_property: true
+    items:
+      $ref: Resource.yaml
+    title: Contained, inline Resources
+    type: array
+  crossReference:
+    description: Reference to another product, e.g. for linking authorised to investigational
+      product, or a virtual product.
+    element_property: true
+    items:
+      $ref: MedicinalProductDefinitionCrossReference.yaml
+    title: Reference to another product, e.g. for linking authorised to investigational
+      product
+    type: array
+  description:
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: General description of this product
+    type: string
+  domain:
+    $ref: CodeableConcept.yaml
+    binding_description: Applicable domain for this product (e.g. human, veterinary).
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/medicinal-product-domain
+    binding_version: null
+    element_property: true
+    title: If this medicine applies to human or veterinary uses
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource. To make the use of extensions safe
+      and managable, there is a strict set of governance applied to the definition
+      and use of extensions. Though any implementer can define an extension, there
+      is a set of requirements that SHALL be met as part of the definition of the
+      extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: The logical id of the resource, as used in the URL for the resource.
+      Once assigned, this value never changes.
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Logical id of this artifact
+    type: string
+  identifier:
+    description: Business identifier for this product. Could be an MPID. When in development
+      or being regulated, products are typically referenced by official identifiers,
+      assigned by a manufacturer or regulator, and unique to a product (which, when
+      compared to a product instance being prescribed, is actually a product type).
+      See also MedicinalProductDefinition.code.
+    element_property: true
+    items:
+      $ref: Identifier.yaml
+    title: Business identifier for this product. Could be an MPID
+    type: array
+  implicitRules:
+    description: A reference to a set of rules that were followed when the resource
+      was constructed, and which must be understood when processing the content. Often,
+      this is a reference to an implementation guide that defines the special rules
+      along with other profiles etc.
+    element_property: true
+    pattern: \S*
+    title: A set of rules under which this content was created
+    type: string
+  impurity:
+    backref: impurity_medicinal_product_definition
+    binding_description: This value set includes all substance codes from SNOMED CT
+      - provided as an exemplar value set.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/substance-codes
+    binding_version: null
+    description: Any component of the drug product which is not the chemical entity
+      defined as the drug substance, or an excipient in the drug product. This includes
+      process-related impurities and contaminants, product-related impurities including
+      degradation products.
+    element_property: true
+    enum_reference_types:
+    - SubstanceDefinition
+    items:
+      $ref: CodeableReference.yaml
+    title: Any component of the drug product which is not the chemical entity defined
+      as the drug substance, or an excipient in the drug product
+    type: array
+  indication:
+    description: Description of indication(s) for this product, used when structured
+      indications are not required. In cases where structured indications are required,
+      they are captured using the ClinicalUseDefinition resource. An indication is
+      a medical situation for which using the product is appropriate.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Description of indication(s) for this product, used when structured indications
+      are not required
+    type: string
+  ingredient:
+    binding_description: This value set includes all substance codes from SNOMED CT
+      - provided as an exemplar value set.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/substance-codes
+    binding_version: null
+    description: The ingredients of this medicinal product - when not detailed in
+      other resources. This is only needed if the ingredients are not specified by
+      incoming references from the Ingredient resource, or indirectly via incoming
+      AdministrableProductDefinition, PackagedProductDefinition or ManufacturedItemDefinition
+      references. In cases where those levels of detail are not used, the ingredients
+      may be specified directly here as codes.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: The ingredients of this medicinal product - when not detailed in other
+      resources
+    type: array
+  language:
+    binding_description: IETF language tag for a human language
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/all-languages
+    binding_version: 5.0.0
+    description: The base language in which the resource is written.
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Language of the resource content
+    type: string
+  legalStatusOfSupply:
+    $ref: CodeableConcept.yaml
+    binding_description: The prescription supply types appropriate to a medicinal
+      product
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/legal-status-of-supply
+    binding_version: null
+    element_property: true
+    title: The legal status of supply of the medicinal product as classified by the
+      regulator
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  marketingStatus:
+    description: Marketing status of the medicinal product, in contrast to marketing
+      authorization. This refers to the product being actually 'on the market' as
+      opposed to being allowed to be on the market (which is an authorization).
+    element_property: true
+    items:
+      $ref: MarketingStatus.yaml
+    title: Marketing status of the medicinal product, in contrast to marketing authorization
+    type: array
+  masterFile:
+    backref: masterFile_medicinal_product_definition
+    description: A master file for the medicinal product (e.g. Pharmacovigilance System
+      Master File). Drug master files (DMFs) are documents submitted to regulatory
+      agencies to provide confidential detailed information about facilities, processes
+      or articles used in the manufacturing, processing, packaging and storing of
+      drug products.
+    element_property: true
+    enum_reference_types:
+    - DocumentReference
+    items:
+      $ref: Reference.yaml
+    title: A master file for the medicinal product (e.g. Pharmacovigilance System
+      Master File)
+    type: array
+  meta:
+    $ref: Meta.yaml
+    description: The metadata about the resource. This is content that is maintained
+      by the infrastructure. Changes to the content might not always be associated
+      with version changes to the resource.
+    element_property: true
+    title: Metadata about the resource
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource and that modifies the understanding
+      of the element that contains it and/or the understanding of the containing element's
+      descendants. Usually modifier elements provide negation or qualification. To
+      make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer is allowed
+      to define an extension, there is a set of requirements that SHALL be met as
+      part of the definition of the extension. Applications processing a resource
+      are required to check for modifier extensions.  Modifier extensions SHALL NOT
+      change the meaning of any elements on Resource or DomainResource (including
+      cannot change the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored
+    type: array
+  name:
+    element_property: true
+    items:
+      $ref: MedicinalProductDefinitionName.yaml
+    title: The product's name, including full name and possibly coded parts
+    type: array
+  operation:
+    description: A manufacturing or administrative process or step associated with
+      (or performed on) the medicinal product.
+    element_property: true
+    items:
+      $ref: MedicinalProductDefinitionOperation.yaml
+    title: A manufacturing or administrative process for the medicinal product
+    type: array
+  packagedMedicinalProduct:
+    binding_description: Types of medicinal product packs
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/medicinal-product-package-type
+    binding_version: null
+    description: Package type for the product. See also the PackagedProductDefinition
+      resource.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Package type for the product
+    type: array
+  pediatricUseIndicator:
+    $ref: CodeableConcept.yaml
+    binding_description: Suitability for age groups, in particular children.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/medicinal-product-pediatric-use
+    binding_version: null
+    description: If authorised for use in children, or infants, neonates etc.
+    element_property: true
+    title: If authorised for use in children
+  resourceType:
+    const: MedicinalProductDefinition
+    default: MedicinalProductDefinition
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  route:
+    binding_description: A code specifying the route or physiological path of administration
+      of a therapeutic agent into or onto a patient's body.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/route-codes
+    binding_version: null
+    description: The path by which the product is taken into or makes contact with
+      the body. In some regions this is referred to as the licenced or approved route.
+      See also AdministrableProductDefinition resource. MedicinalProductDefinition.route
+      is the same concept as AdministrableProductDefinition.routeOfAdministration.code,
+      and they cannot be used together.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: The path by which the product is taken into or makes contact with the body
+    type: array
+  specialMeasures:
+    binding_description: Extra measures defined for a Medicinal Product, such as a
+      requirement to conduct post-authorization studies.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/medicinal-product-special-measures
+    binding_version: null
+    description: Whether the Medicinal Product is subject to special measures for
+      regulatory reasons, such as a requirement to conduct post-authorization studies.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Whether the Medicinal Product is subject to special measures for regulatory
+      reasons
+    type: array
+  status:
+    $ref: CodeableConcept.yaml
+    binding_description: The lifecycle status of an artifact.
+    binding_strength: preferred
+    binding_uri: http://hl7.org/fhir/ValueSet/publication-status
+    binding_version: null
+    description: The status within the lifecycle of this product record. A high-level
+      status, this is not intended to duplicate details carried elsewhere such as
+      legal status, or authorization status.
+    element_property: true
+    title: The status within the lifecycle of this product record
+  statusDate:
+    element_property: true
+    format: date-time
+    title: The date at which the given status became applicable
+    type: string
+  text:
+    $ref: Narrative.yaml
+    description: A human-readable narrative that contains a summary of the resource
+      and can be used to represent the content of the resource to a human. The narrative
+      need not encode all the structured data, but is required to contain sufficient
+      detail to make it "clinically safe" for a human to just read the narrative.
+      Resource definitions may define what content should be represented in the narrative
+      to ensure clinical safety.
+    element_property: true
+    title: Text summary of the resource, for human interpretation
+  type:
+    $ref: CodeableConcept.yaml
+    binding_description: Overall defining type of this medicinal product.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/medicinal-product-type
+    binding_version: null
+    element_property: true
+    title: Regulatory type, e.g. Investigational or Authorized
+  version:
+    description: A business identifier relating to a specific version of the product,
+      this is commonly used to support revisions to an existing product.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: A business identifier relating to a specific version of the product
+    type: string
+required:
+- name
+title: MedicinalProductDefinition
+type: object

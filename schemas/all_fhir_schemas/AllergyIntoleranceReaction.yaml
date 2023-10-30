@@ -1,0 +1,248 @@
+$id: AllergyIntoleranceReaction
+additionalProperties: false
+description: Adverse Reaction Events linked to exposure to substance. Details about
+  each adverse reaction event linked to exposure to the identified substance. [See
+  https://hl7.org/fhir/R5/AllergyIntoleranceReaction.html] [See https://hl7.org/fhir/R5/AllergyIntoleranceReaction.html]
+links:
+- href: Reference/{id}
+  rel: manifestation_reference
+  targetHints:
+    backref:
+    - codeable_reference
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /manifestation/-/reference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: note_authorReference_Practitioner
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: note_authorReference_PractitionerRole
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: note_authorReference_Patient
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: note_authorReference_RelatedPerson
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: note_authorReference_Organization
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+properties:
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _onset:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``onset``.
+  _severity:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``severity``.
+  description:
+    description: Text description about the reaction as a whole, including details
+      of the manifestation if required.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Description of the event as a whole
+    type: string
+  exposureRoute:
+    $ref: CodeableConcept.yaml
+    binding_description: A coded concept describing the route or physiological path
+      of exposure to a substance.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/route-codes
+    binding_version: null
+    description: Identification of the route by which the subject was exposed to the
+      substance.
+    element_property: true
+    title: How the subject was exposed to the substance
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  manifestation:
+    backref: manifestation_allergy_intolerance_reaction
+    binding_description: Clinical symptoms and/or signs that are observed or associated
+      with an Adverse Reaction Event.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/clinical-findings
+    binding_version: null
+    description: Clinical symptoms and/or signs that are observed or associated with
+      the adverse reaction event.
+    element_property: true
+    enum_reference_types:
+    - Observation
+    items:
+      $ref: CodeableReference.yaml
+    title: Clinical symptoms/signs associated with the Event
+    type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  note:
+    description: Additional text about the adverse reaction event not captured in
+      other fields.
+    element_property: true
+    items:
+      $ref: Annotation.yaml
+    title: Text about event not captured in other fields
+    type: array
+  onset:
+    description: Record of the date and/or time of the onset of the Reaction.
+    element_property: true
+    format: date-time
+    title: Date(/time) when manifestations showed
+    type: string
+  resourceType:
+    const: AllergyIntoleranceReaction
+    default: AllergyIntoleranceReaction
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  severity:
+    binding_description: Clinical assessment of the severity of a reaction event as
+      a whole, potentially considering multiple different manifestations.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/reaction-event-severity
+    binding_version: 5.0.0
+    description: Clinical assessment of the severity of the reaction event as a whole,
+      potentially considering multiple different manifestations.
+    element_property: true
+    enum_values:
+    - mild
+    - moderate
+    - severe
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: mild | moderate | severe (of event as a whole)
+    type: string
+  substance:
+    $ref: CodeableConcept.yaml
+    binding_description: Codes defining the type of the substance (including pharmaceutical
+      products).
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/substance-code
+    binding_version: null
+    description: 'Identification of the specific substance (or pharmaceutical product)
+      considered to be responsible for the Adverse Reaction event. Note: the substance
+      for a specific reaction may be different from the substance identified as the
+      cause of the risk, but it must be consistent with it. For instance, it may be
+      a more specific substance (e.g. a brand medication) or a composite product that
+      includes the identified substance. It must be clinically safe to only process
+      the ''code'' and ignore the ''reaction.substance''.  If a receiving system is
+      unable to confirm that AllergyIntolerance.reaction.substance falls within the
+      semantic scope of AllergyIntolerance.code, then the receiving system should
+      ignore AllergyIntolerance.reaction.substance.'
+    element_property: true
+    title: Specific substance or pharmaceutical product considered to be responsible
+      for event
+required:
+- manifestation
+title: AllergyIntoleranceReaction
+type: object

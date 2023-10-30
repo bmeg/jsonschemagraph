@@ -1,0 +1,91 @@
+$id: NutritionOrderOralDietSchedule
+additionalProperties: false
+description: Scheduling information for oral diets. Schedule information for an oral
+  diet. [See https://hl7.org/fhir/R5/NutritionOrderOralDietSchedule.html]
+links: []
+properties:
+  _asNeeded:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``asNeeded``.
+  asNeeded:
+    description: Indicates whether the product is only taken when needed within a
+      specific dosing schedule.
+    element_property: true
+    title: Take 'as needed'
+    type: boolean
+  asNeededFor:
+    $ref: CodeableConcept.yaml
+    binding_description: A coded concept identifying the precondition that should
+      be met or evaluated prior to       consuming a nutrition product.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/medication-as-needed-reason
+    binding_version: null
+    description: Indicates whether the product is only taken based on a precondition
+      for taking the product.
+    element_property: true
+    title: Take 'as needed' for x
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: NutritionOrderOralDietSchedule
+    default: NutritionOrderOralDietSchedule
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  timing:
+    description: The time period and frequency at which the diet should be given.  The
+      diet should be given for the combination of all schedules if more than one schedule
+      is present.
+    element_property: true
+    items:
+      $ref: Timing.yaml
+    title: Scheduled frequency of diet
+    type: array
+title: NutritionOrderOralDietSchedule
+type: object

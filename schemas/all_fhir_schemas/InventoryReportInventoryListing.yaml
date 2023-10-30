@@ -1,0 +1,103 @@
+$id: InventoryReportInventoryListing
+additionalProperties: false
+description: An inventory listing section (grouped by any of the attributes). [See
+  https://hl7.org/fhir/R5/InventoryReportInventoryListing.html] [See https://hl7.org/fhir/R5/InventoryReportInventoryListing.html]
+links:
+- href: Location/{id}
+  rel: location
+  targetHints:
+    backref:
+    - inventory_report_inventory_listing
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /location/reference
+  templateRequired:
+  - id
+properties:
+  _countingDateTime:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``countingDateTime``.
+  countingDateTime:
+    element_property: true
+    format: date-time
+    title: The date and time when the items were counted
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  item:
+    element_property: true
+    items:
+      $ref: InventoryReportInventoryListingItem.yaml
+    title: The item or items in this listing
+    type: array
+  itemStatus:
+    $ref: CodeableConcept.yaml
+    description: The status of the items.
+    element_property: true
+    title: The status of the items that are being reported
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  location:
+    $ref: Reference.yaml
+    backref: inventory_report_inventory_listing
+    element_property: true
+    enum_reference_types:
+    - Location
+    title: Location of the inventory items
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: InventoryReportInventoryListing
+    default: InventoryReportInventoryListing
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+title: InventoryReportInventoryListing
+type: object

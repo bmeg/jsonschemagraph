@@ -1,0 +1,123 @@
+$id: GenomicStudyAnalysisInput
+additionalProperties: false
+description: Inputs for the analysis event. [See https://hl7.org/fhir/R5/GenomicStudyAnalysisInput.html]
+  [See https://hl7.org/fhir/R5/GenomicStudyAnalysisInput.html]
+links:
+- href: DocumentReference/{id}
+  rel: file
+  targetHints:
+    backref:
+    - genomic_study_analysis_input
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: DocumentReference.yaml
+  templatePointers:
+    id: /file/reference
+  templateRequired:
+  - id
+- href: GenomicStudy/{id}
+  rel: generatedByReference
+  targetHints:
+    backref:
+    - genomic_study_analysis_input
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: GenomicStudy.yaml
+  templatePointers:
+    id: /generatedByReference/reference
+  templateRequired:
+  - id
+properties:
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  file:
+    $ref: Reference.yaml
+    backref: genomic_study_analysis_input
+    element_property: true
+    enum_reference_types:
+    - DocumentReference
+    title: File containing input data
+  generatedByIdentifier:
+    $ref: Identifier.yaml
+    element_property: true
+    one_of_many: generatedBy
+    one_of_many_required: false
+    title: The analysis event or other GenomicStudy that generated this input file
+  generatedByReference:
+    $ref: Reference.yaml
+    backref: genomic_study_analysis_input
+    element_property: true
+    enum_reference_types:
+    - GenomicStudy
+    one_of_many: generatedBy
+    one_of_many_required: false
+    title: The analysis event or other GenomicStudy that generated this input file
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: GenomicStudyAnalysisInput
+    default: GenomicStudyAnalysisInput
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  type:
+    $ref: CodeableConcept.yaml
+    binding_description: The data format of the data file.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/genomicstudy-dataformat
+    binding_version: null
+    description: Type of input data, e.g., BAM, CRAM, or FASTA.
+    element_property: true
+    title: Type of input data (e.g., BAM, CRAM, or FASTA)
+title: GenomicStudyAnalysisInput
+type: object

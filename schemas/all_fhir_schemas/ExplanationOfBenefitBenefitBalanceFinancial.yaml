@@ -1,0 +1,120 @@
+$id: ExplanationOfBenefitBenefitBalanceFinancial
+additionalProperties: false
+description: Benefit Summary. Benefits Used to date. [See https://hl7.org/fhir/R5/ExplanationOfBenefitBenefitBalanceFinancial.html]
+  [See https://hl7.org/fhir/R5/ExplanationOfBenefitBenefitBalanceFinancial.html]
+links: []
+properties:
+  _allowedString:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``allowedString``.
+  _allowedUnsignedInt:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``allowedUnsignedInt``.
+  _usedUnsignedInt:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``usedUnsignedInt``.
+  allowedMoney:
+    $ref: Money.yaml
+    description: The quantity of the benefit which is permitted under the coverage.
+    element_property: true
+    one_of_many: allowed
+    one_of_many_required: false
+    title: Benefits allowed
+  allowedString:
+    description: The quantity of the benefit which is permitted under the coverage.
+    element_property: true
+    one_of_many: allowed
+    one_of_many_required: false
+    pattern: '[ \r\n\t\S]+'
+    title: Benefits allowed
+    type: string
+  allowedUnsignedInt:
+    description: The quantity of the benefit which is permitted under the coverage.
+    element_property: true
+    minimum: 0
+    one_of_many: allowed
+    one_of_many_required: false
+    title: Benefits allowed
+    type: integer
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: ExplanationOfBenefitBenefitBalanceFinancial
+    default: ExplanationOfBenefitBenefitBalanceFinancial
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  type:
+    $ref: CodeableConcept.yaml
+    binding_description: Deductable, visits, co-pay, etc.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/benefit-type
+    binding_version: null
+    description: Classification of benefit being provided.
+    element_property: true
+    title: Benefit classification
+  usedMoney:
+    $ref: Money.yaml
+    description: The quantity of the benefit which have been consumed to date.
+    element_property: true
+    one_of_many: used
+    one_of_many_required: false
+    title: Benefits used
+  usedUnsignedInt:
+    description: The quantity of the benefit which have been consumed to date.
+    element_property: true
+    minimum: 0
+    one_of_many: used
+    one_of_many_required: false
+    title: Benefits used
+    type: integer
+required:
+- type
+title: ExplanationOfBenefitBenefitBalanceFinancial
+type: object

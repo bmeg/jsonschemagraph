@@ -1,0 +1,757 @@
+$id: GuidanceResponse
+additionalProperties: false
+description: The formal response to a guidance request. A guidance response is the
+  formal response to a guidance request, including any output parameters returned
+  by the evaluation, as well as the description of any proposed actions to be taken.
+  [See https://hl7.org/fhir/R5/GuidanceResponse.html]
+links:
+- href: Encounter/{id}
+  rel: encounter
+  targetHints:
+    backref:
+    - guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Encounter.yaml
+  templatePointers:
+    id: /encounter/reference
+  templateRequired:
+  - id
+- href: OperationOutcome/{id}
+  rel: evaluationMessage
+  targetHints:
+    backref:
+    - guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: OperationOutcome.yaml
+  templatePointers:
+    id: /evaluationMessage/reference
+  templateRequired:
+  - id
+- href: Parameters/{id}
+  rel: outputParameters
+  targetHints:
+    backref:
+    - guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Parameters.yaml
+  templatePointers:
+    id: /outputParameters/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: performer
+  targetHints:
+    backref:
+    - guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /performer/reference
+  templateRequired:
+  - id
+- href: Appointment/{id}
+  rel: result_Appointment
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Appointment.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: AppointmentResponse/{id}
+  rel: result_AppointmentResponse
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: AppointmentResponse.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: CarePlan/{id}
+  rel: result_CarePlan
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: CarePlan.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: Claim/{id}
+  rel: result_Claim
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Claim.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: CommunicationRequest/{id}
+  rel: result_CommunicationRequest
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: CommunicationRequest.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: Contract/{id}
+  rel: result_Contract
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Contract.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: CoverageEligibilityRequest/{id}
+  rel: result_CoverageEligibilityRequest
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: CoverageEligibilityRequest.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: DeviceRequest/{id}
+  rel: result_DeviceRequest
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: DeviceRequest.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: EnrollmentRequest/{id}
+  rel: result_EnrollmentRequest
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: EnrollmentRequest.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: ImmunizationRecommendation/{id}
+  rel: result_ImmunizationRecommendation
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: ImmunizationRecommendation.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: MedicationRequest/{id}
+  rel: result_MedicationRequest
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: MedicationRequest.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: NutritionOrder/{id}
+  rel: result_NutritionOrder
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: NutritionOrder.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: RequestOrchestration/{id}
+  rel: result_RequestOrchestration
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: RequestOrchestration.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: ServiceRequest/{id}
+  rel: result_ServiceRequest
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: ServiceRequest.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: SupplyRequest/{id}
+  rel: result_SupplyRequest
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: SupplyRequest.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: Task/{id}
+  rel: result_Task
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Task.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: VisionPrescription/{id}
+  rel: result_VisionPrescription
+  targetHints:
+    backref:
+    - result_guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: VisionPrescription.yaml
+  templatePointers:
+    id: /result/-/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: subject_Patient
+  targetHints:
+    backref:
+    - guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /subject/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: subject_Group
+  targetHints:
+    backref:
+    - guidance_response
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /subject/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: dataRequirement_subjectReference
+  targetHints:
+    backref:
+    - data_requirement
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /dataRequirement/-/subjectReference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: note_authorReference_Practitioner
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: note_authorReference_PractitionerRole
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: note_authorReference_Patient
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: note_authorReference_RelatedPerson
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: note_authorReference_Organization
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: reason_reference
+  targetHints:
+    backref:
+    - codeable_reference
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /reason/-/reference/reference
+  templateRequired:
+  - id
+properties:
+  _implicitRules:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``implicitRules``.
+  _language:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``language``.
+  _moduleCanonical:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``moduleCanonical``.
+  _moduleUri:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``moduleUri``.
+  _occurrenceDateTime:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``occurrenceDateTime``.
+  _status:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``status``.
+  contained:
+    description: These resources do not have an independent existence apart from the
+      resource that contains them - they cannot be identified independently, nor can
+      they have their own independent transaction scope. This is allowed to be a Parameters
+      resource if and only if it is referenced by a resource that provides context/meaning.
+    element_property: true
+    items:
+      $ref: Resource.yaml
+    title: Contained, inline Resources
+    type: array
+  dataRequirement:
+    description: If the evaluation could not be completed due to lack of information,
+      or additional information would potentially result in a more accurate response,
+      this element will a description of the data required in order to proceed with
+      the evaluation. A subsequent request to the service should include this data.
+    element_property: true
+    items:
+      $ref: DataRequirement.yaml
+    title: Additional required data
+    type: array
+  encounter:
+    $ref: Reference.yaml
+    backref: guidance_response
+    description: The encounter during which this response was created or to which
+      the creation of this record is tightly associated.
+    element_property: true
+    enum_reference_types:
+    - Encounter
+    title: Encounter during which the response was returned
+  evaluationMessage:
+    $ref: Reference.yaml
+    backref: guidance_response
+    description: Messages resulting from the evaluation of the artifact or artifacts.
+      As part of evaluating the request, the engine may produce informational or warning
+      messages. These messages will be provided by this element.
+    element_property: true
+    enum_reference_types:
+    - OperationOutcome
+    title: Messages resulting from the evaluation of the artifact or artifacts
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource. To make the use of extensions safe
+      and managable, there is a strict set of governance applied to the definition
+      and use of extensions. Though any implementer can define an extension, there
+      is a set of requirements that SHALL be met as part of the definition of the
+      extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: The logical id of the resource, as used in the URL for the resource.
+      Once assigned, this value never changes.
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Logical id of this artifact
+    type: string
+  identifier:
+    description: Allows a service to provide  unique, business identifiers for the
+      response.
+    element_property: true
+    items:
+      $ref: Identifier.yaml
+    title: Business identifier
+    type: array
+  implicitRules:
+    description: A reference to a set of rules that were followed when the resource
+      was constructed, and which must be understood when processing the content. Often,
+      this is a reference to an implementation guide that defines the special rules
+      along with other profiles etc.
+    element_property: true
+    pattern: \S*
+    title: A set of rules under which this content was created
+    type: string
+  language:
+    binding_description: IETF language tag for a human language
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/all-languages
+    binding_version: 5.0.0
+    description: The base language in which the resource is written.
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Language of the resource content
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  meta:
+    $ref: Meta.yaml
+    description: The metadata about the resource. This is content that is maintained
+      by the infrastructure. Changes to the content might not always be associated
+      with version changes to the resource.
+    element_property: true
+    title: Metadata about the resource
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource and that modifies the understanding
+      of the element that contains it and/or the understanding of the containing element's
+      descendants. Usually modifier elements provide negation or qualification. To
+      make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer is allowed
+      to define an extension, there is a set of requirements that SHALL be met as
+      part of the definition of the extension. Applications processing a resource
+      are required to check for modifier extensions.  Modifier extensions SHALL NOT
+      change the meaning of any elements on Resource or DomainResource (including
+      cannot change the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored
+    type: array
+  moduleCanonical:
+    description: An identifier, CodeableConcept or canonical reference to the guidance
+      that was requested.
+    element_property: true
+    one_of_many: module
+    one_of_many_required: true
+    pattern: \S*
+    title: What guidance was requested
+    type: string
+  moduleCodeableConcept:
+    $ref: CodeableConcept.yaml
+    description: An identifier, CodeableConcept or canonical reference to the guidance
+      that was requested.
+    element_property: true
+    one_of_many: module
+    one_of_many_required: true
+    title: What guidance was requested
+  moduleUri:
+    description: An identifier, CodeableConcept or canonical reference to the guidance
+      that was requested.
+    element_property: true
+    one_of_many: module
+    one_of_many_required: true
+    pattern: \S*
+    title: What guidance was requested
+    type: string
+  note:
+    description: Provides a mechanism to communicate additional information about
+      the response.
+    element_property: true
+    items:
+      $ref: Annotation.yaml
+    title: Additional notes about the response
+    type: array
+  occurrenceDateTime:
+    description: Indicates when the guidance response was processed.
+    element_property: true
+    format: date-time
+    title: When the guidance response was processed
+    type: string
+  outputParameters:
+    $ref: Reference.yaml
+    backref: guidance_response
+    description: The output parameters of the evaluation, if any. Many modules will
+      result in the return of specific resources such as procedure or communication
+      requests that are returned as part of the operation result. However, modules
+      may define specific outputs that would be returned as the result of the evaluation,
+      and these would be returned in this element.
+    element_property: true
+    enum_reference_types:
+    - Parameters
+    title: The output parameters of the evaluation, if any
+  performer:
+    $ref: Reference.yaml
+    backref: guidance_response
+    description: Provides a reference to the device that performed the guidance.
+    element_property: true
+    enum_reference_types:
+    - Device
+    title: Device returning the guidance
+  reason:
+    backref: reason_guidance_response
+    description: Describes the reason for the guidance response in coded or textual
+      form, or Indicates the reason the request was initiated. This is typically provided
+      as a parameter to the evaluation and echoed by the service, although for some
+      use cases, such as subscription- or event-based scenarios, it may provide an
+      indication of the cause for the response.
+    element_property: true
+    items:
+      $ref: CodeableReference.yaml
+    title: Why guidance is needed
+    type: array
+  requestIdentifier:
+    $ref: Identifier.yaml
+    description: The identifier of the request associated with this response. If an
+      identifier was given as part of the request, it will be reproduced here to enable
+      the requester to more easily identify the response in a multi-request scenario.
+    element_property: true
+    title: The identifier of the request associated with this response, if any
+  resourceType:
+    const: GuidanceResponse
+    default: GuidanceResponse
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  result:
+    backref: result_guidance_response
+    description: The actions, if any, produced by the evaluation of the artifact.
+    element_property: true
+    enum_reference_types:
+    - Appointment
+    - AppointmentResponse
+    - CarePlan
+    - Claim
+    - CommunicationRequest
+    - Contract
+    - CoverageEligibilityRequest
+    - DeviceRequest
+    - EnrollmentRequest
+    - ImmunizationRecommendation
+    - MedicationRequest
+    - NutritionOrder
+    - RequestOrchestration
+    - ServiceRequest
+    - SupplyRequest
+    - Task
+    - VisionPrescription
+    items:
+      $ref: Reference.yaml
+    title: Proposed actions, if any
+    type: array
+  status:
+    binding_description: The status of a guidance response.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/guidance-response-status
+    binding_version: 5.0.0
+    description: The status of the response. If the evaluation is completed successfully,
+      the status will indicate success. However, in order to complete the evaluation,
+      the engine may require more information. In this case, the status will be data-required,
+      and the response will contain a description of the additional required information.
+      If the evaluation completed successfully, but the engine determines that a potentially
+      more accurate response could be provided if more data was available, the status
+      will be data-requested, and the response will contain a description of the additional
+      requested information.
+    element_property: true
+    element_required: true
+    enum_values:
+    - success
+    - data-requested
+    - data-required
+    - in-progress
+    - failure
+    - entered-in-error
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: success | data-requested | data-required | in-progress | failure | entered-in-error
+    type: string
+  subject:
+    $ref: Reference.yaml
+    backref: guidance_response
+    description: The patient for which the request was processed.
+    element_property: true
+    enum_reference_types:
+    - Patient
+    - Group
+    title: Patient the request was performed for
+  text:
+    $ref: Narrative.yaml
+    description: A human-readable narrative that contains a summary of the resource
+      and can be used to represent the content of the resource to a human. The narrative
+      need not encode all the structured data, but is required to contain sufficient
+      detail to make it "clinically safe" for a human to just read the narrative.
+      Resource definitions may define what content should be represented in the narrative
+      to ensure clinical safety.
+    element_property: true
+    title: Text summary of the resource, for human interpretation
+title: GuidanceResponse
+type: object

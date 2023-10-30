@@ -1,0 +1,258 @@
+$id: MeasureReportGroupStratifierStratum
+additionalProperties: false
+description: Stratum results, one for each unique value, or set of values, in the
+  stratifier, or stratifier components. This element contains the results for a single
+  stratum within the stratifier. For example, when stratifying on administrative gender,
+  there will be four strata, one for each possible gender value. [See https://hl7.org/fhir/R5/MeasureReportGroupStratifierStratum.html]
+  [See https://hl7.org/fhir/R5/MeasureReportGroupStratifierStratum.html]
+links:
+- href: Reference/{id}
+  rel: valueReference
+  targetHints:
+    backref:
+    - measure_report_group_stratifier_stratum
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /valueReference/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: component_valueReference
+  targetHints:
+    backref:
+    - measure_report_group_stratifier_stratum_component
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /component/-/valueReference/reference
+  templateRequired:
+  - id
+- href: MeasureReport/{id}
+  rel: population_subjectReport
+  targetHints:
+    backref:
+    - subjectReport_measure_report_group_stratifier_stratum_population
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: MeasureReport.yaml
+  templatePointers:
+    id: /population/-/subjectReport/-/reference
+  templateRequired:
+  - id
+- href: List/{id}
+  rel: population_subjectResults
+  targetHints:
+    backref:
+    - measure_report_group_stratifier_stratum_population
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: List.yaml
+  templatePointers:
+    id: /population/-/subjectResults/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: population_subjects
+  targetHints:
+    backref:
+    - measure_report_group_stratifier_stratum_population
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /population/-/subjects/reference
+  templateRequired:
+  - id
+properties:
+  _measureScoreDateTime:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``measureScoreDateTime``.
+  _valueBoolean:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``valueBoolean``.
+  component:
+    description: A stratifier component value.
+    element_property: true
+    items:
+      $ref: MeasureReportGroupStratifierStratumComponent.yaml
+    title: Stratifier component values
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  measureScoreCodeableConcept:
+    $ref: CodeableConcept.yaml
+    description: The measure score for this stratum, calculated as appropriate for
+      the measure type and scoring method, and based on only the members of this stratum.
+    element_property: true
+    one_of_many: measureScore
+    one_of_many_required: false
+    title: What score this stratum achieved
+  measureScoreDateTime:
+    description: The measure score for this stratum, calculated as appropriate for
+      the measure type and scoring method, and based on only the members of this stratum.
+    element_property: true
+    format: date-time
+    one_of_many: measureScore
+    one_of_many_required: false
+    title: What score this stratum achieved
+    type: string
+  measureScoreDuration:
+    $ref: Duration.yaml
+    description: The measure score for this stratum, calculated as appropriate for
+      the measure type and scoring method, and based on only the members of this stratum.
+    element_property: true
+    one_of_many: measureScore
+    one_of_many_required: false
+    title: What score this stratum achieved
+  measureScorePeriod:
+    $ref: Period.yaml
+    description: The measure score for this stratum, calculated as appropriate for
+      the measure type and scoring method, and based on only the members of this stratum.
+    element_property: true
+    one_of_many: measureScore
+    one_of_many_required: false
+    title: What score this stratum achieved
+  measureScoreQuantity:
+    $ref: Quantity.yaml
+    description: The measure score for this stratum, calculated as appropriate for
+      the measure type and scoring method, and based on only the members of this stratum.
+    element_property: true
+    one_of_many: measureScore
+    one_of_many_required: false
+    title: What score this stratum achieved
+  measureScoreRange:
+    $ref: Range.yaml
+    description: The measure score for this stratum, calculated as appropriate for
+      the measure type and scoring method, and based on only the members of this stratum.
+    element_property: true
+    one_of_many: measureScore
+    one_of_many_required: false
+    title: What score this stratum achieved
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  population:
+    description: The populations that make up the stratum, one for each type of population
+      appropriate to the measure.
+    element_property: true
+    items:
+      $ref: MeasureReportGroupStratifierStratumPopulation.yaml
+    title: Population results in this stratum
+    type: array
+  resourceType:
+    const: MeasureReportGroupStratifierStratum
+    default: MeasureReportGroupStratifierStratum
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  valueBoolean:
+    description: The value for this stratum, expressed as a CodeableConcept. When
+      defining stratifiers on complex values, the value must be rendered such that
+      the value for each stratum within the stratifier is unique.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: The stratum value, e.g. male
+    type: boolean
+  valueCodeableConcept:
+    $ref: CodeableConcept.yaml
+    description: The value for this stratum, expressed as a CodeableConcept. When
+      defining stratifiers on complex values, the value must be rendered such that
+      the value for each stratum within the stratifier is unique.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: The stratum value, e.g. male
+  valueQuantity:
+    $ref: Quantity.yaml
+    description: The value for this stratum, expressed as a CodeableConcept. When
+      defining stratifiers on complex values, the value must be rendered such that
+      the value for each stratum within the stratifier is unique.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: The stratum value, e.g. male
+  valueRange:
+    $ref: Range.yaml
+    description: The value for this stratum, expressed as a CodeableConcept. When
+      defining stratifiers on complex values, the value must be rendered such that
+      the value for each stratum within the stratifier is unique.
+    element_property: true
+    one_of_many: value
+    one_of_many_required: false
+    title: The stratum value, e.g. male
+  valueReference:
+    $ref: Reference.yaml
+    backref: measure_report_group_stratifier_stratum
+    description: The value for this stratum, expressed as a CodeableConcept. When
+      defining stratifiers on complex values, the value must be rendered such that
+      the value for each stratum within the stratifier is unique.
+    element_property: true
+    enum_reference_types:
+    - Reference
+    one_of_many: value
+    one_of_many_required: false
+    title: The stratum value, e.g. male
+title: MeasureReportGroupStratifierStratum
+type: object

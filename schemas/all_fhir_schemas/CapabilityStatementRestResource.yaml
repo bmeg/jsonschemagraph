@@ -1,0 +1,299 @@
+$id: CapabilityStatementRestResource
+additionalProperties: false
+description: Resource served on the REST interface. A specification of the restful
+  capabilities of the solution for a specific resource type. [See https://hl7.org/fhir/R5/CapabilityStatementRestResource.html]
+  [See https://hl7.org/fhir/R5/CapabilityStatementRestResource.html]
+links: []
+properties:
+  _conditionalCreate:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``conditionalCreate``.
+  _conditionalDelete:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``conditionalDelete``.
+  _conditionalPatch:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``conditionalPatch``.
+  _conditionalRead:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``conditionalRead``.
+  _conditionalUpdate:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``conditionalUpdate``.
+  _documentation:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``documentation``.
+  _profile:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``profile``.
+  _readHistory:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``readHistory``.
+  _referencePolicy:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``referencePolicy``.
+    type: array
+  _searchInclude:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``searchInclude``.
+    type: array
+  _searchRevInclude:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``searchRevInclude``.
+    type: array
+  _supportedProfile:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``supportedProfile``.
+    type: array
+  _type:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``type``.
+  _updateCreate:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``updateCreate``.
+  _versioning:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``versioning``.
+  conditionalCreate:
+    description: A flag that indicates that the server supports conditional create.
+    element_property: true
+    title: If allows/uses conditional create
+    type: boolean
+  conditionalDelete:
+    binding_description: A code that indicates how the server supports conditional
+      delete.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/conditional-delete-status
+    binding_version: 5.0.0
+    description: A code that indicates how the server supports conditional delete.
+    element_property: true
+    enum_values:
+    - not-supported
+    - single
+    - multiple
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: not-supported | single | multiple - how conditional delete is supported
+    type: string
+  conditionalPatch:
+    description: A flag that indicates that the server supports conditional patch.
+    element_property: true
+    title: If allows/uses conditional patch
+    type: boolean
+  conditionalRead:
+    binding_description: A code that indicates how the server supports conditional
+      read.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/conditional-read-status
+    binding_version: 5.0.0
+    description: A code that indicates how the server supports conditional read.
+    element_property: true
+    enum_values:
+    - not-supported
+    - modified-since
+    - not-match
+    - full-support
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: not-supported | modified-since | not-match | full-support
+    type: string
+  conditionalUpdate:
+    description: A flag that indicates that the server supports conditional update.
+    element_property: true
+    title: If allows/uses conditional update
+    type: boolean
+  documentation:
+    description: Additional information about the resource type used by the system.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Additional information about the use of the resource type
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  interaction:
+    description: Identifies a restful operation supported by the solution.
+    element_property: true
+    items:
+      $ref: CapabilityStatementRestResourceInteraction.yaml
+    title: What operations are supported?
+    type: array
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  operation:
+    description: Definition of an operation or a named query together with its parameters
+      and their meaning and type. Consult the definition of the operation for details
+      about how to invoke the operation, and the parameters.
+    element_property: true
+    items:
+      $ref: CapabilityStatementRestResourceOperation.yaml
+    title: Definition of a resource operation
+    type: array
+  profile:
+    description: A system-wide profile that is applied across *all* instances of the
+      resource supported by the system. For example, if declared on Observation, this
+      profile is the "superset" of capabilities for laboratory *and* vitals *and*
+      other domains. See further discussion in [Using Profiles](profiling.html#profile-uses).
+    element_property: true
+    enum_reference_types:
+    - StructureDefinition
+    pattern: \S*
+    title: System-wide profile
+    type: string
+  readHistory:
+    description: A flag for whether the server is able to return past versions as
+      part of the vRead operation.
+    element_property: true
+    title: Whether vRead can return past versions
+    type: boolean
+  referencePolicy:
+    binding_description: A set of flags that defines how references are supported.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/reference-handling-policy
+    binding_version: 5.0.0
+    description: A set of flags that defines how references are supported.
+    element_property: true
+    enum_values:
+    - literal
+    - logical
+    - resolves
+    - enforced
+    - local
+    items:
+      pattern: ^[^\s]+(\s[^\s]+)*$
+      type: string
+    title: literal | logical | resolves | enforced | local
+    type: array
+  resourceType:
+    const: CapabilityStatementRestResource
+    default: CapabilityStatementRestResource
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  searchInclude:
+    description: A list of _include values supported by the server.
+    element_property: true
+    items:
+      pattern: '[ \r\n\t\S]+'
+      type: string
+    title: _include values supported by the server
+    type: array
+  searchParam:
+    description: Search parameters for implementations to support and/or make use
+      of - either references to ones defined in the specification, or additional ones
+      defined for/by the implementation.
+    element_property: true
+    items:
+      $ref: CapabilityStatementRestResourceSearchParam.yaml
+    title: Search parameters supported by implementation
+    type: array
+  searchRevInclude:
+    description: A list of _revinclude (reverse include) values supported by the server.
+    element_property: true
+    items:
+      pattern: '[ \r\n\t\S]+'
+      type: string
+    title: _revinclude values supported by the server
+    type: array
+  supportedProfile:
+    description: A list of profiles representing different use cases the system hosts/produces.
+      A supported profile is a statement about the functionality of the data and services
+      provided by the server (or the client) for supported use cases. For example,
+      a system can define and declare multiple Observation profiles for laboratory
+      observations, vital sign observations, etc. By declaring supported profiles,
+      systems provide a way to determine whether individual resources are conformant.
+      See further discussion in [Using Profiles](profiling.html#profile-uses).
+    element_property: true
+    enum_reference_types:
+    - StructureDefinition
+    items:
+      pattern: \S*
+      type: string
+    title: Use-case specific profiles
+    type: array
+  type:
+    binding_description: One of the resource types defined as part of this version
+      of FHIR.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/resource-types
+    binding_version: 5.0.0
+    description: A type of resource exposed via the restful interface.
+    element_property: true
+    element_required: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: A resource type that is supported
+    type: string
+  updateCreate:
+    description: A flag to indicate that the server allows or needs to allow the client
+      to create new identities on the server (that is, the client PUTs to a location
+      where there is no existing resource). Allowing this operation means that the
+      server allows the client to create new identities on the server.
+    element_property: true
+    title: If update can commit to a new identity
+    type: boolean
+  versioning:
+    binding_description: How the system supports versioning for a resource.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/versioning-policy
+    binding_version: 5.0.0
+    description: This field is set to no-version to specify that the system does not
+      support (server) or use (client) versioning for this resource type. If this
+      has some other value, the server must at least correctly track and populate
+      the versionId meta-property on resources. If the value is 'versioned-update',
+      then the server supports all the versioning features, including using e-tags
+      for version integrity in the API.
+    element_property: true
+    enum_values:
+    - no-version
+    - versioned
+    - versioned-update
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: no-version | versioned | versioned-update
+    type: string
+title: CapabilityStatementRestResource
+type: object

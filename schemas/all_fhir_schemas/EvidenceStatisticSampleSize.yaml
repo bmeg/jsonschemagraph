@@ -1,0 +1,179 @@
+$id: EvidenceStatisticSampleSize
+additionalProperties: false
+description: Number of samples in the statistic. [See https://hl7.org/fhir/R5/EvidenceStatisticSampleSize.html]
+  [See https://hl7.org/fhir/R5/EvidenceStatisticSampleSize.html]
+links:
+- href: Practitioner/{id}
+  rel: note_authorReference_Practitioner
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: note_authorReference_PractitionerRole
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: note_authorReference_Patient
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: note_authorReference_RelatedPerson
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: note_authorReference_Organization
+  targetHints:
+    backref:
+    - annotation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /note/-/authorReference/reference
+  templateRequired:
+  - id
+properties:
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _knownDataCount:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``knownDataCount``.
+  _numberOfParticipants:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``numberOfParticipants``.
+  _numberOfStudies:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``numberOfStudies``.
+  description:
+    description: Human-readable summary of population sample size.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Textual description of sample size for statistic
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  knownDataCount:
+    element_property: true
+    minimum: 0
+    title: Number of participants with known results for measured variables
+    type: integer
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  note:
+    element_property: true
+    items:
+      $ref: Annotation.yaml
+    title: Footnote or explanatory note about the sample size
+    type: array
+  numberOfParticipants:
+    description: A human-readable string to clarify or explain concepts about the
+      sample size.
+    element_property: true
+    minimum: 0
+    title: Cumulative number of participants
+    type: integer
+  numberOfStudies:
+    description: Number of participants in the population.
+    element_property: true
+    minimum: 0
+    title: Number of contributing studies
+    type: integer
+  resourceType:
+    const: EvidenceStatisticSampleSize
+    default: EvidenceStatisticSampleSize
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+title: EvidenceStatisticSampleSize
+type: object

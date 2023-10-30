@@ -1,0 +1,153 @@
+$id: PlanDefinitionGoal
+additionalProperties: false
+description: What the plan is trying to accomplish. A goal describes an expected outcome
+  that activities within the plan are intended to achieve. For example, weight loss,
+  restoring an activity of daily living, obtaining herd immunity via immunization,
+  meeting a process improvement objective, meeting the acceptance criteria for a test
+  as specified by a quality specification, etc. [See https://hl7.org/fhir/R5/PlanDefinitionGoal.html]
+  [See https://hl7.org/fhir/R5/PlanDefinitionGoal.html]
+links:
+- href: Resource/{id}
+  rel: documentation_resourceReference
+  targetHints:
+    backref:
+    - related_artifact
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /documentation/-/resourceReference/reference
+  templateRequired:
+  - id
+properties:
+  addresses:
+    binding_description: Identifies problems, conditions, issues, or concerns that
+      goals may address.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/condition-code
+    binding_version: null
+    description: Identifies problems, conditions, issues, or concerns the goal is
+      intended to address.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: What does the goal address
+    type: array
+  category:
+    $ref: CodeableConcept.yaml
+    binding_description: Example codes for grouping goals for filtering or presentation.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/goal-category
+    binding_version: null
+    description: Indicates a category the goal falls within.
+    element_property: true
+    title: E.g. Treatment, dietary, behavioral
+  description:
+    $ref: CodeableConcept.yaml
+    binding_description: Describes goals that can be achieved.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/clinical-findings
+    binding_version: null
+    description: Human-readable and/or coded description of a specific desired objective
+      of care, such as "control blood pressure" or "negotiate an obstacle course"
+      or "dance with child at wedding".
+    element_property: true
+    title: Code or text describing the goal
+  documentation:
+    description: Didactic or other informational resources associated with the goal
+      that provide further supporting information about the goal. Information resources
+      can include inline text commentary and links to web resources.
+    element_property: true
+    items:
+      $ref: RelatedArtifact.yaml
+    title: Supporting documentation for the goal
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  priority:
+    $ref: CodeableConcept.yaml
+    binding_description: Indicates the level of importance associated with reaching
+      or sustaining a goal.
+    binding_strength: preferred
+    binding_uri: http://hl7.org/fhir/ValueSet/goal-priority
+    binding_version: null
+    description: Identifies the expected level of importance associated with reaching/sustaining
+      the defined goal.
+    element_property: true
+    title: high-priority | medium-priority | low-priority
+  resourceType:
+    const: PlanDefinitionGoal
+    default: PlanDefinitionGoal
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  start:
+    $ref: CodeableConcept.yaml
+    binding_description: Identifies the types of events that might trigger the start
+      of a goal.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/goal-start-event
+    binding_version: null
+    description: The event after which the goal should begin being pursued.
+    element_property: true
+    title: When goal pursuit begins
+  target:
+    description: Indicates what should be done and within what timeframe.
+    element_property: true
+    items:
+      $ref: PlanDefinitionGoalTarget.yaml
+    title: Target outcome for the goal
+    type: array
+required:
+- description
+title: PlanDefinitionGoal
+type: object

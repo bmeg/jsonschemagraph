@@ -1,0 +1,737 @@
+$id: PlanDefinitionAction
+additionalProperties: false
+description: Action defined by the plan. An action or group of actions to be taken
+  as part of the plan. For example, in clinical care, an action would be to prescribe
+  a particular indicated medication, or perform a particular test as appropriate.
+  In pharmaceutical quality, an action would be the test that needs to be performed
+  on a drug product as defined in the quality specification. [See https://hl7.org/fhir/R5/PlanDefinitionAction.html]
+  [See https://hl7.org/fhir/R5/PlanDefinitionAction.html] [See https://hl7.org/fhir/R5/PlanDefinitionAction.html]
+links:
+- href: Group/{id}
+  rel: subjectReference
+  targetHints:
+    backref:
+    - plan_definition_action
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /subjectReference/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: action_subjectReference
+  targetHints:
+    backref:
+    - plan_definition_action
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /action/-/subjectReference/reference
+  templateRequired:
+  - id
+- href: Resource/{id}
+  rel: documentation_resourceReference
+  targetHints:
+    backref:
+    - related_artifact
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /documentation/-/resourceReference/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: location_reference
+  targetHints:
+    backref:
+    - codeable_reference
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /location/reference/reference
+  templateRequired:
+  - id
+- href: CareTeam/{id}
+  rel: participant_typeReference_CareTeam
+  targetHints:
+    backref:
+    - plan_definition_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: CareTeam.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: participant_typeReference_Device
+  targetHints:
+    backref:
+    - plan_definition_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: DeviceDefinition/{id}
+  rel: participant_typeReference_DeviceDefinition
+  targetHints:
+    backref:
+    - plan_definition_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: DeviceDefinition.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Endpoint/{id}
+  rel: participant_typeReference_Endpoint
+  targetHints:
+    backref:
+    - plan_definition_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Endpoint.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: participant_typeReference_Group
+  targetHints:
+    backref:
+    - plan_definition_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: HealthcareService/{id}
+  rel: participant_typeReference_HealthcareService
+  targetHints:
+    backref:
+    - plan_definition_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: HealthcareService.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: participant_typeReference_Location
+  targetHints:
+    backref:
+    - plan_definition_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: participant_typeReference_Organization
+  targetHints:
+    backref:
+    - plan_definition_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: participant_typeReference_Patient
+  targetHints:
+    backref:
+    - plan_definition_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: participant_typeReference_Practitioner
+  targetHints:
+    backref:
+    - plan_definition_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: participant_typeReference_PractitionerRole
+  targetHints:
+    backref:
+    - plan_definition_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: participant_typeReference_RelatedPerson
+  targetHints:
+    backref:
+    - plan_definition_action_participant
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /participant/-/typeReference/reference
+  templateRequired:
+  - id
+- href: Schedule/{id}
+  rel: trigger_timingReference
+  targetHints:
+    backref:
+    - trigger_definition
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Schedule.yaml
+  templatePointers:
+    id: /trigger/-/timingReference/reference
+  templateRequired:
+  - id
+properties:
+  _cardinalityBehavior:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``cardinalityBehavior``.
+  _definitionCanonical:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``definitionCanonical``.
+  _definitionUri:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``definitionUri``.
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _goalId:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``goalId``.
+    type: array
+  _groupingBehavior:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``groupingBehavior``.
+  _linkId:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``linkId``.
+  _precheckBehavior:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``precheckBehavior``.
+  _prefix:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``prefix``.
+  _priority:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``priority``.
+  _requiredBehavior:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``requiredBehavior``.
+  _selectionBehavior:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``selectionBehavior``.
+  _subjectCanonical:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``subjectCanonical``.
+  _textEquivalent:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``textEquivalent``.
+  _title:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``title``.
+  _transform:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``transform``.
+  action:
+    description: Sub actions that are contained within the action. The behavior of
+      this action determines the functionality of the sub-actions. For example, a
+      selection behavior of at-most-one indicates that of the sub-actions, at most
+      one may be chosen as part of realizing the action definition.
+    element_property: true
+    items:
+      $ref: PlanDefinitionAction.yaml
+    title: A sub-action
+    type: array
+  cardinalityBehavior:
+    binding_description: Defines behavior for an action or a group for how many times
+      that item may be repeated.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/action-cardinality-behavior
+    binding_version: 5.0.0
+    description: Defines whether the action can be selected multiple times.
+    element_property: true
+    enum_values:
+    - single
+    - multiple
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: single | multiple
+    type: string
+  code:
+    $ref: CodeableConcept.yaml
+    binding_description: Provides examples of actions to be performed.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/action-code
+    binding_version: null
+    description: A code that provides a meaning, grouping, or classification for the
+      action or action group. For example, a section may have a LOINC code for the
+      section of a documentation template. In pharmaceutical quality, an action (Test)
+      such as pH could be classified as a physical property.
+    element_property: true
+    title: Code representing the meaning of the action or sub-actions
+  condition:
+    description: An expression that describes applicability criteria or start/stop
+      conditions for the action.
+    element_property: true
+    items:
+      $ref: PlanDefinitionActionCondition.yaml
+    title: Whether or not the action is applicable
+    type: array
+  definitionCanonical:
+    description: A reference to an ActivityDefinition that describes the action to
+      be taken in detail, a MessageDefinition describing a message to be snet, a PlanDefinition
+      that describes a series of actions to be taken, a Questionnaire that should
+      be filled out, a SpecimenDefinition describing a specimen to be collected, or
+      an ObservationDefinition that specifies what observation should be captured.
+    element_property: true
+    enum_reference_types:
+    - ActivityDefinition
+    - MessageDefinition
+    - ObservationDefinition
+    - PlanDefinition
+    - Questionnaire
+    - SpecimenDefinition
+    one_of_many: definition
+    one_of_many_required: false
+    pattern: \S*
+    title: Description of the activity to be performed
+    type: string
+  definitionUri:
+    description: A reference to an ActivityDefinition that describes the action to
+      be taken in detail, a MessageDefinition describing a message to be snet, a PlanDefinition
+      that describes a series of actions to be taken, a Questionnaire that should
+      be filled out, a SpecimenDefinition describing a specimen to be collected, or
+      an ObservationDefinition that specifies what observation should be captured.
+    element_property: true
+    one_of_many: definition
+    one_of_many_required: false
+    pattern: \S*
+    title: Description of the activity to be performed
+    type: string
+  description:
+    description: A brief description of the action used to provide a summary to display
+      to the user.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Brief description of the action
+    type: string
+  documentation:
+    description: Didactic or other informational resources associated with the action
+      that can be provided to the CDS recipient. Information resources can include
+      inline text commentary and links to web resources.
+    element_property: true
+    items:
+      $ref: RelatedArtifact.yaml
+    title: Supporting documentation for the intended performer of the action
+    type: array
+  dynamicValue:
+    description: Customizations that should be applied to the statically defined resource.
+      For example, if the dosage of a medication must be computed based on the patient's
+      weight, a customization would be used to specify an expression that calculated
+      the weight, and the path on the resource that would contain the result.
+    element_property: true
+    items:
+      $ref: PlanDefinitionActionDynamicValue.yaml
+    title: Dynamic aspects of the definition
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  goalId:
+    description: Identifies goals that this action supports. The reference must be
+      to a goal element defined within this plan definition. In pharmaceutical quality,
+      a goal represents acceptance criteria (Goal) for a given action (Test), so the
+      goalId would be the unique id of a defined goal element establishing the acceptance
+      criteria for the action.
+    element_property: true
+    items:
+      maxLength: 64
+      minLength: 1
+      pattern: ^[A-Za-z0-9\-.]+$
+      type: string
+    title: What goals this action supports
+    type: array
+  groupingBehavior:
+    binding_description: Defines organization behavior of a group.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/action-grouping-behavior
+    binding_version: 5.0.0
+    description: Defines the grouping behavior for the action and its children.
+    element_property: true
+    enum_values:
+    - visual-group
+    - logical-group
+    - sentence-group
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: visual-group | logical-group | sentence-group
+    type: string
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  input:
+    description: Defines input data requirements for the action.
+    element_property: true
+    items:
+      $ref: PlanDefinitionActionInput.yaml
+    title: Input data requirements
+    type: array
+  linkId:
+    description: An identifier that is unique within the PlanDefinition to allow linkage
+      within the realized CarePlan and/or RequestOrchestration.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for the action in the PlanDefinition
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  location:
+    $ref: CodeableReference.yaml
+    backref: plan_definition_action
+    description: Identifies the facility where the action will occur; e.g. home, hospital,
+      specific clinic, etc.
+    element_property: true
+    enum_reference_types:
+    - Location
+    title: Where it should happen
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  output:
+    description: Defines the outputs of the action, if any.
+    element_property: true
+    items:
+      $ref: PlanDefinitionActionOutput.yaml
+    title: Output data definition
+    type: array
+  participant:
+    description: Indicates who should participate in performing the action described.
+    element_property: true
+    items:
+      $ref: PlanDefinitionActionParticipant.yaml
+    title: Who should participate in the action
+    type: array
+  precheckBehavior:
+    binding_description: Defines selection frequency behavior for an action or group.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/action-precheck-behavior
+    binding_version: 5.0.0
+    description: Defines whether the action should usually be preselected.
+    element_property: true
+    enum_values:
+    - 'yes'
+    - 'no'
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: yes | no
+    type: string
+  prefix:
+    description: A user-visible prefix for the action. For example a section or item
+      numbering such as 1. or A.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: User-visible prefix for the action (e.g. 1. or A.)
+    type: string
+  priority:
+    binding_description: Identifies the level of importance to be assigned to actioning
+      the request.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/request-priority
+    binding_version: 5.0.0
+    description: Indicates how quickly the action should be addressed with respect
+      to other actions.
+    element_property: true
+    enum_values:
+    - routine
+    - urgent
+    - asap
+    - stat
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: routine | urgent | asap | stat
+    type: string
+  reason:
+    binding_description: Provides examples of reasons for actions to be performed.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/action-reason-code
+    binding_version: null
+    description: A description of why this action is necessary or appropriate.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Why the action should be performed
+    type: array
+  relatedAction:
+    description: A relationship to another action such as "before" or "30-60 minutes
+      after start of".
+    element_property: true
+    items:
+      $ref: PlanDefinitionActionRelatedAction.yaml
+    title: Relationship to another action
+    type: array
+  requiredBehavior:
+    binding_description: Defines expectations around whether an action or action group
+      is required.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/action-required-behavior
+    binding_version: 5.0.0
+    description: Defines the required behavior for the action.
+    element_property: true
+    enum_values:
+    - must
+    - could
+    - must-unless-documented
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: must | could | must-unless-documented
+    type: string
+  resourceType:
+    const: PlanDefinitionAction
+    default: PlanDefinitionAction
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  selectionBehavior:
+    binding_description: Defines selection behavior of a group.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/action-selection-behavior
+    binding_version: 5.0.0
+    description: Defines the selection behavior for the action and its children.
+    element_property: true
+    enum_values:
+    - any
+    - all
+    - all-or-none
+    - exactly-one
+    - at-most-one
+    - one-or-more
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: any | all | all-or-none | exactly-one | at-most-one | one-or-more
+    type: string
+  subjectCanonical:
+    description: A code, group definition, or canonical reference that describes the
+      intended subject of the action and its children, if any. Canonical references
+      are allowed to support the definition of protocols for drug and substance quality
+      specifications, and is allowed to reference a MedicinalProductDefinition, SubstanceDefinition,
+      AdministrableProductDefinition, ManufacturedItemDefinition, or PackagedProductDefinition
+      resource.
+    element_property: true
+    one_of_many: subject
+    one_of_many_required: false
+    pattern: \S*
+    title: Type of individual the action is focused on
+    type: string
+  subjectCodeableConcept:
+    $ref: CodeableConcept.yaml
+    description: A code, group definition, or canonical reference that describes the
+      intended subject of the action and its children, if any. Canonical references
+      are allowed to support the definition of protocols for drug and substance quality
+      specifications, and is allowed to reference a MedicinalProductDefinition, SubstanceDefinition,
+      AdministrableProductDefinition, ManufacturedItemDefinition, or PackagedProductDefinition
+      resource.
+    element_property: true
+    one_of_many: subject
+    one_of_many_required: false
+    title: Type of individual the action is focused on
+  subjectReference:
+    $ref: Reference.yaml
+    backref: plan_definition_action
+    description: A code, group definition, or canonical reference that describes the
+      intended subject of the action and its children, if any. Canonical references
+      are allowed to support the definition of protocols for drug and substance quality
+      specifications, and is allowed to reference a MedicinalProductDefinition, SubstanceDefinition,
+      AdministrableProductDefinition, ManufacturedItemDefinition, or PackagedProductDefinition
+      resource.
+    element_property: true
+    enum_reference_types:
+    - Group
+    one_of_many: subject
+    one_of_many_required: false
+    title: Type of individual the action is focused on
+  textEquivalent:
+    description: A text equivalent of the action to be performed. This provides a
+      human-interpretable description of the action when the definition is consumed
+      by a system that might not be capable of interpreting it dynamically.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Static text equivalent of the action, used if the dynamic aspects cannot
+      be interpreted by the receiving system
+    type: string
+  timingAge:
+    $ref: Age.yaml
+    description: An optional value describing when the action should be performed.
+    element_property: true
+    one_of_many: timing
+    one_of_many_required: false
+    title: When the action should take place
+  timingDuration:
+    $ref: Duration.yaml
+    description: An optional value describing when the action should be performed.
+    element_property: true
+    one_of_many: timing
+    one_of_many_required: false
+    title: When the action should take place
+  timingRange:
+    $ref: Range.yaml
+    description: An optional value describing when the action should be performed.
+    element_property: true
+    one_of_many: timing
+    one_of_many_required: false
+    title: When the action should take place
+  timingTiming:
+    $ref: Timing.yaml
+    description: An optional value describing when the action should be performed.
+    element_property: true
+    one_of_many: timing
+    one_of_many_required: false
+    title: When the action should take place
+  title:
+    description: The textual description of the action displayed to a user. For example,
+      when the action is a test to be performed, the title would be the title of the
+      test such as Assay by HPLC.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: User-visible title
+    type: string
+  transform:
+    description: A reference to a StructureMap resource that defines a transform that
+      can be executed to produce the intent resource using the ActivityDefinition
+      instance as the input.
+    element_property: true
+    enum_reference_types:
+    - StructureMap
+    pattern: \S*
+    title: Transform to apply the template
+    type: string
+  trigger:
+    description: A description of when the action should be triggered. When multiple
+      triggers are specified on an action, any triggering event invokes the action.
+    element_property: true
+    items:
+      $ref: TriggerDefinition.yaml
+    title: When the action should be triggered
+    type: array
+  type:
+    $ref: CodeableConcept.yaml
+    binding_description: The type of action to be performed.
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/action-type
+    binding_version: null
+    description: The type of action to perform (create, update, remove).
+    element_property: true
+    title: create | update | remove | fire-event
+title: PlanDefinitionAction
+type: object

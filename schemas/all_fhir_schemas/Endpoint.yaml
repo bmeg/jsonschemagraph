@@ -1,0 +1,267 @@
+$id: Endpoint
+additionalProperties: false
+description: The technical details of an endpoint that can be used for electronic
+  services. The technical details of an endpoint that can be used for electronic services,
+  such as for web services providing XDS.b, a REST endpoint for another FHIR server,
+  or a s/Mime email address. This may include any security context information. [See
+  https://hl7.org/fhir/R5/Endpoint.html]
+links:
+- href: Organization/{id}
+  rel: managingOrganization
+  targetHints:
+    backref:
+    - endpoint
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /managingOrganization/reference
+  templateRequired:
+  - id
+properties:
+  _address:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``address``.
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _header:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``header``.
+    type: array
+  _implicitRules:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``implicitRules``.
+  _language:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``language``.
+  _name:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``name``.
+  _status:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``status``.
+  address:
+    description: The uri that describes the actual end-point to connect to.
+    element_property: true
+    element_required: true
+    format: uri
+    maxLength: 65536
+    minLength: 1
+    title: The technical base address for connecting to this endpoint
+    type: string
+  connectionType:
+    binding_description: null
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/endpoint-connection-type
+    binding_version: null
+    description: A coded value that represents the technical details of the usage
+      of this endpoint, such as what WSDLs should be used in what way. (e.g. XDS.b/DICOM/cds-hook).
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Protocol/Profile/Standard to be used with this endpoint connection
+    type: array
+  contact:
+    description: Contact details for a human to contact about the endpoint. The primary
+      use of this for system administrator troubleshooting.
+    element_property: true
+    items:
+      $ref: ContactPoint.yaml
+    title: Contact details for source (e.g. troubleshooting)
+    type: array
+  contained:
+    description: These resources do not have an independent existence apart from the
+      resource that contains them - they cannot be identified independently, nor can
+      they have their own independent transaction scope. This is allowed to be a Parameters
+      resource if and only if it is referenced by a resource that provides context/meaning.
+    element_property: true
+    items:
+      $ref: Resource.yaml
+    title: Contained, inline Resources
+    type: array
+  description:
+    description: The description of the endpoint and what it is for (typically used
+      as supplemental information in an endpoint directory describing its usage/purpose).
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Additional details about the endpoint that could be displayed as further
+      information to identify the description beyond its name
+    type: string
+  environmentType:
+    binding_description: null
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/endpoint-environment
+    binding_version: null
+    description: The type of environment(s) exposed at this endpoint (dev, prod, test,
+      etc.).
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: The type of environment(s) exposed at this endpoint
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource. To make the use of extensions safe
+      and managable, there is a strict set of governance applied to the definition
+      and use of extensions. Though any implementer can define an extension, there
+      is a set of requirements that SHALL be met as part of the definition of the
+      extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  header:
+    description: Additional headers / information to send as part of the notification.
+    element_property: true
+    items:
+      pattern: '[ \r\n\t\S]+'
+      type: string
+    title: Usage depends on the channel type
+    type: array
+  id:
+    description: The logical id of the resource, as used in the URL for the resource.
+      Once assigned, this value never changes.
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Logical id of this artifact
+    type: string
+  identifier:
+    description: Identifier for the organization that is used to identify the endpoint
+      across multiple disparate systems.
+    element_property: true
+    items:
+      $ref: Identifier.yaml
+    title: Identifies this endpoint across multiple systems
+    type: array
+  implicitRules:
+    description: A reference to a set of rules that were followed when the resource
+      was constructed, and which must be understood when processing the content. Often,
+      this is a reference to an implementation guide that defines the special rules
+      along with other profiles etc.
+    element_property: true
+    pattern: \S*
+    title: A set of rules under which this content was created
+    type: string
+  language:
+    binding_description: IETF language tag for a human language
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/all-languages
+    binding_version: 5.0.0
+    description: The base language in which the resource is written.
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Language of the resource content
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  managingOrganization:
+    $ref: Reference.yaml
+    backref: endpoint
+    description: The organization that manages this endpoint (even if technically
+      another organization is hosting this in the cloud, it is the organization associated
+      with the data).
+    element_property: true
+    enum_reference_types:
+    - Organization
+    title: Organization that manages this endpoint (might not be the organization
+      that exposes the endpoint)
+  meta:
+    $ref: Meta.yaml
+    description: The metadata about the resource. This is content that is maintained
+      by the infrastructure. Changes to the content might not always be associated
+      with version changes to the resource.
+    element_property: true
+    title: Metadata about the resource
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource and that modifies the understanding
+      of the element that contains it and/or the understanding of the containing element's
+      descendants. Usually modifier elements provide negation or qualification. To
+      make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer is allowed
+      to define an extension, there is a set of requirements that SHALL be met as
+      part of the definition of the extension. Applications processing a resource
+      are required to check for modifier extensions.  Modifier extensions SHALL NOT
+      change the meaning of any elements on Resource or DomainResource (including
+      cannot change the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored
+    type: array
+  name:
+    description: A friendly name that this endpoint can be referred to with.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: A name that this endpoint can be identified by
+    type: string
+  payload:
+    description: The set of payloads that are provided/available at this endpoint.
+    element_property: true
+    items:
+      $ref: EndpointPayload.yaml
+    title: Set of payloads that are provided by this endpoint
+    type: array
+  period:
+    $ref: Period.yaml
+    description: The interval during which the endpoint is expected to be operational.
+    element_property: true
+    title: Interval the endpoint is expected to be operational
+  resourceType:
+    const: Endpoint
+    default: Endpoint
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  status:
+    binding_description: The status of the endpoint.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/endpoint-status
+    binding_version: 5.0.0
+    description: The endpoint status represents the general expected availability
+      of an endpoint.
+    element_property: true
+    element_required: true
+    enum_values:
+    - active
+    - suspended
+    - error
+    - 'off'
+    - entered-in-error
+    - test
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: active | suspended | error | off | entered-in-error | test
+    type: string
+  text:
+    $ref: Narrative.yaml
+    description: A human-readable narrative that contains a summary of the resource
+      and can be used to represent the content of the resource to a human. The narrative
+      need not encode all the structured data, but is required to contain sufficient
+      detail to make it "clinically safe" for a human to just read the narrative.
+      Resource definitions may define what content should be represented in the narrative
+      to ensure clinical safety.
+    element_property: true
+    title: Text summary of the resource, for human interpretation
+required:
+- connectionType
+title: Endpoint
+type: object

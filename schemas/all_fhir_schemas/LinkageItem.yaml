@@ -1,0 +1,109 @@
+$id: LinkageItem
+additionalProperties: false
+description: Item to be linked. Identifies which record considered as the reference
+  to the same real-world occurrence as well as how the items should be evaluated within
+  the collection of linked items. [See https://hl7.org/fhir/R5/LinkageItem.html] [See
+  https://hl7.org/fhir/R5/LinkageItem.html]
+links:
+- href: Resource/{id}
+  rel: resource
+  targetHints:
+    backref:
+    - linkage_item
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /resource/reference
+  templateRequired:
+  - id
+properties:
+  _type:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``type``.
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resource:
+    $ref: Reference.yaml
+    backref: linkage_item
+    description: The resource instance being linked as part of the group.
+    element_property: true
+    enum_reference_types:
+    - Resource
+    title: Resource being linked
+  resourceType:
+    const: LinkageItem
+    default: LinkageItem
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  type:
+    binding_description: Used to distinguish different roles a resource can play within
+      a set of linked resources.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/linkage-type
+    binding_version: 5.0.0
+    description: Distinguishes which item is "source of truth" (if any) and which
+      items are no longer considered to be current representations.
+    element_property: true
+    element_required: true
+    enum_values:
+    - source
+    - alternate
+    - historical
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: source | alternate | historical
+    type: string
+required:
+- resource
+title: LinkageItem
+type: object

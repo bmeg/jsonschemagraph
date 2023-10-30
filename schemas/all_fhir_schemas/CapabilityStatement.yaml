@@ -1,0 +1,632 @@
+$id: CapabilityStatement
+additionalProperties: false
+description: A statement of system capabilities. A Capability Statement documents
+  a set of capabilities (behaviors) of a FHIR Server or Client for a particular version
+  of FHIR that may be used as a statement of actual server functionality or a statement
+  of required or desired server implementation. [See https://hl7.org/fhir/R5/CapabilityStatement.html]
+links:
+- href: Organization/{id}
+  rel: implementation_custodian
+  targetHints:
+    backref:
+    - capability_statement_implementation
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /implementation/custodian/reference
+  templateRequired:
+  - id
+- href: PlanDefinition/{id}
+  rel: useContext_valueReference_PlanDefinition
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: PlanDefinition.yaml
+  templatePointers:
+    id: /useContext/-/valueReference/reference
+  templateRequired:
+  - id
+- href: ResearchStudy/{id}
+  rel: useContext_valueReference_ResearchStudy
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: ResearchStudy.yaml
+  templatePointers:
+    id: /useContext/-/valueReference/reference
+  templateRequired:
+  - id
+- href: InsurancePlan/{id}
+  rel: useContext_valueReference_InsurancePlan
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: InsurancePlan.yaml
+  templatePointers:
+    id: /useContext/-/valueReference/reference
+  templateRequired:
+  - id
+- href: HealthcareService/{id}
+  rel: useContext_valueReference_HealthcareService
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: HealthcareService.yaml
+  templatePointers:
+    id: /useContext/-/valueReference/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: useContext_valueReference_Group
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /useContext/-/valueReference/reference
+  templateRequired:
+  - id
+- href: Location/{id}
+  rel: useContext_valueReference_Location
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Location.yaml
+  templatePointers:
+    id: /useContext/-/valueReference/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: useContext_valueReference_Organization
+  targetHints:
+    backref:
+    - usage_context
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /useContext/-/valueReference/reference
+  templateRequired:
+  - id
+properties:
+  _acceptLanguage:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``acceptLanguage``.
+    type: array
+  _copyright:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``copyright``.
+  _copyrightLabel:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``copyrightLabel``.
+  _date:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``date``.
+  _description:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``description``.
+  _experimental:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``experimental``.
+  _fhirVersion:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``fhirVersion``.
+  _format:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``format``.
+    type: array
+  _implementationGuide:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``implementationGuide``.
+    type: array
+  _implicitRules:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``implicitRules``.
+  _imports:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``imports``.
+    type: array
+  _instantiates:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``instantiates``.
+    type: array
+  _kind:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``kind``.
+  _language:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``language``.
+  _name:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``name``.
+  _patchFormat:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``patchFormat``.
+    type: array
+  _publisher:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``publisher``.
+  _purpose:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``purpose``.
+  _status:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``status``.
+  _title:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``title``.
+  _url:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``url``.
+  _version:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``version``.
+  _versionAlgorithmString:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``versionAlgorithmString``.
+  acceptLanguage:
+    binding_description: IETF language tag for a human language
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/all-languages
+    binding_version: 5.0.0
+    description: A list of the languages supported by this implementation that are
+      usefully supported in the ```Accept-Language``` header.
+    element_property: true
+    items:
+      pattern: ^[^\s]+(\s[^\s]+)*$
+      type: string
+    title: Languages supported
+    type: array
+  contact:
+    description: Contact details to assist a user in finding and communicating with
+      the publisher.
+    element_property: true
+    items:
+      $ref: ContactDetail.yaml
+    title: Contact details for the publisher
+    type: array
+  contained:
+    description: These resources do not have an independent existence apart from the
+      resource that contains them - they cannot be identified independently, nor can
+      they have their own independent transaction scope. This is allowed to be a Parameters
+      resource if and only if it is referenced by a resource that provides context/meaning.
+    element_property: true
+    items:
+      $ref: Resource.yaml
+    title: Contained, inline Resources
+    type: array
+  copyright:
+    description: A copyright statement relating to the capability statement and/or
+      its contents. Copyright statements are generally legal restrictions on the use
+      and publishing of the capability statement.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Use and/or publishing restrictions
+    type: string
+  copyrightLabel:
+    description: A short string (<50 characters), suitable for inclusion in a page
+      footer that identifies the copyright holder, effective period, and optionally
+      whether rights are resctricted. (e.g. 'All rights reserved', 'Some rights reserved').
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Copyright holder and year(s)
+    type: string
+  date:
+    description: The date  (and optionally time) when the capability statement was
+      last significantly changed. The date must change when the business version changes
+      and it must change if the status code changes. In addition, it should change
+      when the substantive content of the capability statement changes.
+    element_property: true
+    element_required: true
+    format: date-time
+    title: Date last changed
+    type: string
+  description:
+    description: A free text natural language description of the capability statement
+      from a consumer's perspective. Typically, this is used when the capability statement
+      describes a desired rather than an actual solution, for example as a formal
+      expression of requirements as part of an RFP.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Natural language description of the capability statement
+    type: string
+  document:
+    description: A document definition.
+    element_property: true
+    items:
+      $ref: CapabilityStatementDocument.yaml
+    title: Document definition
+    type: array
+  experimental:
+    description: A Boolean value to indicate that this capability statement is authored
+      for testing purposes (or education/evaluation/marketing) and is not intended
+      to be used for genuine usage.
+    element_property: true
+    title: For testing purposes, not real usage
+    type: boolean
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource. To make the use of extensions safe
+      and managable, there is a strict set of governance applied to the definition
+      and use of extensions. Though any implementer can define an extension, there
+      is a set of requirements that SHALL be met as part of the definition of the
+      extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhirVersion:
+    binding_description: All published FHIR Versions.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/FHIR-version
+    binding_version: 5.0.0
+    description: The version of the FHIR specification that this CapabilityStatement
+      describes (which SHALL be the same as the FHIR version of the CapabilityStatement
+      itself). There is no default value.
+    element_property: true
+    element_required: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: FHIR Version the system supports
+    type: string
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  format:
+    binding_description: The mime type of an attachment. Any valid mime type is allowed.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/mimetypes
+    binding_version: 5.0.0
+    description: A list of the formats supported by this implementation using their
+      content types.
+    element_property: true
+    element_required: true
+    enum_values:
+    - formats
+    - json
+    - ttl
+    - mime
+    items:
+      pattern: ^[^\s]+(\s[^\s]+)*$
+      type: string
+    title: formats supported (xml | json | ttl | mime type)
+    type: array
+  id:
+    description: The logical id of the resource, as used in the URL for the resource.
+      Once assigned, this value never changes.
+    element_property: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Logical id of this artifact
+    type: string
+  identifier:
+    description: A formal identifier that is used to identify this CapabilityStatement
+      when it is represented in other formats, or referenced in a specification, model,
+      design or an instance.
+    element_property: true
+    items:
+      $ref: Identifier.yaml
+    title: Additional identifier for the CapabilityStatement (business identifier)
+    type: array
+  implementation:
+    $ref: CapabilityStatementImplementation.yaml
+    description: Identifies a specific implementation instance that is described by
+      the capability statement - i.e. a particular installation, rather than the capabilities
+      of a software program.
+    element_property: true
+    title: If this describes a specific instance
+  implementationGuide:
+    description: A list of implementation guides that the server does (or should)
+      support in their entirety.
+    element_property: true
+    enum_reference_types:
+    - ImplementationGuide
+    items:
+      pattern: \S*
+      type: string
+    title: Implementation guides supported
+    type: array
+  implicitRules:
+    description: A reference to a set of rules that were followed when the resource
+      was constructed, and which must be understood when processing the content. Often,
+      this is a reference to an implementation guide that defines the special rules
+      along with other profiles etc.
+    element_property: true
+    pattern: \S*
+    title: A set of rules under which this content was created
+    type: string
+  imports:
+    description: Reference to a canonical URL of another CapabilityStatement that
+      this software adds to. The capability statement automatically includes everything
+      in the other statement, and it is not duplicated, though the server may repeat
+      the same resources, interactions and operations to add additional details to
+      them.
+    element_property: true
+    enum_reference_types:
+    - CapabilityStatement
+    items:
+      pattern: \S*
+      type: string
+    title: Canonical URL of another capability statement this adds to
+    type: array
+  instantiates:
+    description: Reference to a canonical URL of another CapabilityStatement that
+      this software implements. This capability statement is a published API description
+      that corresponds to a business service. The server may actually implement a
+      subset of the capability statement it claims to implement, so the capability
+      statement must specify the full capability details.
+    element_property: true
+    enum_reference_types:
+    - CapabilityStatement
+    items:
+      pattern: \S*
+      type: string
+    title: Canonical URL of another capability statement this implements
+    type: array
+  jurisdiction:
+    binding_description: Countries and regions within which this artifact is targeted
+      for use.
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/jurisdiction
+    binding_version: null
+    description: A legal or geographic region in which the capability statement is
+      intended to be used.
+    element_property: true
+    items:
+      $ref: CodeableConcept.yaml
+    title: Intended jurisdiction for capability statement (if applicable)
+    type: array
+  kind:
+    binding_description: How a capability statement is intended to be used.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/capability-statement-kind
+    binding_version: 5.0.0
+    description: The way that this statement is intended to be used, to describe an
+      actual running instance of software, a particular product (kind, not instance
+      of software) or a class of implementation (e.g. a desired purchase).
+    element_property: true
+    element_required: true
+    enum_values:
+    - instance
+    - capability
+    - requirements
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: instance | capability | requirements
+    type: string
+  language:
+    binding_description: IETF language tag for a human language
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/all-languages
+    binding_version: 5.0.0
+    description: The base language in which the resource is written.
+    element_property: true
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: Language of the resource content
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  messaging:
+    description: A description of the messaging capabilities of the solution.
+    element_property: true
+    items:
+      $ref: CapabilityStatementMessaging.yaml
+    title: If messaging is supported
+    type: array
+  meta:
+    $ref: Meta.yaml
+    description: The metadata about the resource. This is content that is maintained
+      by the infrastructure. Changes to the content might not always be associated
+      with version changes to the resource.
+    element_property: true
+    title: Metadata about the resource
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the resource and that modifies the understanding
+      of the element that contains it and/or the understanding of the containing element's
+      descendants. Usually modifier elements provide negation or qualification. To
+      make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer is allowed
+      to define an extension, there is a set of requirements that SHALL be met as
+      part of the definition of the extension. Applications processing a resource
+      are required to check for modifier extensions.  Modifier extensions SHALL NOT
+      change the meaning of any elements on Resource or DomainResource (including
+      cannot change the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored
+    type: array
+  name:
+    description: A natural language name identifying the capability statement. This
+      name should be usable as an identifier for the module by machine processing
+      applications such as code generation.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Name for this capability statement (computer friendly)
+    type: string
+  patchFormat:
+    binding_description: BCP 13 (RFCs 2045, 2046, 2047, 4288, 4289 and 2049)
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/mimetypes
+    binding_version: 5.0.0
+    description: A list of the patch formats supported by this implementation using
+      their content types.
+    element_property: true
+    items:
+      pattern: ^[^\s]+(\s[^\s]+)*$
+      type: string
+    title: Patch formats supported
+    type: array
+  publisher:
+    description: The name of the organization or individual responsible for the release
+      and ongoing maintenance of the capability statement.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Name of the publisher/steward (organization or individual)
+    type: string
+  purpose:
+    description: Explanation of why this capability statement is needed and why it
+      has been designed as it has.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Why this capability statement is defined
+    type: string
+  resourceType:
+    const: CapabilityStatement
+    default: CapabilityStatement
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  rest:
+    description: A definition of the restful capabilities of the solution, if any.
+    element_property: true
+    items:
+      $ref: CapabilityStatementRest.yaml
+    title: If the endpoint is a RESTful one
+    type: array
+  software:
+    $ref: CapabilityStatementSoftware.yaml
+    description: Software that is covered by this capability statement.  It is used
+      when the capability statement describes the capabilities of a particular software
+      version, independent of an installation.
+    element_property: true
+    title: Software that is covered by this capability statement
+  status:
+    binding_description: The lifecycle status of an artifact.
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/publication-status
+    binding_version: 5.0.0
+    description: The status of this capability statement. Enables tracking the life-cycle
+      of the content.
+    element_property: true
+    element_required: true
+    enum_values:
+    - draft
+    - active
+    - retired
+    - unknown
+    pattern: ^[^\s]+(\s[^\s]+)*$
+    title: draft | active | retired | unknown
+    type: string
+  text:
+    $ref: Narrative.yaml
+    description: A human-readable narrative that contains a summary of the resource
+      and can be used to represent the content of the resource to a human. The narrative
+      need not encode all the structured data, but is required to contain sufficient
+      detail to make it "clinically safe" for a human to just read the narrative.
+      Resource definitions may define what content should be represented in the narrative
+      to ensure clinical safety.
+    element_property: true
+    title: Text summary of the resource, for human interpretation
+  title:
+    description: A short, descriptive, user-friendly title for the capability statement.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Name for this capability statement (human friendly)
+    type: string
+  url:
+    description: An absolute URI that is used to identify this capability statement
+      when it is referenced in a specification, model, design or an instance; also
+      called its canonical identifier. This SHOULD be globally unique and SHOULD be
+      a literal address at which an authoritative instance of this capability statement
+      is (or will be) published. This URL can be the target of a canonical reference.
+      It SHALL remain the same when the capability statement is stored on different
+      servers.
+    element_property: true
+    pattern: \S*
+    title: Canonical identifier for this capability statement, represented as a URI
+      (globally unique)
+    type: string
+  useContext:
+    description: The content was developed with a focus and intent of supporting the
+      contexts that are listed. These contexts may be general categories (gender,
+      age, ...) or may be references to specific programs (insurance plans, studies,
+      ...) and may be used to assist with indexing and searching for appropriate capability
+      statement instances.
+    element_property: true
+    items:
+      $ref: UsageContext.yaml
+    title: The context that the content is intended to support
+    type: array
+  version:
+    description: The identifier that is used to identify this version of the capability
+      statement when it is referenced in a specification, model, design or instance.
+      This is an arbitrary value managed by the capability statement author and is
+      not expected to be globally unique. For example, it might be a timestamp (e.g.
+      yyyymmdd) if a managed version is not available. There is also no expectation
+      that versions can be placed in a lexicographical sequence.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Business version of the capability statement
+    type: string
+  versionAlgorithmCoding:
+    $ref: Coding.yaml
+    description: Indicates the mechanism used to compare versions to determine which
+      is more current.
+    element_property: true
+    one_of_many: versionAlgorithm
+    one_of_many_required: false
+    title: How to compare versions
+  versionAlgorithmString:
+    description: Indicates the mechanism used to compare versions to determine which
+      is more current.
+    element_property: true
+    one_of_many: versionAlgorithm
+    one_of_many_required: false
+    pattern: '[ \r\n\t\S]+'
+    title: How to compare versions
+    type: string
+title: CapabilityStatement
+type: object

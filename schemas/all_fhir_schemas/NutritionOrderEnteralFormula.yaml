@@ -1,0 +1,180 @@
+$id: NutritionOrderEnteralFormula
+additionalProperties: false
+description: Enteral formula components. Feeding provided through the gastrointestinal
+  tract via a tube, catheter, or stoma that delivers nutrition distal to the oral
+  cavity. [See https://hl7.org/fhir/R5/NutritionOrderEnteralFormula.html] [See https://hl7.org/fhir/R5/NutritionOrderEnteralFormula.html]
+links:
+- href: Reference/{id}
+  rel: baseFormulaType_reference
+  targetHints:
+    backref:
+    - codeable_reference
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /baseFormulaType/reference/reference
+  templateRequired:
+  - id
+- href: Reference/{id}
+  rel: deliveryDevice_reference
+  targetHints:
+    backref:
+    - codeable_reference
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Reference.yaml
+  templatePointers:
+    id: /deliveryDevice/-/reference/reference
+  templateRequired:
+  - id
+properties:
+  _administrationInstruction:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``administrationInstruction``.
+  _baseFormulaProductName:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``baseFormulaProductName``.
+  additive:
+    description: Indicates modular components to be provided in addition or mixed
+      with the base formula.
+    element_property: true
+    items:
+      $ref: NutritionOrderEnteralFormulaAdditive.yaml
+    title: Components to add to the feeding
+    type: array
+  administration:
+    description: Formula administration instructions as structured data.  This repeating
+      structure allows for changing the administration rate or volume over time for
+      both bolus and continuous feeding.  An example of this would be an instruction
+      to increase the rate of continuous feeding every 2 hours.
+    element_property: true
+    items:
+      $ref: NutritionOrderEnteralFormulaAdministration.yaml
+    title: Formula feeding instruction as structured data
+    type: array
+  administrationInstruction:
+    description: Free text formula administration, feeding instructions or additional
+      instructions or information.
+    element_property: true
+    pattern: \s*(\S|\s)*
+    title: Formula feeding instructions expressed as text
+    type: string
+  baseFormulaProductName:
+    description: The product or brand name of the enteral or infant formula product
+      such as "ACME Adult Standard Formula".
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Product or brand name of the enteral or infant formula
+    type: string
+  baseFormulaType:
+    $ref: CodeableReference.yaml
+    backref: nutrition_order_enteral_formula
+    binding_description: Codes for type of enteral formula to be administered to patient.
+    binding_strength: example
+    binding_uri: http://hl7.org/fhir/ValueSet/entformula-type
+    binding_version: null
+    description: The type of enteral or infant formula such as an adult standard formula
+      with fiber or a soy-based infant formula.
+    element_property: true
+    enum_reference_types:
+    - NutritionProduct
+    title: Type of enteral or infant formula
+  caloricDensity:
+    $ref: Quantity.yaml
+    description: The amount of energy (calories) that the formula should provide per
+      specified volume, typically per mL or fluid oz.  For example, an infant may
+      require a formula that provides 24 calories per fluid ounce or an adult may
+      require an enteral formula that provides 1.5 calorie/mL.
+    element_property: true
+    title: Amount of energy per specified volume that is required
+  deliveryDevice:
+    backref: deliveryDevice_nutrition_order_enteral_formula
+    description: The intended type of device that is to be used for the administration
+      of the enteral formula.
+    element_property: true
+    enum_reference_types:
+    - DeviceDefinition
+    items:
+      $ref: CodeableReference.yaml
+    title: Intended type of device for the administration
+    type: array
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  maxVolumeToDeliver:
+    $ref: Quantity.yaml
+    description: The maximum total quantity of formula that may be administered to
+      a subject over the period of time, e.g. 1440 mL over 24 hours.
+    element_property: true
+    title: Upper limit on formula volume per unit of time
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: NutritionOrderEnteralFormula
+    default: NutritionOrderEnteralFormula
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  routeOfAdministration:
+    $ref: CodeableConcept.yaml
+    binding_description: Codes specifying the route of administration of enteral formula.
+    binding_strength: extensible
+    binding_uri: http://hl7.org/fhir/ValueSet/enteral-route
+    binding_version: null
+    description: The route or physiological path of administration into the patient's
+      gastrointestinal  tract for purposes of providing the formula feeding, e.g.
+      nasogastric tube.
+    element_property: true
+    title: How the formula should enter the patient's gastrointestinal tract
+title: NutritionOrderEnteralFormula
+type: object

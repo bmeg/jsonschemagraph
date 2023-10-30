@@ -1,0 +1,332 @@
+$id: RequirementsStatement
+additionalProperties: false
+description: Actual statement as markdown. The actual statement of requirement, in
+  markdown format. [See https://hl7.org/fhir/R5/RequirementsStatement.html] [See https://hl7.org/fhir/R5/RequirementsStatement.html]
+links:
+- href: CareTeam/{id}
+  rel: source_CareTeam
+  targetHints:
+    backref:
+    - source_requirements_statement
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: CareTeam.yaml
+  templatePointers:
+    id: /source/-/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: source_Device
+  targetHints:
+    backref:
+    - source_requirements_statement
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /source/-/reference
+  templateRequired:
+  - id
+- href: Group/{id}
+  rel: source_Group
+  targetHints:
+    backref:
+    - source_requirements_statement
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Group.yaml
+  templatePointers:
+    id: /source/-/reference
+  templateRequired:
+  - id
+- href: HealthcareService/{id}
+  rel: source_HealthcareService
+  targetHints:
+    backref:
+    - source_requirements_statement
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: HealthcareService.yaml
+  templatePointers:
+    id: /source/-/reference
+  templateRequired:
+  - id
+- href: Organization/{id}
+  rel: source_Organization
+  targetHints:
+    backref:
+    - source_requirements_statement
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Organization.yaml
+  templatePointers:
+    id: /source/-/reference
+  templateRequired:
+  - id
+- href: Patient/{id}
+  rel: source_Patient
+  targetHints:
+    backref:
+    - source_requirements_statement
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Patient.yaml
+  templatePointers:
+    id: /source/-/reference
+  templateRequired:
+  - id
+- href: Practitioner/{id}
+  rel: source_Practitioner
+  targetHints:
+    backref:
+    - source_requirements_statement
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: Practitioner.yaml
+  templatePointers:
+    id: /source/-/reference
+  templateRequired:
+  - id
+- href: PractitionerRole/{id}
+  rel: source_PractitionerRole
+  targetHints:
+    backref:
+    - source_requirements_statement
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: PractitionerRole.yaml
+  templatePointers:
+    id: /source/-/reference
+  templateRequired:
+  - id
+- href: RelatedPerson/{id}
+  rel: source_RelatedPerson
+  targetHints:
+    backref:
+    - source_requirements_statement
+    direction:
+    - outbound
+    multiplicity:
+    - has_many
+  targetSchema:
+    $ref: RelatedPerson.yaml
+  templatePointers:
+    id: /source/-/reference
+  templateRequired:
+  - id
+properties:
+  _conditionality:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``conditionality``.
+  _conformance:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``conformance``.
+    type: array
+  _derivedFrom:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``derivedFrom``.
+  _key:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``key``.
+  _label:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``label``.
+  _parent:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``parent``.
+  _reference:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``reference``.
+    type: array
+  _requirement:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``requirement``.
+  _satisfiedBy:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``satisfiedBy``.
+    type: array
+  conditionality:
+    description: This boolean flag is set to true of the text of the requirement is
+      conditional on something e.g. it includes lanauage like 'if x then y'. This
+      conditionality flag is introduced for purposes of filtering and colour highlighting
+      etc.
+    element_property: true
+    title: Set to true if requirements statement is conditional
+    type: boolean
+  conformance:
+    binding_description: null
+    binding_strength: required
+    binding_uri: http://hl7.org/fhir/ValueSet/conformance-expectation
+    binding_version: 5.0.0
+    description: A short human usable label for this statement.
+    element_property: true
+    enum_values:
+    - SHALL
+    - SHOULD
+    - MAY
+    - SHOULD-NOT
+    items:
+      pattern: ^[^\s]+(\s[^\s]+)*$
+      type: string
+    title: SHALL | SHOULD | MAY | SHOULD-NOT
+    type: array
+  derivedFrom:
+    description: Another statement on one of the requirements that this requirement
+      clarifies or restricts.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Another statement this clarifies/restricts ([url#]key)
+    type: string
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  key:
+    description: Key that identifies this statement (unique within this resource).
+    element_property: true
+    element_required: true
+    maxLength: 64
+    minLength: 1
+    pattern: ^[A-Za-z0-9\-.]+$
+    title: Key that identifies this statement
+    type: string
+  label:
+    description: A short human usable label for this statement.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Short Human label for this statement
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  parent:
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: A larger requirement that this requirement helps to refine and enable
+    type: string
+  reference:
+    description: A reference to another artifact that created this requirement. This
+      could be a Profile, etc., or external regulation, or business requirements expressed
+      elsewhere.
+    element_property: true
+    items:
+      format: uri
+      maxLength: 65536
+      minLength: 1
+      type: string
+    title: External artifact (rule/document etc. that) created this requirement
+    type: array
+  requirement:
+    description: The actual requirement for human consumption.
+    element_property: true
+    element_required: true
+    pattern: \s*(\S|\s)*
+    title: The actual requirement
+    type: string
+  resourceType:
+    const: RequirementsStatement
+    default: RequirementsStatement
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  satisfiedBy:
+    description: A reference to another artifact that satisfies this requirement.
+      This could be a Profile, extension, or an element in one of those, or a CapabilityStatement,
+      OperationDefinition, SearchParameter, CodeSystem(/code), ValueSet, Libary etc.
+    element_property: true
+    items:
+      format: uri
+      maxLength: 65536
+      minLength: 1
+      type: string
+    title: Design artifact that satisfies this requirement
+    type: array
+  source:
+    backref: source_requirements_statement
+    description: Who asked for this statement to be a requirement. By default, it's
+      assumed that the publisher knows who it is if it matters.
+    element_property: true
+    enum_reference_types:
+    - CareTeam
+    - Device
+    - Group
+    - HealthcareService
+    - Organization
+    - Patient
+    - Practitioner
+    - PractitionerRole
+    - RelatedPerson
+    items:
+      $ref: Reference.yaml
+    title: Who asked for this statement
+    type: array
+title: RequirementsStatement
+type: object

@@ -171,14 +171,18 @@ func (graphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]int
 									if bval, ok := emap["targetHints"]; ok {
 										if hval, ok := bval.(map[string]any); ok {
 											if ref, ok := hval["backref"]; ok {
+												//fmt.Println("TYPEOF", reflect.TypeOf(ref))
 												if bstr, ok := ref.(string); ok {
+													backRef = bstr
+												} else if bstr, ok := ref.([]any)[0].(string); ok {
+													//fmt.Println("bstr", bstr)
 													backRef = bstr
 												}
 											}
 											//fmt.Println("refstr", refStr)
 											sch, err := ctx.CompileRef(refStr, "./", false)
 											//fmt.Println("After CompileRef")
-
+											//fmt.Println("OUT LINKKEY: ",linkKey)
 											if err == nil {
 												out.Targets = append(out.Targets, Target{
 													Schema:  sch,
@@ -191,6 +195,7 @@ func (graphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]int
 												return nil, err
 											}
 										}
+										//fmt.Println("BACKREF: ", backRef, "REL: ", rel)
 									}
 								}
 							}
@@ -275,12 +280,11 @@ func Load(path string, opt ...LoadOpt) (GraphSchema, error) {
 		}
 
 		for _, f := range files {
-			//fmt.Println("VALUE OF F ", f)
 			if sch, err := compiler.Compile(f); err == nil {
 				if sch.Title != "" {
 					out.Classes[sch.Title] = sch
 				} else {
-					log.Printf("Title not found: %s %#v", f, sch)
+					//log.Printf("Title not found: %s %#v", f, sch)
 				}
 			} else {
 				fmt.Println("ERRORRARARAAR", err)

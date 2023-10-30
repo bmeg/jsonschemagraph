@@ -1,0 +1,260 @@
+$id: AdverseEventContributingFactor
+additionalProperties: false
+description: Contributing factors suspected to have increased the probability or severity
+  of the adverse event. The contributing factors suspected to have increased the probability
+  or severity of the adverse event. [See https://hl7.org/fhir/R5/AdverseEventContributingFactor.html]
+  [See https://hl7.org/fhir/R5/AdverseEventContributingFactor.html]
+links:
+- href: Condition/{id}
+  rel: itemReference_Condition
+  targetHints:
+    backref:
+    - adverse_event_contributing_factor
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Condition.yaml
+  templatePointers:
+    id: /itemReference/reference
+  templateRequired:
+  - id
+- href: Observation/{id}
+  rel: itemReference_Observation
+  targetHints:
+    backref:
+    - adverse_event_contributing_factor
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Observation.yaml
+  templatePointers:
+    id: /itemReference/reference
+  templateRequired:
+  - id
+- href: AllergyIntolerance/{id}
+  rel: itemReference_AllergyIntolerance
+  targetHints:
+    backref:
+    - adverse_event_contributing_factor
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: AllergyIntolerance.yaml
+  templatePointers:
+    id: /itemReference/reference
+  templateRequired:
+  - id
+- href: FamilyMemberHistory/{id}
+  rel: itemReference_FamilyMemberHistory
+  targetHints:
+    backref:
+    - adverse_event_contributing_factor
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: FamilyMemberHistory.yaml
+  templatePointers:
+    id: /itemReference/reference
+  templateRequired:
+  - id
+- href: Immunization/{id}
+  rel: itemReference_Immunization
+  targetHints:
+    backref:
+    - adverse_event_contributing_factor
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Immunization.yaml
+  templatePointers:
+    id: /itemReference/reference
+  templateRequired:
+  - id
+- href: Procedure/{id}
+  rel: itemReference_Procedure
+  targetHints:
+    backref:
+    - adverse_event_contributing_factor
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Procedure.yaml
+  templatePointers:
+    id: /itemReference/reference
+  templateRequired:
+  - id
+- href: Device/{id}
+  rel: itemReference_Device
+  targetHints:
+    backref:
+    - adverse_event_contributing_factor
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Device.yaml
+  templatePointers:
+    id: /itemReference/reference
+  templateRequired:
+  - id
+- href: DeviceUsage/{id}
+  rel: itemReference_DeviceUsage
+  targetHints:
+    backref:
+    - adverse_event_contributing_factor
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: DeviceUsage.yaml
+  templatePointers:
+    id: /itemReference/reference
+  templateRequired:
+  - id
+- href: DocumentReference/{id}
+  rel: itemReference_DocumentReference
+  targetHints:
+    backref:
+    - adverse_event_contributing_factor
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: DocumentReference.yaml
+  templatePointers:
+    id: /itemReference/reference
+  templateRequired:
+  - id
+- href: MedicationAdministration/{id}
+  rel: itemReference_MedicationAdministration
+  targetHints:
+    backref:
+    - adverse_event_contributing_factor
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: MedicationAdministration.yaml
+  templatePointers:
+    id: /itemReference/reference
+  templateRequired:
+  - id
+- href: MedicationStatement/{id}
+  rel: itemReference_MedicationStatement
+  targetHints:
+    backref:
+    - adverse_event_contributing_factor
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: MedicationStatement.yaml
+  templatePointers:
+    id: /itemReference/reference
+  templateRequired:
+  - id
+properties:
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  itemCodeableConcept:
+    $ref: CodeableConcept.yaml
+    description: The item that is suspected to have increased the probability or severity
+      of the adverse event.
+    element_property: true
+    one_of_many: item
+    one_of_many_required: true
+    title: Item suspected to have increased the probability or severity of the adverse
+      event
+  itemReference:
+    $ref: Reference.yaml
+    backref: adverse_event_contributing_factor
+    description: The item that is suspected to have increased the probability or severity
+      of the adverse event.
+    element_property: true
+    enum_reference_types:
+    - Condition
+    - Observation
+    - AllergyIntolerance
+    - FamilyMemberHistory
+    - Immunization
+    - Procedure
+    - Device
+    - DeviceUsage
+    - DocumentReference
+    - MedicationAdministration
+    - MedicationStatement
+    one_of_many: item
+    one_of_many_required: true
+    title: Item suspected to have increased the probability or severity of the adverse
+      event
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  resourceType:
+    const: AdverseEventContributingFactor
+    default: AdverseEventContributingFactor
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+title: AdverseEventContributingFactor
+type: object

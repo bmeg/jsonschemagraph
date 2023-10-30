@@ -1,0 +1,137 @@
+$id: ImplementationGuideManifest
+additionalProperties: false
+description: Information about an assembled IG. Information about an assembled implementation
+  guide, created by the publication tooling. [See https://hl7.org/fhir/R5/ImplementationGuideManifest.html]
+  [See https://hl7.org/fhir/R5/ImplementationGuideManifest.html]
+links:
+- href: Resource/{id}
+  rel: resource_reference
+  targetHints:
+    backref:
+    - implementation_guide_manifest_resource
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /resource/-/reference/reference
+  templateRequired:
+  - id
+properties:
+  _image:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``image``.
+    type: array
+  _other:
+    items:
+      $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``other``.
+    type: array
+  _rendering:
+    $ref: FHIRPrimitiveExtension.yaml
+    title: Extension field for ``rendering``.
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  image:
+    description: Indicates a relative path to an image that exists within the IG.
+    element_property: true
+    items:
+      pattern: '[ \r\n\t\S]+'
+      type: string
+    title: Image within the IG
+    type: array
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  other:
+    description: Indicates the relative path of an additional non-page, non-image
+      file that is part of the IG - e.g. zip, jar and similar files that could be
+      the target of a hyperlink in a derived IG.
+    element_property: true
+    items:
+      pattern: '[ \r\n\t\S]+'
+      type: string
+    title: Additional linkable file in IG
+    type: array
+  page:
+    description: Information about a page within the IG.
+    element_property: true
+    items:
+      $ref: ImplementationGuideManifestPage.yaml
+    title: HTML page within the parent IG
+    type: array
+  rendering:
+    description: A pointer to official web page, PDF or other rendering of the implementation
+      guide.
+    element_property: true
+    format: uri
+    maxLength: 65536
+    minLength: 1
+    title: Location of rendered implementation guide
+    type: string
+  resource:
+    description: A resource that is part of the implementation guide. Conformance
+      resources (value set, structure definition, capability statements etc.) are
+      obvious candidates for inclusion, but any kind of resource can be included as
+      an example resource.
+    element_property: true
+    items:
+      $ref: ImplementationGuideManifestResource.yaml
+    title: Resource in the implementation guide
+    type: array
+  resourceType:
+    const: ImplementationGuideManifest
+    default: ImplementationGuideManifest
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+required:
+- resource
+title: ImplementationGuideManifest
+type: object

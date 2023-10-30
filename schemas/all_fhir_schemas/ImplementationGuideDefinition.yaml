@@ -1,0 +1,117 @@
+$id: ImplementationGuideDefinition
+additionalProperties: false
+description: Information needed to build the IG. The information needed by an IG publisher
+  tool to publish the whole implementation guide. [See https://hl7.org/fhir/R5/ImplementationGuideDefinition.html]
+  [See https://hl7.org/fhir/R5/ImplementationGuideDefinition.html]
+links:
+- href: Resource/{id}
+  rel: resource_reference
+  targetHints:
+    backref:
+    - implementation_guide_definition_resource
+    direction:
+    - outbound
+    multiplicity:
+    - has_one
+  targetSchema:
+    $ref: Resource.yaml
+  templatePointers:
+    id: /resource/-/reference/reference
+  templateRequired:
+  - id
+properties:
+  extension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element. To make the use of extensions safe and
+      managable, there is a strict set of governance applied to the definition and
+      use of extensions. Though any implementer can define an extension, there is
+      a set of requirements that SHALL be met as part of the definition of the extension.
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Additional content defined by implementations
+    type: array
+  fhir_comments:
+    anyOf:
+    - type: string
+    - items:
+        type: string
+      type: array
+    element_property: false
+    title: Fhir Comments
+  grouping:
+    description: A logical group of resources. Logical groups can be used when building
+      pages.
+    element_property: true
+    items:
+      $ref: ImplementationGuideDefinitionGrouping.yaml
+    title: Grouping used to present related resources in the IG
+    type: array
+  id:
+    description: Unique id for the element within a resource (for internal references).
+      This may be any string value that does not contain spaces.
+    element_property: true
+    pattern: '[ \r\n\t\S]+'
+    title: Unique id for inter-element referencing
+    type: string
+  links:
+    links:
+      items:
+        $ref: https://json-schema.org/draft/2020-12/links.yaml
+      type: array
+  modifierExtension:
+    description: May be used to represent additional information that is not part
+      of the basic definition of the element and that modifies the understanding of
+      the element in which it is contained and/or the understanding of the containing
+      element's descendants. Usually modifier elements provide negation or qualification.
+      To make the use of extensions safe and managable, there is a strict set of governance
+      applied to the definition and use of extensions. Though any implementer can
+      define an extension, there is a set of requirements that SHALL be met as part
+      of the definition of the extension. Applications processing a resource are required
+      to check for modifier extensions.  Modifier extensions SHALL NOT change the
+      meaning of any elements on Resource or DomainResource (including cannot change
+      the meaning of modifierExtension itself).
+    element_property: true
+    items:
+      $ref: Extension.yaml
+    title: Extensions that cannot be ignored even if unrecognized
+    type: array
+  page:
+    $ref: ImplementationGuideDefinitionPage.yaml
+    description: A page / section in the implementation guide. The root page is the
+      implementation guide home page.
+    element_property: true
+    title: Page/Section in the Guide
+  parameter:
+    description: A set of parameters that defines how the implementation guide is
+      built. The parameters are defined by the relevant tools that build the implementation
+      guides.
+    element_property: true
+    items:
+      $ref: ImplementationGuideDefinitionParameter.yaml
+    title: Defines how IG is built by tools
+    type: array
+  resource:
+    description: A resource that is part of the implementation guide. Conformance
+      resources (value set, structure definition, capability statements etc.) are
+      obvious candidates for inclusion, but any kind of resource can be included as
+      an example resource.
+    element_property: true
+    items:
+      $ref: ImplementationGuideDefinitionResource.yaml
+    title: Resource in the implementation guide
+    type: array
+  resourceType:
+    const: ImplementationGuideDefinition
+    default: ImplementationGuideDefinition
+    description: One of the resource types defined as part of FHIR
+    title: Resource Type
+    type: string
+  template:
+    element_property: true
+    items:
+      $ref: ImplementationGuideDefinitionTemplate.yaml
+    title: A template for building resources
+    type: array
+title: ImplementationGuideDefinition
+type: object
