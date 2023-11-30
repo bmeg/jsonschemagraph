@@ -73,23 +73,3 @@ func (s GraphSchema) CleanAndValidate(class *jsonschema.Schema, data map[string]
 	}
 	return out, class.Validate(out)
 }
-
-func getAverages(nums []int, k int) []int {
-	ret_arr := make([]int, len(nums))
-	running_total := 0
-	max := k + k
-	if k+k > len(nums) {
-		max = len(nums)
-	}
-	for j := 0; j <= max; j++ {
-		running_total = running_total + nums[j]
-	}
-	fmt.Println(running_total)
-	for i := 0; i < len(nums); i++ {
-		if i < k || i > (len(nums)-k) {
-			ret_arr[i] = -1
-		}
-	}
-	return ret_arr
-
-}
