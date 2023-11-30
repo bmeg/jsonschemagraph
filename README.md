@@ -67,13 +67,17 @@ Output is an example name of the directory that the edges and vertices will be o
 Schemas is the location of your schema files
 
 ## Example Commands
-Generate edge and vertex files 
+Generate edge and vertex files
 ```
 jsonschemagraph gen-graph [schema_directory_location] [data_file_location] [output_directory_location] [schema_class_name]
 ```
 SWAPI Example: jsonschemagraph gen-graph schemas/ data/swapi/swapi_character.json.gz output character
 
 BMEG Example: jsonschemagraph gen-graph schemas/bmeg_schemas data/ensembl_transcript.json.gz output Transcript
+
+FHIR Example: jsonschemagraph gen-graph schemas/all_fhir_schemas aced-data/actual_fhir/Observation.json.gz out Observation
+
+Note: the fhir data used in the above example is an ndjson file of FHIR Observations
 
 Check to see if the schemas in a directory are valid
 ```
@@ -83,6 +87,6 @@ jsonschemagraph schema-lint [schema_directory_location]
 Generate a d2 graphical representation of a directory of graph schemas
 ```
 jsonschemagraph schema-graph [schema_directory_location] > in.d2
-d2 --watch in.d2 out.svg 
+d2 --watch in.d2 out.svg
 ```
 

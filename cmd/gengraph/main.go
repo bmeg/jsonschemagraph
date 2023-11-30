@@ -156,6 +156,8 @@ var Cmd = &cobra.Command{
 				jsgraph.Check_delete(args[2] + "/" + unique_str + ".OutEdge.json")
 				jsgraph.Check_delete(args[2] + "/" + unique_str + ".InEdge.json")
 				jsgraph.Check_delete(args[2] + "/" + unique_str + ".Vertex.json")
+			} else {
+				fmt.Println("ERROR: ", err)
 			}
 		}
 		return nil
