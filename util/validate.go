@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/santhosh-tekuri/jsonschema/v5"
+	_ "github.com/santhosh-tekuri/jsonschema/v5/httploader"
 )
 
 func (s GraphSchema) Validate(classID string, data map[string]any) error {

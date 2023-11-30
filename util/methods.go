@@ -2,6 +2,7 @@ package util
 
 import (
 	"github.com/santhosh-tekuri/jsonschema/v5"
+	_ "github.com/santhosh-tekuri/jsonschema/v5/httploader"
 )
 
 func (s GraphSchema) ListClasses() []string {

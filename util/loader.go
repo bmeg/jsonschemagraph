@@ -14,6 +14,7 @@ import (
 	"sigs.k8s.io/yaml"
 
 	"github.com/santhosh-tekuri/jsonschema/v5"
+	_ "github.com/santhosh-tekuri/jsonschema/v5/httploader"
 )
 
 var GraphExtensionTag = "json_schema_graph"
@@ -284,7 +285,7 @@ func Load(path string, opt ...LoadOpt) (GraphSchema, error) {
 				if sch.Title != "" {
 					out.Classes[sch.Title] = sch
 				} else {
-					//log.Printf("Title not found: %s %#v", f, sch)
+					log.Printf("Title not found: %s %#v", f, sch)
 				}
 			} else {
 				fmt.Println("ERRORRARARAAR", err)
