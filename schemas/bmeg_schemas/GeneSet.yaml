@@ -1,92 +1,88 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: Compound
-title: Compound
+$id: GeneSet
+title: GeneSet
 type: object
-description: Definitions for Compound
+description: A set of biologically related genes
 required:
   - id
   - submitter_id
   - project_id
 links:
-  - rel: projects
-    href: Project/{id}
+  - rel: genes
+    href: Gene/{id}
     templateRequired:
       - id
     targetSchema:
-      $ref: Project.yaml
+      $ref: Gene.yaml
     templatePointers:
-      id: /projects/-/id
+      id: /genes/-/id
     targetHints:
       directionality:
         - outbound
       multiplicity:
         - has_many
       backref:
-        - compounds
-  - rel: similar_compounds
-    href: Compound/{id}
+        - gene_sets
+  - rel: publications
+    href: Publication/{id}
     templateRequired:
       - id
     targetSchema:
-      $ref: Compound.yaml
+      $ref: Publication.yaml
     templatePointers:
-      id: /similar_compounds/-/id
+      id: /publications/-/id
     targetHints:
       directionality:
         - outbound
       multiplicity:
         - has_many
       backref:
-        - compounds
+        - gene_sets
 properties:
   id:
     type: string
     element_property: true
-  pubchem_id:
+  standard_name:
     type: string
     element_property: true
-  chebi_id:
+  systematic_name:
     type: string
     element_property: true
-  chembl_id:
+  historical_names:
     type: string
     element_property: true
-  drugbank_id:
+  geoid:
     type: string
     element_property: true
-  synonym:
-    type: array
-    items:
-      type: string
-    element_property: true
-  inchi:
+  exact_source:
     type: string
     element_property: true
-  inchi_key:
+  geneset_listing_url:
     type: string
     element_property: true
-  usan_stem_definition:
+  external_details_url:
     type: string
     element_property: true
-  taxonomy:
-    element_property: true
-  approved_countries:
-    type: array
-    element_property: true
-  source_url:
+  chip:
     type: string
     element_property: true
-  id_source:
+  category_code:
     type: string
     element_property: true
-  morgan_fingerprint_2:
-    type: array
+  sub_category_code:
+    type: string
     element_property: true
-  similar_compounds:
-    type: array
-    items:
-      $ref: Compound.yaml
-    backref: compounds
+  contributor:
+    type: string
+    element_property: true
+  contributor_org:
+    type: string
+    element_property: true
+  description_brief:
+    type: string
+    element_property: true
+  description_full:
+    type: string
     element_property: true
   project_id:
     $ref: _definitions.yaml#/project_id
@@ -103,13 +99,19 @@ properties:
   updated_datetime:
     $ref: _definitions.yaml#/datetime
     element_property: true
-  projects:
+  genes:
     type: array
     items:
-      $ref: Project.yaml
-    backref: compounds
+      $ref: Gene.yaml
+    backref: gene_sets
+    element_property: true
+  publications:
+    type: array
+    items:
+      $ref: Publication.yaml
+    backref: gene_sets
     element_property: true
   resourceType:
-    default: Compound
+    default: GeneSet
     type: string
     description: One of the resource types defined as part of BMEG

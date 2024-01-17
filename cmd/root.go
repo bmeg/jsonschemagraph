@@ -7,6 +7,8 @@ import (
 	"github.com/bmeg/jsonschemagraph/cmd/schema_graph"
 	"github.com/bmeg/jsonschemagraph/cmd/schema_lint"
 	"github.com/spf13/cobra"
+	"github.com/bmeg/jsonschemagraph/cmd/data_validate"
+
 )
 
 // RootCmd represents the root command
@@ -20,6 +22,7 @@ func init() {
 	RootCmd.AddCommand(gengraph.Cmd)
 	RootCmd.AddCommand(schema_lint.Cmd)
 	RootCmd.AddCommand(schema_graph.Cmd)
+	RootCmd.AddCommand(data_validate.Cmd)
 
 }
 

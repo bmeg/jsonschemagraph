@@ -1,31 +1,35 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: program
+$id: Program
 title: Program
 type: object
-description: 'A broad framework of goals to be achieved. (i.e. TCGA or FM-AD)
-
-  '
+description: A broad framework of goals to be achieved. (i.e. TCGA or FM-AD)
 required:
-- submitter_id
-- program_id
+  - submitter_id
+  - program_id
 links: []
 properties:
   program_id:
     type: string
+    element_property: true
   gdc_attributes:
-    type:
-    - 'null'
-    - object
+    element_property: true
   submitter_id:
-    type:
-    - string
-    - 'null'
+    type: string
+    element_property: true
   id:
     $ref: _definitions.yaml#/UUID
     systemAlias: node_id
+    element_property: true
   type:
     type: string
+    element_property: true
   created_datetime:
     $ref: _definitions.yaml#/datetime
+    element_property: true
   updated_datetime:
     $ref: _definitions.yaml#/datetime
+    element_property: true
+  resourceType:
+    default: Program
+    type: string
+    description: One of the resource types defined as part of BMEG

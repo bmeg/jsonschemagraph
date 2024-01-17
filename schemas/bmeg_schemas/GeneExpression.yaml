@@ -1,62 +1,56 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: Protein
-title: Protein
+$id: GeneExpression
+title: GeneExpression
 type: object
-description: A protein - A biological macromolecule minimally consisting of one polypeptide
-  chain synthesized at the ribosome.
+description: Gene level expression values for an aliquot - The process in which a
+  genes sequence is converted into a mature gene product (protein or RNA). This includes
+  the production of an RNA transcript and its processing, as well as translation and
+  maturation for protein-coding genes.
 required:
-  - id
   - submitter_id
   - project_id
+  - values
+  - method
+  - metric
 links:
-  - rel: gene
-    href: Gene/{id}
+  - rel: aliquot
+    href: Aliquot/{id}
     templateRequired:
       - id
     targetSchema:
-      $ref: Gene.yaml
+      $ref: Aliquot.yaml
     templatePointers:
-      id: /gene/-/id
+      id: /aliquot/-/id
     targetHints:
       directionality:
         - outbound
       multiplicity:
         - has_one
       backref:
-        - proteins
-  - rel: transcript
-    href: Transcript/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: Transcript.yaml
-    templatePointers:
-      id: /transcript/-/id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_one
-      backref:
-        - protein
+        - gene_expressions
 properties:
   id:
     type: string
+    systemAlias: node_id
     element_property: true
-  sequence:
+  method:
     type: string
     element_property: true
-  submitter_id:
-    type: string
+  metric:
+    $ref: _definitions.yaml#/expression_metric
+    element_property: true
+  values:
+    type: object
+    propertyNames:
+      pattern: ^ENSG[0-9]+
+    additionalProperties:
+      type: number
     element_property: true
   project_id:
     $ref: _definitions.yaml#/project_id
     element_property: true
-  length:
-    type: number
-    element_property: true
-  mass:
-    type: number
+  submitter_id:
+    type: string
     element_property: true
   type:
     type: string
@@ -67,19 +61,13 @@ properties:
   updated_datetime:
     $ref: _definitions.yaml#/datetime
     element_property: true
-  gene:
+  aliquot:
     type: array
     items:
-      $ref: Gene.yaml
-    backref: proteins
-    element_property: true
-  transcript:
-    type: array
-    items:
-      $ref: Transcript.yaml
-    backref: protein
+      $ref: Aliquot.yaml
+    backref: gene_expressions
     element_property: true
   resourceType:
-    default: Protein
+    default: GeneExpression
     type: string
     description: One of the resource types defined as part of BMEG

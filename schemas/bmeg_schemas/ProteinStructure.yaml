@@ -1,39 +1,49 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: Publication
-title: Publication
+$id: ProteinStructure
+title: ProteinStructure
 type: object
-description: A publication - In academic publishing, a scientific journal is a periodical
-  publication intended to further the progress of science, usually by sharing findings
-  from research with readers.
+description: A protein structure - The amino acids and their 3-D arrangement in constituting
+  a protein.
 required:
-  - url
+  - id
   - submitter_id
   - project_id
-links: []
+links:
+  - rel: protein
+    href: Protein/{id}
+    templateRequired:
+      - id
+    targetSchema:
+      $ref: Protein.yaml
+    templatePointers:
+      id: /protein/-/id
+    targetHints:
+      directionality:
+        - outbound
+      multiplicity:
+        - has_one
+      backref:
+        - protein_structures
 properties:
   id:
     type: string
-    systemAlias: node_id
     element_property: true
-  url:
+  resolution:
+    type: number
+    element_property: true
+  description:
     type: string
     element_property: true
-  abstract:
+  short_description:
     type: string
     element_property: true
-  author:
-    type: array
-    element_property: true
-  citation:
-    type: array
-    element_property: true
-  date:
+  source:
     type: string
     element_property: true
-  text:
+  submission_date:
     type: string
     element_property: true
-  title:
+  experiment_type:
     type: string
     element_property: true
   project_id:
@@ -51,7 +61,13 @@ properties:
   updated_datetime:
     $ref: _definitions.yaml#/datetime
     element_property: true
+  protein:
+    type: array
+    items:
+      $ref: Protein.yaml
+    backref: protein_structures
+    element_property: true
   resourceType:
-    default: Publication
+    default: ProteinStructure
     type: string
     description: One of the resource types defined as part of BMEG

@@ -1,55 +1,52 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: File
-title: File
+$id: CopyNumberAlteration
+title: CopyNumberAlteration
 type: object
-description: A file Represents a file within a data system. Contains information about
-  a file, including its unique identifiers, checksum (MD5), filename, project association,
-  submitter information, creation and update timestamps, and references to related
-  aliquots. The file object serves as a key entity for linking, organizing, and managing
-  data files.
+description: Gene level copy number estimates for an aliquot. Variation in the number
+  of copies of a particular sequence within the genetic material of an individual.
+  Large-scale copy number polymorphisms are common and widely distributed in the human
+  genome.
 required:
   - submitter_id
   - project_id
-  - md5
-  - filename
+  - values
+  - method
 links:
-  - rel: aliquots
+  - rel: aliquot
     href: Aliquot/{id}
     templateRequired:
       - id
     targetSchema:
       $ref: Aliquot.yaml
     templatePointers:
-      id: /aliquots/-/id
+      id: /aliquot/-/id
     targetHints:
       directionality:
         - outbound
       multiplicity:
         - has_one
       backref:
-        - files
+        - copy_number_alterations
 properties:
-  id:
-    $ref: _definitions.yaml#/UUID
-    systemAlias: node_id
-    element_property: true
-  md5:
+  method:
     type: string
     element_property: true
-  path:
-    type: string
-    element_property: true
-  cmd:
-    type: string
-    element_property: true
-  filename:
-    type: string
+  values:
+    type: object
+    propertyNames:
+      pattern: ^ENSG[0-9]+
+    additionalProperties:
+      type: number
     element_property: true
   project_id:
     $ref: _definitions.yaml#/project_id
     element_property: true
   submitter_id:
     type: string
+    element_property: true
+  id:
+    $ref: _definitions.yaml#/UUID
+    systemAlias: node_id
     element_property: true
   type:
     type: string
@@ -60,13 +57,13 @@ properties:
   updated_datetime:
     $ref: _definitions.yaml#/datetime
     element_property: true
-  aliquots:
+  aliquot:
     type: array
     items:
       $ref: Aliquot.yaml
-    backref: files
+    backref: copy_number_alterations
     element_property: true
   resourceType:
-    default: File
+    default: CopyNumberAlteration
     type: string
     description: One of the resource types defined as part of BMEG

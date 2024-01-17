@@ -1,74 +1,80 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: aliquot
+$id: Aliquot
 title: Aliquot
 type: object
-description: 'Pertaining to a portion of the whole; any one of two or more samples
+description: Pertaining to a portion of the whole; any one of two or more samples
   of something, of the same volume or weight.
-
-  '
 required:
-- submitter_id
-- project_id
-- id
+  - submitter_id
+  - project_id
+  - id
 links:
-- rel: sample
-  href: sample/{id}
-  templateRequired:
-  - id
-  targetSchema:
-    $ref: sample.yaml
-  templatePointers:
-    id: /sample/-/id
-  targetHints:
-    directionality:
-    - outbound
-    multiplicity:
-    - has_one
-    backref: aliquots
-- rel: projects
-  href: project/{id}
-  templateRequired:
-  - id
-  targetSchema:
-    $ref: project.yaml
-  templatePointers:
-    id: /projects/-/id
-  targetHints:
-    directionality:
-    - outbound
-    multiplicity:
-    - has_many
-    backref: aliquots
+  - rel: sample
+    href: Sample/{id}
+    templateRequired:
+      - id
+    targetSchema:
+      $ref: Sample.yaml
+    templatePointers:
+      id: /sample/-/id
+    targetHints:
+      directionality:
+        - outbound
+      multiplicity:
+        - has_one
+      backref:
+        - aliquots
+  - rel: projects
+    href: Project/{id}
+    templateRequired:
+      - id
+    targetSchema:
+      $ref: Project.yaml
+    templatePointers:
+      id: /projects/-/id
+    targetHints:
+      directionality:
+        - outbound
+      multiplicity:
+        - has_many
+      backref:
+        - aliquots
 properties:
   id:
     type: string
+    element_property: true
   cellline_attributes:
-    type:
-    - 'null'
-    - object
+    element_property: true
   gdc_attributes:
-    type:
-    - 'null'
-    - object
+    element_property: true
   project_id:
     $ref: _definitions.yaml#/project_id
+    element_property: true
   submitter_id:
-    type:
-    - string
-    - 'null'
+    type: string
+    element_property: true
   type:
     type: string
+    element_property: true
   created_datetime:
     $ref: _definitions.yaml#/datetime
+    element_property: true
   updated_datetime:
     $ref: _definitions.yaml#/datetime
+    element_property: true
   sample:
-    type:
-    - array
+    type: array
     items:
-      $ref: reference.yaml
+      $ref: Sample.yaml
+    backref: aliquots
+    element_property: true
   projects:
-    type:
-    - array
+    type: array
     items:
-      $ref: reference.yaml
+      $ref: Project.yaml
+    backref: aliquots
+    element_property: true
+  resourceType:
+    default: Aliquot
+    type: string
+    description: One of the resource types defined as part of BMEG

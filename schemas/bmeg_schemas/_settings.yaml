@@ -4,3 +4,4 @@
 # to create a link between all children to case
 # to expedite case filter on nodes
 enable_case_cache: false
+title: _settings

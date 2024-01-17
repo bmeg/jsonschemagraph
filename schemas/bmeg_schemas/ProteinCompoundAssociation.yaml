@@ -1,98 +1,107 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: Case
-title: Case
+$id: ProteinCompoundAssociation
+title: ProteinCompoundAssociation
 type: object
-description: The collection of all data related to a specific subject in the context
-  of a specific experiment.
+description: Definitions for protein-compound Associations
 required:
+  - id
   - submitter_id
   - project_id
-  - case_id
 links:
-  - rel: compounds
+  - rel: proteins
+    href: Protein/{id}
+    templateRequired:
+      - id
+    targetSchema:
+      $ref: Protein.yaml
+    templatePointers:
+      id: /proteins/-/id
+    targetHints:
+      directionality:
+        - outbound
+      multiplicity:
+        - has_many
+      backref:
+        - protein_compound_associations
+  - rel: genes
+    href: Gene/{id}
+    templateRequired:
+      - id
+    targetSchema:
+      $ref: Gene.yaml
+    templatePointers:
+      id: /genes/-/id
+    targetHints:
+      directionality:
+        - outbound
+      multiplicity:
+        - has_many
+      backref:
+        - protein_compound_associations
+  - rel: compound
     href: Compound/{id}
     templateRequired:
       - id
     targetSchema:
       $ref: Compound.yaml
     templatePointers:
-      id: /compounds/-/id
+      id: /compound/-/id
     targetHints:
       directionality:
         - outbound
       multiplicity:
-        - has_many
+        - has_one
       backref:
-        - cases
-  - rel: projects
-    href: Project/{id}
+        - protein_compound_associations
+  - rel: publications
+    href: Publication/{id}
     templateRequired:
       - id
     targetSchema:
-      $ref: Project.yaml
+      $ref: Publication.yaml
     templatePointers:
-      id: /projects/-/id
+      id: /publications/-/id
     targetHints:
       directionality:
         - outbound
       multiplicity:
         - has_many
       backref:
-        - cases
-  - rel: phenotypes
-    href: Phenotype/{id}
+        - protein_compound_associations
+  - rel: protein_structures
+    href: ProteinStructure/{id}
     templateRequired:
       - id
     targetSchema:
-      $ref: Phenotype.yaml
+      $ref: ProteinStructure.yaml
     templatePointers:
-      id: /phenotypes/-/id
+      id: /protein_structures/-/id
     targetHints:
       directionality:
         - outbound
       multiplicity:
         - has_many
       backref:
-        - cases
-  - rel: same_as
-    href: Case/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: Case.yaml
-    templatePointers:
-      id: /same_as/-/id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_many
-      backref:
-        - cases
+        - protein_compound_associations
 properties:
-  case_id:
+  id:
     type: string
     element_property: true
-  cellline_attributes:
-    element_property: true
-  gdc_attributes:
-    element_property: true
-  gtex_attributes:
-    element_property: true
-  sex:
+  association_type:
     type: string
+    description: protein-compound association keyword, example inhibitor
     element_property: true
   project_id:
     $ref: _definitions.yaml#/project_id
     element_property: true
+  source:
+    type: string
+    element_property: true
   submitter_id:
     type: string
     element_property: true
-  id:
-    type: string
-    element_property: true
-  comment:
-    type: string
+  ki_nm:
+    type: number
     element_property: true
   type:
     type: string
@@ -103,31 +112,37 @@ properties:
   updated_datetime:
     $ref: _definitions.yaml#/datetime
     element_property: true
-  compounds:
+  proteins:
+    type: array
+    items:
+      $ref: Protein.yaml
+    backref: protein_compound_associations
+    element_property: true
+  genes:
+    type: array
+    items:
+      $ref: Gene.yaml
+    backref: protein_compound_associations
+    element_property: true
+  compound:
     type: array
     items:
       $ref: Compound.yaml
-    backref: cases
+    backref: protein_compound_associations
     element_property: true
-  projects:
+  publications:
     type: array
     items:
-      $ref: Project.yaml
-    backref: cases
+      $ref: Publication.yaml
+    backref: protein_compound_associations
     element_property: true
-  phenotypes:
+  protein_structures:
     type: array
     items:
-      $ref: Phenotype.yaml
-    backref: cases
-    element_property: true
-  same_as:
-    type: array
-    items:
-      $ref: Case.yaml
-    backref: cases
+      $ref: ProteinStructure.yaml
+    backref: protein_compound_associations
     element_property: true
   resourceType:
-    default: Case
+    default: ProteinCompoundAssociation
     type: string
     description: One of the resource types defined as part of BMEG

@@ -1,13 +1,15 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: Protein
-title: Protein
+$id: MethylationProbe
+title: MethylationProbe
 type: object
-description: A protein - A biological macromolecule minimally consisting of one polypeptide
-  chain synthesized at the ribosome.
+description: Definition for a methylation probe - A probe is a DNA sequence used experimentally
+  to detect the presence or absence of a complementary nucleic acid.
 required:
-  - id
   - submitter_id
   - project_id
+  - probe_id
+  - chromosome
+  - position
 links:
   - rel: gene
     href: Gene/{id}
@@ -23,40 +25,29 @@ links:
       multiplicity:
         - has_one
       backref:
-        - proteins
-  - rel: transcript
-    href: Transcript/{id}
-    templateRequired:
-      - id
-    targetSchema:
-      $ref: Transcript.yaml
-    templatePointers:
-      id: /transcript/-/id
-    targetHints:
-      directionality:
-        - outbound
-      multiplicity:
-        - has_one
-      backref:
-        - protein
+        - methylation_probes
 properties:
-  id:
+  probe_id:
     type: string
     element_property: true
-  sequence:
-    type: string
+  chromosome:
+    $ref: _definitions.yaml#/chromosome
     element_property: true
-  submitter_id:
+  position:
+    type: integer
+    element_property: true
+  target:
     type: string
     element_property: true
   project_id:
     $ref: _definitions.yaml#/project_id
     element_property: true
-  length:
-    type: number
+  submitter_id:
+    type: string
     element_property: true
-  mass:
-    type: number
+  id:
+    $ref: _definitions.yaml#/UUID
+    systemAlias: node_id
     element_property: true
   type:
     type: string
@@ -71,15 +62,9 @@ properties:
     type: array
     items:
       $ref: Gene.yaml
-    backref: proteins
-    element_property: true
-  transcript:
-    type: array
-    items:
-      $ref: Transcript.yaml
-    backref: protein
+    backref: methylation_probes
     element_property: true
   resourceType:
-    default: Protein
+    default: MethylationProbe
     type: string
     description: One of the resource types defined as part of BMEG

@@ -1,62 +1,79 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: Protein
-title: Protein
+$id: GeneOntologyTerm
+title: GeneOntologyTerm
 type: object
-description: A protein - A biological macromolecule minimally consisting of one polypeptide
-  chain synthesized at the ribosome.
+description: The Gene Ontology project provides an ontology of defined terms representing  gene
+  product properties.
 required:
-  - id
   - submitter_id
+  - synonym
   - project_id
+  - name
+  - xref
+  - go_id
+  - definition
+  - namespace
 links:
-  - rel: gene
+  - rel: genes
     href: Gene/{id}
     templateRequired:
       - id
     targetSchema:
       $ref: Gene.yaml
     templatePointers:
-      id: /gene/-/id
+      id: /genes/-/id
     targetHints:
       directionality:
         - outbound
       multiplicity:
-        - has_one
+        - has_many
       backref:
-        - proteins
-  - rel: transcript
-    href: Transcript/{id}
+        - gene_ontology_terms
+  - rel: child_terms
+    href: GeneOntologyTerm/{id}
     templateRequired:
       - id
     targetSchema:
-      $ref: Transcript.yaml
+      $ref: GeneOntologyTerm.yaml
     templatePointers:
-      id: /transcript/-/id
+      id: /child_terms/-/id
     targetHints:
       directionality:
         - outbound
       multiplicity:
-        - has_one
+        - has_many
       backref:
-        - protein
+        - gene_ontology_terms
 properties:
-  id:
+  go_id:
     type: string
     element_property: true
-  sequence:
+  name:
     type: string
     element_property: true
-  submitter_id:
+  namespace:
     type: string
+    element_property: true
+  definition:
+    type: string
+    element_property: true
+  synonym:
+    type: array
+    element_property: true
+  xref:
+    type: array
+    items:
+      type: string
     element_property: true
   project_id:
     $ref: _definitions.yaml#/project_id
     element_property: true
-  length:
-    type: number
+  submitter_id:
+    type: string
     element_property: true
-  mass:
-    type: number
+  id:
+    type: string
+    systemAlias: node_id
     element_property: true
   type:
     type: string
@@ -67,19 +84,19 @@ properties:
   updated_datetime:
     $ref: _definitions.yaml#/datetime
     element_property: true
-  gene:
+  genes:
     type: array
     items:
       $ref: Gene.yaml
-    backref: proteins
+    backref: gene_ontology_terms
     element_property: true
-  transcript:
+  child_terms:
     type: array
     items:
-      $ref: Transcript.yaml
-    backref: protein
+      $ref: GeneOntologyTerm.yaml
+    backref: gene_ontology_terms
     element_property: true
   resourceType:
-    default: Protein
+    default: GeneOntologyTerm
     type: string
     description: One of the resource types defined as part of BMEG
