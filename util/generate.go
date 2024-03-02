@@ -9,6 +9,9 @@ import (
 	"google.golang.org/protobuf/types/known/structpb"
 )
 
+const RUNE_DASH = rune('-')
+const RUNE_SLASH = rune('/')
+
 type Vertex struct {
 	Gid   string           `protobuf:"bytes,1,opt,name=gid,proto3" json:"gid,omitempty"`
 	Label string           `protobuf:"bytes,2,opt,name=label,proto3" json:"label,omitempty"`
@@ -134,16 +137,20 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 							//fmt.Println("----------------------------------------------------------------", rest_of_value)
 							if strings.Count(rest_of_pointer, "/") > 1 {
 								for _, v := range rest_of_pointer {
-									if v != 45 && v != 47 {
+									if v != RUNE_DASH && v != RUNE_SLASH {
 										pointer_fragment = pointer_fragment + string(v)
-									} else if v == 45 {
+									} else if v == RUNE_DASH {
 										if _, ok := derivedId.([]any); ok {
 											if value, ok := derivedId.([]any); ok {
-												derivedId = value[0]
-												//fmt.Println("v==45", derivedId, "VAL VALUE: ", pointer_fragment)
+												if len(value) > 0 {
+													derivedId = value[0]
+													//fmt.Println("v==45", derivedId, "VAL VALUE: ", pointer_fragment)
+												} else {
+													derivedId = "" //TODO: flag validation
+												}
 											}
 										}
-									} else if v == 47 {
+									} else if v == RUNE_SLASH {
 										if _, ok := derivedId.(map[string]any); ok {
 											if nalue, ok := derivedId.(map[string]any)[pointer_fragment]; ok {
 												derivedId = nalue
@@ -190,7 +197,7 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 				// gather compare to a list of rels so that the vertexes don't include edge reference information
 				if !contains(ListOfRels, name) {
 					if d, ok := data[name]; ok {
-						fmt.Println("name: ", name, "D: ", d)
+						//fmt.Println("name: ", name, "D: ", d)
 						vData[name] = d
 					}
 				}
@@ -202,7 +209,7 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 				out = append(out, GraphElement{Vertex: &vert})
 			}
 			if nerr != nil {
-				fmt.Println("VALUE OF ERROR ", nerr)
+				fmt.Println("VALUE OF ERROR ", nerr) //TODO: send this to logging
 			}
 
 		}
