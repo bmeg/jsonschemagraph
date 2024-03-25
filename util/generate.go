@@ -110,7 +110,6 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 		}
 		out := make([]GraphElement, 0, 1)
 		if id, nerr := getObjectID(data, class); nerr == nil {
-			//fmt.Println("CLASS: ", class)
 			var ListOfRels []string
 			vData := map[string]any{}
 			//fmt.Println("HELLO ", GraphExtensionTag)
@@ -131,63 +130,75 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 						// this if statement is used to get map[string]any into type any which is much easier to work with
 						// this assumes that the first characters of the target.templatePointer will always be of the form '/hgfdsadfg/'
 						if derivedId, ok := data[splitted_pointer[1]].(any); ok {
-							//fmt.Println("HELLO ", splitted_pointer, "DERIVED ID: ", derivedId)
+							//fmt.Println("HELLO ", splitted_pointer, "DERIVED ID: ", derivedId, "POINTER: ", splitted_pointer[1], "DATA: ", data)
 							rest_of_pointer := strings.Join(splitted_pointer[2:], "/") + "/"
 							//fmt.Println("REST OF POINTER: ", rest_of_pointer)
-							//fmt.Println("----------------------------------------------------------------", rest_of_value)
+							//fmt.Println("----------------------------------------------------------------", rest_of_pointer)
+							correct_path := true
 							if strings.Count(rest_of_pointer, "/") > 1 {
 								for _, v := range rest_of_pointer {
 									if v != RUNE_DASH && v != RUNE_SLASH {
+										//fmt.Println("POINTER FRAGMENT: ", pointer_fragment)
 										pointer_fragment = pointer_fragment + string(v)
 									} else if v == RUNE_DASH {
-										if _, ok := derivedId.([]any); ok {
-											if value, ok := derivedId.([]any); ok {
-												if len(value) > 0 {
-													derivedId = value[0]
-													//fmt.Println("v==45", derivedId, "VAL VALUE: ", pointer_fragment)
-												} else {
-													derivedId = "" //TODO: flag validation
-												}
+										//fmt.Println("DASH: ", derivedId)
+										if value, ok := derivedId.([]any); ok {
+											if len(value) > 0 {
+												derivedId = value[0]
+												//fmt.Println("v==45", derivedId, "VAL VALUE: ", pointer_fragment)
+											} else {
+												return nil, fmt.Errorf("data %s does not match schema pointer %s on row %s", derivedId, rest_of_pointer, data)
 											}
+										} else if !ok {
+											correct_path = false
 										}
+
 									} else if v == RUNE_SLASH {
-										if _, ok := derivedId.(map[string]any); ok {
-											if nalue, ok := derivedId.(map[string]any)[pointer_fragment]; ok {
+										//fmt.Println("SLASH: ", derivedId)
+										if value, ok := derivedId.(map[string]any); ok {
+											if nalue, ok := value[pointer_fragment]; ok {
 												derivedId = nalue
 												//fmt.Println("v==47", derivedId, "VAL VALUE: ", pointer_fragment)
+											} else if !ok {
+												correct_path = false
 											}
+										} else if !ok{
+											correct_path = false
 										}
 										pointer_fragment = ""
 									}
 								}
 							} else {
-								//fmt.Println("DERIVED_ID", derivedId)
 								if value, ok := derivedId.(map[string]any)["id"]; ok {
 									derivedId = value
 								} else if value, ok := derivedId.(map[string]any)["reference"]; ok {
 									derivedId = value
 								}
 							}
-							edgeOut := Edge{
-								To:    derivedId.(string),
-								From:  id,
-								Label: target.Rel,
-								// this label isn't quite right. Ex: right now "Transcript" -> should be "transcripts"
-								// doing some string manipulation now, but not sure if there is a better solution
-							}
-							// problem of appending edges of basically the same label giving a bunch fo duplicates?
-							//if !EdgeExistsInList(edgeOut, out) {
-							out = append(out, GraphElement{OutEdge: &edgeOut})
-							//}
-							if target.Backref != "" {
-								edgeIn := Edge{
-									To:    id,
-									From:  derivedId.(string),
-									Label: target.Backref,
+							// Just because the first n pointer keys matched doesn't mean the whole json pointer path matches.
+							// This if statement checks for this to ensure that the final derived data is type correct
+							if correct_path{
+								edgeOut := Edge{
+									To:    derivedId.(string),
+									From:  id,
+									Label: target.Rel,
+									// this label isn't quite right. Ex: right now "Transcript" -> should be "transcripts"
+									// doing some string manipulation now, but not sure if there is a better solution
 								}
-								//if !EdgeExistsInList(edgeIn, out) {
-								out = append(out, GraphElement{InEdge: &edgeIn})
+								// problem of appending edges of basically the same label giving a bunch fo duplicates?
+								//if !EdgeExistsInList(edgeOut, out) {
+								out = append(out, GraphElement{OutEdge: &edgeOut})
 								//}
+								if target.Backref != "" {
+									edgeIn := Edge{
+										To:    id,
+										From:  derivedId.(string),
+										Label: target.Backref,
+									}
+									//if !EdgeExistsInList(edgeIn, out) {
+									out = append(out, GraphElement{InEdge: &edgeIn})
+									//}
+								}
 							}
 						}
 					}

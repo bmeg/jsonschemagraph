@@ -151,6 +151,8 @@ var Cmd = &cobra.Command{
 								}
 							}
 						}
+					} else if err != nil{
+						log.Fatal(err)
 					}
 				}
 				jsgraph.Check_delete(args[2] + "/" + unique_str + ".OutEdge.json")
