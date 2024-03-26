@@ -182,10 +182,10 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 							// This if statement checks for this to ensure that the final derived data is type correct
 							if correct_path{
 								// Special case for fhir to chop off the remaining reference from the schema. Need a better way of doing this.
-								if rest_of_pointer != "" && rest_of_pointer == "reference/" {
+								if rest_of_pointer != "" && (strings.Contains(rest_of_pointer, "reference/")) {
 									derivedId = strings.Split(derivedId.(string), "/")[1]
 								}else{
-									return nil, fmt.Errorf("rest of pointer value: %s is not expected type string for row %s", rest_of_pointer, data)
+									return nil, fmt.Errorf("derived value: %s is not expected for row %s", derivedId, data)
 								}
 								edgeOut := Edge{
 									To:    derivedId.(string),
