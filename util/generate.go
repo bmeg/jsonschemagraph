@@ -113,11 +113,12 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 			var ListOfRels []string
 			vData := map[string]any{}
 			//fmt.Println("HELLO ", GraphExtensionTag)
-			//fmt.Println("CLASS EXTENSIONS: ", class.Extensions)
+			//fmt.Println("CLASS", class, "CLASS EXTENSIONS: ", class.Extensions, "TAG: ", GraphExtensionTag)
 			if ext, ok := class.Extensions[GraphExtensionTag]; ok {
 				gext := ext.(GraphExtension)
 				// trying to index into derivedId with the appropriate json pointer patter that is taken from templatePointers
 				for _, target := range gext.Targets {
+					//fmt.Println("TARGET: ", target)
 					ListOfRels = append(ListOfRels, target.Rel)
 					pointer_fragment := ""
 					for _, pointer_string := range target.templatePointer {
@@ -129,6 +130,7 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 						}
 						// this if statement is used to get map[string]any into type any which is much easier to work with
 						// this assumes that the first characters of the target.templatePointer will always be of the form '/hgfdsadfg/'
+						//fmt.Println("POINTER: ", splitted_pointer[1],"DATA: ", data)
 						if derivedId, ok := data[splitted_pointer[1]].(any); ok {
 							//fmt.Println("HELLO ", splitted_pointer, "DERIVED ID: ", derivedId, "POINTER: ", splitted_pointer[1], "DATA: ", data)
 							rest_of_pointer := strings.Join(splitted_pointer[2:], "/") + "/"
@@ -136,6 +138,7 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 							//fmt.Println("----------------------------------------------------------------", rest_of_pointer)
 							correct_path := true
 							if strings.Count(rest_of_pointer, "/") > 1 {
+								//fmt.Println("REST OF POINTER: ", rest_of_pointer)
 								for _, v := range rest_of_pointer {
 									if v != RUNE_DASH && v != RUNE_SLASH {
 										//fmt.Println("POINTER FRAGMENT: ", pointer_fragment)
@@ -178,6 +181,12 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 							// Just because the first n pointer keys matched doesn't mean the whole json pointer path matches.
 							// This if statement checks for this to ensure that the final derived data is type correct
 							if correct_path{
+								// Special case for fhir to chop off the remaining reference from the schema. Need a better way of doing this.
+								if rest_of_pointer != "" && rest_of_pointer == "reference/" {
+									derivedId = strings.Split(derivedId.(string), "/")[1]
+								}else{
+									return nil, fmt.Errorf("rest of pointer value: %s is not expected type string for row %s", rest_of_pointer, data)
+								}
 								edgeOut := Edge{
 									To:    derivedId.(string),
 									From:  id,

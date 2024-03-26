@@ -165,6 +165,7 @@ func (graphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]int
 					}
 
 					if tval, ok := emap["targetSchema"]; ok {
+						//fmt.Println("TVAL: ", tval)
 						if tmap, ok := tval.(map[string]any); ok {
 							if ref, ok := tmap["$ref"]; ok {
 								if refStr, ok := ref.(string); ok {
@@ -204,7 +205,7 @@ func (graphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]int
 					}
 				}
 			}
-			//fmt.Println("NEXT ONE _____________________________________________")
+			//fmt.Println("NEXT ONE _____________________________________________", out)
 			return out, nil
 		}
 	}

@@ -39,6 +39,8 @@ func yamlLoader(s string) (io.ReadCloser, error) {
 			return nil, err
 		}
 		return io.NopCloser(strings.NewReader(string(schemaText))), nil
+	} else{
+		return nil, fmt.Errorf("First argument must be a .yaml file schema")
 	}
 	return os.Open(f)
 }
