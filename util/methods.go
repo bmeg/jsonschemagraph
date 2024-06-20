@@ -14,7 +14,6 @@ func (s GraphSchema) ListClasses() []string {
 }
 
 func (s GraphSchema) GetClass(classID string) *jsonschema.Schema {
-	//fmt.Println("S.CLASSES", s.Classes)
 	if class, ok := s.Classes[classID]; ok {
 		return class
 	}

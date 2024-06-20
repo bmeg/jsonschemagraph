@@ -120,9 +120,10 @@ var graphExtMeta = jsonschema.MustCompileString("graphExtMeta.json", `{"properti
 type graphExtCompiler struct{}
 
 type Target struct {
-	Schema  *jsonschema.Schema
-	Backref string
-	Rel     string
+	Schema     *jsonschema.Schema
+	Backref    string
+	Rel        string
+	Regexmatch string
 	//Href  string don't currently use this
 	templatePointer map[string]any
 }
@@ -165,31 +166,32 @@ func (graphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]int
 					}
 
 					if tval, ok := emap["targetSchema"]; ok {
-						//fmt.Println("TVAL: ", tval)
 						if tmap, ok := tval.(map[string]any); ok {
 							if ref, ok := tmap["$ref"]; ok {
 								if refStr, ok := ref.(string); ok {
 									backRef := ""
+									regex_match := ""
 									if bval, ok := emap["targetHints"]; ok {
 										if hval, ok := bval.(map[string]any); ok {
 											if ref, ok := hval["backref"]; ok {
-												//fmt.Println("TYPEOF", reflect.TypeOf(ref))
 												if bstr, ok := ref.(string); ok {
 													backRef = bstr
 												} else if bstr, ok := ref.([]any)[0].(string); ok {
-													//fmt.Println("bstr", bstr)
 													backRef = bstr
 												}
 											}
-											//fmt.Println("refstr", refStr)
+											if regex, ok := hval["regex_match"]; ok {
+												if reg_match, ok := regex.([]any)[0].(string); ok {
+													regex_match = reg_match
+												}
+											}
 											sch, err := ctx.CompileRef(refStr, "./", false)
-											//fmt.Println("After CompileRef")
-											//fmt.Println("OUT LINKKEY: ",linkKey)
 											if err == nil {
 												out.Targets = append(out.Targets, Target{
-													Schema:  sch,
-													Backref: backRef,
-													Rel:     rel,
+													Schema:     sch,
+													Backref:    backRef,
+													Rel:        rel,
+													Regexmatch: regex_match,
 													//Href:            href,
 													templatePointer: linkKey,
 												})
@@ -197,7 +199,6 @@ func (graphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]int
 												return nil, err
 											}
 										}
-										//fmt.Println("BACKREF: ", backRef, "REL: ", rel)
 									}
 								}
 							}
@@ -205,7 +206,6 @@ func (graphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]int
 					}
 				}
 			}
-			//fmt.Println("NEXT ONE _____________________________________________", out)
 			return out, nil
 		}
 	}
@@ -290,7 +290,6 @@ func Load(path string, opt ...LoadOpt) (GraphSchema, error) {
 				}
 			} else {
 				fmt.Println("ERRORRARARAAR", err)
-
 				for _, i := range opt {
 					if i.LogError != nil {
 						i.LogError(f, err)

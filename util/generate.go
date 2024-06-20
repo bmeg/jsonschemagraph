@@ -59,7 +59,6 @@ func contains(elems []string, v string) bool {
 // Used to filter out duplicate edges with different labels
 func EdgeExistsInList(newEdge Edge, EdgeList []GraphElement) bool {
 	for _, Edge := range EdgeList {
-		//fmt.Println("EDGE: ", Edge, "NEWEDGE: ", newEdge)
 		if Edge.OutEdge != nil && Edge.OutEdge.To != "" && Edge.OutEdge.From != "" && Edge.OutEdge.To == newEdge.To && Edge.OutEdge.From == newEdge.From {
 			return true
 		} else if Edge.InEdge != nil && Edge.InEdge.To != "" && Edge.InEdge.From != "" && Edge.InEdge.To == newEdge.To && Edge.InEdge.From == newEdge.From {
@@ -79,7 +78,6 @@ func flattenProperties(data any, listOfRels []string, vData map[string]any) {
 					flattenProperties(d, listOfRels, vData)
 				} else {
 					if d, ok := value.(string); ok {
-						fmt.Println("name: ", name, "D: ", d)
 						vData[name] = d
 					}
 				}
@@ -93,7 +91,6 @@ func flattenProperties(data any, listOfRels []string, vData map[string]any) {
 }*/
 
 func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) ([]GraphElement, error) {
-	//fmt.Println("CLASS: ", classID, "DATA: ", data)
 	if class := s.GetClass(classID); class != nil {
 		if clean {
 			var err error
@@ -104,7 +101,6 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 		} else {
 			err := class.Validate(data)
 			if err != nil {
-				//fmt.Println("VALUE OF ERROR: ", err)
 				return nil, err
 			}
 		}
@@ -112,43 +108,32 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 		if id, nerr := getObjectID(data, class); nerr == nil {
 			var ListOfRels []string
 			vData := map[string]any{}
-			//fmt.Println("HELLO ", GraphExtensionTag)
-			//fmt.Println("CLASS", class, "CLASS EXTENSIONS: ", class.Extensions, "TAG: ", GraphExtensionTag)
 			if ext, ok := class.Extensions[GraphExtensionTag]; ok {
 				gext := ext.(GraphExtension)
+
 				// trying to index into derivedId with the appropriate json pointer patter that is taken from templatePointers
 				for _, target := range gext.Targets {
-					//fmt.Println("TARGET: ", target)
 					ListOfRels = append(ListOfRels, target.Rel)
 					pointer_fragment := ""
 					for _, pointer_string := range target.templatePointer {
 						splitted_pointer := strings.Split(pointer_string.(string), "/")
-						//fmt.Println("SPLITTED POINTER: ", splitted_pointer[1])
 
 						if len(splitted_pointer) < 3 {
 							return nil, fmt.Errorf("length of templatePointers is not long enough")
 						}
 						// this if statement is used to get map[string]any into type any which is much easier to work with
 						// this assumes that the first characters of the target.templatePointer will always be of the form '/hgfdsadfg/'
-						//fmt.Println("POINTER: ", splitted_pointer[1],"DATA: ", data)
 						if derivedId, ok := data[splitted_pointer[1]].(any); ok {
-							//fmt.Println("HELLO ", splitted_pointer, "DERIVED ID: ", derivedId, "POINTER: ", splitted_pointer[1], "DATA: ", data)
 							rest_of_pointer := strings.Join(splitted_pointer[2:], "/") + "/"
-							//fmt.Println("REST OF POINTER: ", rest_of_pointer)
-							//fmt.Println("----------------------------------------------------------------", rest_of_pointer)
 							correct_path := true
 							if strings.Count(rest_of_pointer, "/") > 1 {
-								//fmt.Println("REST OF POINTER: ", rest_of_pointer)
 								for _, v := range rest_of_pointer {
 									if v != RUNE_DASH && v != RUNE_SLASH {
-										//fmt.Println("POINTER FRAGMENT: ", pointer_fragment)
 										pointer_fragment = pointer_fragment + string(v)
 									} else if v == RUNE_DASH {
-										//fmt.Println("DASH: ", derivedId)
 										if value, ok := derivedId.([]any); ok {
 											if len(value) > 0 {
 												derivedId = value[0]
-												//fmt.Println("v==45", derivedId, "VAL VALUE: ", pointer_fragment)
 											} else {
 												return nil, fmt.Errorf("data %s does not match schema pointer %s on row %s", derivedId, rest_of_pointer, data)
 											}
@@ -157,15 +142,13 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 										}
 
 									} else if v == RUNE_SLASH {
-										//fmt.Println("SLASH: ", derivedId)
 										if value, ok := derivedId.(map[string]any); ok {
 											if nalue, ok := value[pointer_fragment]; ok {
 												derivedId = nalue
-												//fmt.Println("v==47", derivedId, "VAL VALUE: ", pointer_fragment)
 											} else if !ok {
 												correct_path = false
 											}
-										} else if !ok{
+										} else if !ok {
 											correct_path = false
 										}
 										pointer_fragment = ""
@@ -180,11 +163,18 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 							}
 							// Just because the first n pointer keys matched doesn't mean the whole json pointer path matches.
 							// This if statement checks for this to ensure that the final derived data is type correct
-							if correct_path{
+							if correct_path {
 								// Special case for fhir to chop off the remaining reference from the schema. Need a better way of doing this.
 								if rest_of_pointer != "" && (strings.Contains(rest_of_pointer, "reference/")) {
-									derivedId = strings.Split(derivedId.(string), "/")[1]
-								}else{
+									fmt.Println("derivedId: ", derivedId)
+									split_list := strings.Split(derivedId.(string), "/")
+									fmt.Println("SPLIT LIST: ", split_list[0], "REGEXMATCH: ", target.Regexmatch)
+									if split_list[0]+"/*" == target.Regexmatch {
+										derivedId = split_list[1]
+									} else {
+										continue
+									}
+								} else {
 									return nil, fmt.Errorf("derived value: %s is not expected for row %s", derivedId, data)
 								}
 								edgeOut := Edge{
@@ -194,7 +184,7 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 									// this label isn't quite right. Ex: right now "Transcript" -> should be "transcripts"
 									// doing some string manipulation now, but not sure if there is a better solution
 								}
-								// problem of appending edges of basically the same label giving a bunch fo duplicates?
+								// problem of appending edges of basically the same label giving a bunch of duplicates?
 								//if !EdgeExistsInList(edgeOut, out) {
 								out = append(out, GraphElement{OutEdge: &edgeOut})
 								//}
@@ -217,7 +207,6 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 				// gather compare to a list of rels so that the vertexes don't include edge reference information
 				if !contains(ListOfRels, name) {
 					if d, ok := data[name]; ok {
-						//fmt.Println("name: ", name, "D: ", d)
 						vData[name] = d
 					}
 				}

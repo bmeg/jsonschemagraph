@@ -65,7 +65,6 @@ var Cmd = &cobra.Command{
 				procChan := make(chan map[string]any, line_count)
 				go func() {
 					for line := range reader {
-
 						o := map[string]any{}
 						if len(line) > 0 {
 							json.Unmarshal(line, &o)
@@ -151,7 +150,7 @@ var Cmd = &cobra.Command{
 								}
 							}
 						}
-					} else if err != nil{
+					} else if err != nil {
 						log.Fatal(err)
 					}
 				}
