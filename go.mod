@@ -3,6 +3,7 @@ module github.com/bmeg/jsonschemagraph
 go 1.20
 
 require (
+	github.com/bmeg/golib v0.0.0-20200725232156-e799a31439fc
 	github.com/bmeg/grip v0.0.0-20210910231938-94d69d94ff65
 	github.com/santhosh-tekuri/jsonschema/v5 v5.1.1
 	github.com/spf13/cobra v1.4.0
@@ -11,7 +12,6 @@ require (
 )
 
 require (
-	github.com/bmeg/golib v0.0.0-20200725232156-e799a31439fc // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
