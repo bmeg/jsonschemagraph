@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/google/uuid"
 	"github.com/santhosh-tekuri/jsonschema/v5"
 	_ "github.com/santhosh-tekuri/jsonschema/v5/httploader"
 	"google.golang.org/protobuf/types/known/structpb"
@@ -19,7 +20,7 @@ type Vertex struct {
 }
 
 type Edge struct {
-	Gid   string           `protobuf:"bytes,1,opt,name=gid,proto3" json:"gid,omitempty"`
+	Gid   uuid.UUID        `protobuf:"bytes,1,opt,name=gid,proto3" json:"gid,omitempty"`
 	Label string           `protobuf:"bytes,2,opt,name=label,proto3" json:"label,omitempty"`
 	From  string           `protobuf:"bytes,3,opt,name=from,proto3" json:"from,omitempty"`
 	To    string           `protobuf:"bytes,4,opt,name=to,proto3" json:"to,omitempty"`
@@ -91,6 +92,8 @@ func flattenProperties(data any, listOfRels []string, vData map[string]any) {
 }*/
 
 func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) ([]GraphElement, error) {
+	namespace := uuid.NewMD5(uuid.NameSpaceDNS, []byte("aced-idp.org"))
+
 	if class := s.GetClass(classID); class != nil {
 		if clean {
 			var err error
@@ -166,9 +169,7 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 							if correct_path {
 								// Special case for fhir to chop off the remaining reference from the schema. Need a better way of doing this.
 								if rest_of_pointer != "" && (strings.Contains(rest_of_pointer, "reference/")) {
-									fmt.Println("derivedId: ", derivedId)
 									split_list := strings.Split(derivedId.(string), "/")
-									fmt.Println("SPLIT LIST: ", split_list[0], "REGEXMATCH: ", target.Regexmatch)
 									if split_list[0]+"/*" == target.Regexmatch {
 										derivedId = split_list[1]
 									} else {
@@ -181,6 +182,8 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 									To:    derivedId.(string),
 									From:  id,
 									Label: target.Rel,
+									Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", derivedId, id, target.Rel))),
+
 									// this label isn't quite right. Ex: right now "Transcript" -> should be "transcripts"
 									// doing some string manipulation now, but not sure if there is a better solution
 								}
@@ -193,6 +196,7 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 										To:    id,
 										From:  derivedId.(string),
 										Label: target.Backref,
+										Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", id, derivedId, target.Backref))),
 									}
 									//if !EdgeExistsInList(edgeIn, out) {
 									out = append(out, GraphElement{InEdge: &edgeIn})

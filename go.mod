@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/bmeg/golib v0.0.0-20200725232156-e799a31439fc
 	github.com/bmeg/grip v0.0.0-20210910231938-94d69d94ff65
+	github.com/google/uuid v1.6.0
 	github.com/santhosh-tekuri/jsonschema/v5 v5.1.1
 	github.com/spf13/cobra v1.4.0
 	google.golang.org/protobuf v1.30.0
