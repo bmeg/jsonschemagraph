@@ -40,6 +40,8 @@ func countLines(filePath string) int {
 	return count
 }
 
+var project_id string
+
 // https://github.com/bmeg/sifter/blob/51a67b0de852e429d30b9371d9975dbefe3a8df9/transform/graph_build.go#L86
 var Cmd = &cobra.Command{
 	Use:   "gen-graph [schema dir] [data dir] [out dir] [class name]",
@@ -99,7 +101,7 @@ var Cmd = &cobra.Command{
 
 				var IedgeInit, VertexInit, OedegeInit = true, true, true
 				for line := range procChan {
-					if result, err := out.Generate(args[3], line, false); err == nil {
+					if result, err := out.Generate(args[3], line, false, project_id); err == nil {
 						for _, lin := range result {
 							if b, err := json.Marshal(lin.InEdge); err == nil {
 								if string(b) != "null" {
@@ -166,4 +168,6 @@ var Cmd = &cobra.Command{
 }
 
 func init() {
+	Cmd.Flags().StringVar(&project_id, "project_id", "", "specify project_id if loading into gen3")
+
 }

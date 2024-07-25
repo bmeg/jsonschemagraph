@@ -91,7 +91,7 @@ func flattenProperties(data any, listOfRels []string, vData map[string]any) {
 	}
 }*/
 
-func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) ([]GraphElement, error) {
+func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, project_id string) ([]GraphElement, error) {
 	namespace := uuid.NewMD5(uuid.NameSpaceDNS, []byte("aced-idp.org"))
 
 	if class := s.GetClass(classID); class != nil {
@@ -214,6 +214,13 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool) (
 						vData[name] = d
 					}
 				}
+			}
+			if project_id != "" {
+				project_parts := strings.Split(project_id, "-")
+				if len(project_parts) != 2 {
+					return nil, fmt.Errorf("project_id '%s' not in form program-project", project_id)
+				}
+				vData["auth_resource_path"] = "/programs/" + project_parts[0] + "/projects/" + project_parts[1]
 			}
 
 			dataPB, err := structpb.NewStruct(vData)
