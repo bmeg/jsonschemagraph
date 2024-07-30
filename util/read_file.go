@@ -20,6 +20,14 @@ func ReadGzipLines(path string, size int) (chan []byte, error) {
 	return nil, err
 }
 
+func ReadFileLines(path string, size int) (chan []byte, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	return ReadLines(file, size)
+}
+
 func ReadLines(r io.Reader, size int) (chan []byte, error) {
 	out := make(chan []byte, 100)
 	go func() {

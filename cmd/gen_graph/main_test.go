@@ -1,4 +1,4 @@
-package gengraph
+package gen_graph
 
 import (
 	"bytes"
