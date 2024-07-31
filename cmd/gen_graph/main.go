@@ -1,6 +1,7 @@
 package gen_graph
 
 import (
+	"compress/gzip"
 	"encoding/json"
 	"log"
 	"os"
@@ -11,6 +12,7 @@ import (
 )
 
 var project_id string
+var gzip_files bool
 
 // https://github.com/bmeg/sifter/blob/51a67b0de852e429d30b9371d9975dbefe3a8df9/transform/graph_build.go#L86
 var Cmd = &cobra.Command{
@@ -43,6 +45,8 @@ var Cmd = &cobra.Command{
 			if reader, err = util.ReadFileLines(args[1], 1024*1024); err != nil {
 				log.Fatal("ERROR: ", err)
 			}
+		} else {
+			log.Fatal("File must be of type .json, .ndjson or .gz")
 		}
 
 		var line_count int = util.CountLines(args[1])
@@ -63,89 +67,74 @@ var Cmd = &cobra.Command{
 		ClassName := strings.Split(base_name[len(base_name)-1], ".")[0]
 		log.Println("Writing:", args[2]+"/"+ClassName)
 
-		vertex_file, err := os.Create(args[2] + "/" + ClassName + ".Vertex.json")
+		vertex_file_path := args[2] + "/" + ClassName + ".vertex.json"
+		inedge_file_path := args[2] + "/" + ClassName + ".out.edge.json"
+		outedge_file_path := args[2] + "/" + ClassName + ".in.edge.json"
+
+		if gzip_files {
+			vertex_file_path += ".gz"
+			inedge_file_path += ".gz"
+			outedge_file_path += ".gz"
+		}
+
+		vertex_file, err := os.Create(vertex_file_path)
 		if err != nil {
 			log.Println("ERROR ON FILE CREATE", err)
 		}
 		defer vertex_file.Close()
 
-		InEdge_file, err := os.Create(args[2] + "/" + ClassName + ".InEdge.json")
+		InEdge_file, err := os.Create(inedge_file_path)
 		if err != nil {
 			log.Println("ERROR ON FILE CREATE", err)
 		}
 		defer InEdge_file.Close()
 
-		OutEdege_file, err := os.Create(args[2] + "/" + ClassName + ".OutEdge.json")
+		OutEdege_file, err := os.Create(outedge_file_path)
 		if err != nil {
 			log.Println("ERROR ON FILE CREATE", err)
 		}
 		defer OutEdege_file.Close()
+
+		var InEdge_gzWriter *gzip.Writer
+		var OutEdge_gzWriter *gzip.Writer
+		var Vertex_gzwriter *gzip.Writer
+		if gzip_files {
+			InEdge_gzWriter = gzip.NewWriter(InEdge_file)
+			defer InEdge_gzWriter.Close()
+
+			OutEdge_gzWriter = gzip.NewWriter(OutEdege_file)
+			defer OutEdge_gzWriter.Close()
+
+			Vertex_gzwriter = gzip.NewWriter(vertex_file)
+			defer Vertex_gzwriter.Close()
+		}
 
 		var IedgeInit, VertexInit, OedegeInit = true, true, true
 		for line := range procChan {
 			if result, err := out.Generate(args[3], line, false, project_id); err == nil {
 				for _, lin := range result {
 					if b, err := json.Marshal(lin.InEdge); err == nil {
-						if string(b) != "null" {
-							if IedgeInit {
-								_, err := InEdge_file.WriteString(string(b))
-								IedgeInit = !IedgeInit
-								if err != nil {
-									log.Fatal("Write File error")
-								}
-							} else {
-								_, err := InEdge_file.WriteString("\n" + string(b))
-								if err != nil {
-									log.Fatal("Write File error")
-								}
-							}
-						}
+						IedgeInit = util.Write_line(IedgeInit, b, InEdge_file, InEdge_gzWriter)
 					}
 					if b, err := json.Marshal(lin.OutEdge); err == nil {
-						if string(b) != "null" {
-							if OedegeInit {
-								_, err := OutEdege_file.WriteString(string(b))
-								OedegeInit = !OedegeInit
-								if err != nil {
-									log.Fatal("Write File error")
-								}
-							} else {
-								_, err := OutEdege_file.WriteString("\n" + string(b))
-								if err != nil {
-									log.Fatal("Write File error")
-								}
-							}
-						}
+						OedegeInit = util.Write_line(OedegeInit, b, OutEdege_file, OutEdge_gzWriter)
 					}
 					if b, err := json.Marshal(lin.Vertex); err == nil {
-						if string(b) != "null" {
-							if VertexInit {
-								_, err := vertex_file.WriteString(string(b))
-								VertexInit = !VertexInit
-								if err != nil {
-									log.Fatal("Write File error")
-								}
-							} else {
-								_, err := vertex_file.WriteString("\n" + string(b))
-								if err != nil {
-									log.Fatal("Write File error")
-								}
-							}
-						}
+						VertexInit = util.Write_line(VertexInit, b, vertex_file, Vertex_gzwriter)
 					}
 				}
 			} else if err != nil {
 				log.Fatal(err)
 			}
 		}
-		util.Check_delete(args[2] + "/" + ClassName + ".OutEdge.json")
-		util.Check_delete(args[2] + "/" + ClassName + ".InEdge.json")
-		util.Check_delete(args[2] + "/" + ClassName + ".Vertex.json")
-
+		util.Check_delete(vertex_file_path)
+		util.Check_delete(inedge_file_path)
+		util.Check_delete(outedge_file_path)
 		return nil
 	},
 }
 
 func init() {
 	Cmd.Flags().StringVar(&project_id, "project_id", "", "specify project_id if loading into gen3")
+	Cmd.Flags().BoolVar(&gzip_files, "gzip_files", false, "specify output files to be gzipped")
 }
