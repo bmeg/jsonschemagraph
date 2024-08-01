@@ -2,10 +2,10 @@ package util
 
 import (
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/google/uuid"
-	"github.com/santhosh-tekuri/jsonschema/v5"
 	_ "github.com/santhosh-tekuri/jsonschema/v5/httploader"
 	"google.golang.org/protobuf/types/known/structpb"
 )
@@ -36,95 +36,39 @@ type reference struct {
 	dstType string
 }
 
-func getObjectID(data map[string]any, schema *jsonschema.Schema) (string, error) {
-	if id, ok := data["id"]; ok {
-		if idStr, ok := id.(string); ok {
-			return idStr, nil
-		}
-	}
-	return "", fmt.Errorf("object id not found")
-}
-
-func contains(elems []string, v string) bool {
-	for _, s := range elems {
-		if v == s {
-			return true
-		}
-	}
-	return false
-}
-
-func Resolve(doc interface{}, path []string) (interface{}, error) {
-	var err error
-	var ok bool
-	curr := doc
-	for _, part := range path {
-		switch currTyped := curr.(type) {
-		case map[string]any:
-			if curr, ok = currTyped[part]; !ok {
-				return nil, fmt.Errorf("key %s not found in map", part)
-			}
-		case []any:
-			if part != "-" {
-				err = fmt.Errorf("invalid list index %s", part)
-			} else {
-				curr = currTyped
-			}
-		default:
-			return nil, fmt.Errorf("unable to resolve path %s on %v", part, curr)
-		}
-		if err != nil {
-			return nil, err
-		}
-	}
-	return curr, nil
-}
-
 func resolveItem(pointer []string, item any) ([]any, error) {
+	if len(pointer) == 0 {
+		return []any{item}, nil
+	}
 	curr := item
-	var results []any
-	for i, part := range pointer {
-		switch currTyped := curr.(type) {
-		case map[string]any:
-			var err error
-			var ok bool
-			if curr, ok = currTyped[part]; !ok {
-				return nil, fmt.Errorf("key %s not found in map", part)
-			}
-			// pointer miss
+	part := pointer[0]
+	remainingPointer := pointer[1:]
+
+	switch currTyped := curr.(type) {
+	case map[string]any:
+		//log.Println("PART: ", part, "REMAININGPOINTER: ", remainingPointer, "currTyped: ", currTyped)
+		next, ok := currTyped[part]
+		// if miss, return nil
+		if !ok {
+			return nil, nil
+		}
+		return resolveItem(remainingPointer, next)
+	case []any:
+		if part != "-" {
+			return nil, fmt.Errorf("expecting '-' for list iteration in json pointer")
+		}
+		var results []any
+		for _, elem := range currTyped {
+			subResults, err := resolveItem(remainingPointer, elem)
 			if err != nil {
 				return nil, err
 			}
-			if i == len(pointer)-1 {
-				results = append(results, curr)
-			}
-		case []any:
-			//fmt.Println("PART: ", part)
-			if part == "-" {
-				var tempResults []any
-				for _, elem := range currTyped {
-					//fmt.Println("ELEM: ", elem)
-					if i == len(pointer)-1 {
-						tempResults = append(tempResults, elem)
-					} else {
-						subPointer := pointer[i+1:]
-						subResults, err := Resolve(elem, subPointer)
-						//fmt.Println("ELEM: ", elem, "SUBPOINTER: ", subPointer, "SUBRESULTS: ", subResults)
-						if err != nil {
-							return nil, err
-						}
-						tempResults = append(tempResults, subResults)
-					}
-				}
-				return tempResults, nil
-			} else {
-				fmt.Errorf("expecting '-' from jsonpointer")
-			}
-		default:
-			return nil, fmt.Errorf("unable to resolve path %s on %v", part, curr)
+			results = append(results, subResults...)
 		}
+		return results, nil
+	default:
+		return nil, fmt.Errorf("unable to resolve path %s on %v", part, curr)
 	}
-	return results, nil
 }
 
 func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, project_id string) ([]GraphElement, error) {
@@ -150,33 +94,40 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, p
 				gext := ext.(GraphExtension)
 				for _, target := range gext.Targets {
 					ListOfRels = append(ListOfRels, target.Rel)
-					pointer_string := target.templatePointer["id"]
+					pointer_string, ok := target.templatePointer["id"]
+					if !ok {
+						continue
+					}
 					splitted_pointer := strings.Split(pointer_string.(string), "/")[1:]
 					items, err := resolveItem(splitted_pointer, data)
-					if err != nil {
+					// if pointer miss continue
+					if items == nil && err == nil {
 						continue
+					}
+					// if invalid pointer structure in data, error
+					if err != nil {
+						log.Fatal("ERROR: ", err)
 					}
 					for _, elem := range items {
 						split_list := strings.Split(elem.(string), "/")
-						if target.Regexmatch != split_list[0]+"/*" {
-							continue
-						}
-						elem := split_list[1]
-						edgeOut := Edge{
-							To:    elem,
-							From:  id,
-							Label: target.Rel,
-							Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", elem, id, target.Rel))),
-						}
-						out = append(out, GraphElement{OutEdge: &edgeOut})
-						if target.Backref != "" {
-							edgeIn := Edge{
-								To:    id,
-								From:  elem,
-								Label: target.Backref,
-								Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", id, elem, target.Backref))),
+						if target.Regexmatch == (split_list[0] + "/*") {
+							elem := split_list[1]
+							edgeOut := Edge{
+								To:    elem,
+								From:  id,
+								Label: target.Rel,
+								Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", elem, id, target.Rel))),
 							}
-							out = append(out, GraphElement{InEdge: &edgeIn})
+							out = append(out, GraphElement{OutEdge: &edgeOut})
+							if target.Backref != "" {
+								edgeIn := Edge{
+									To:    id,
+									From:  elem,
+									Label: target.Backref,
+									Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", id, elem, target.Backref))),
+								}
+								out = append(out, GraphElement{InEdge: &edgeIn})
+							}
 						}
 					}
 				}
@@ -198,14 +149,16 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, p
 			}
 
 			dataPB, err := structpb.NewStruct(vData)
-			if err == nil {
-				vert := Vertex{Gid: id, Label: classID, Data: dataPB}
-				out = append(out, GraphElement{Vertex: &vert})
+			if err != nil {
+				log.Println("ERROR: ", err)
+				return nil, err
 			}
-			if nerr != nil {
-				fmt.Println("VALUE OF ERROR ", nerr) //TODO: send this to logging
-			}
+			vert := Vertex{Gid: id, Label: classID, Data: dataPB}
+			out = append(out, GraphElement{Vertex: &vert})
 
+		} else if nerr != nil {
+			log.Println("ERROR: ", nerr)
+			return nil, nerr
 		}
 		return out, nil
 	}
