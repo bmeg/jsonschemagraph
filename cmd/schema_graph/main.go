@@ -3,7 +3,7 @@ package schema_graph
 import (
 	"fmt"
 
-	jsgraph "github.com/bmeg/jsonschemagraph/util"
+	"github.com/bmeg/jsonschemagraph/util"
 	"github.com/spf13/cobra"
 )
 
@@ -13,7 +13,7 @@ var Cmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		sch, _ := jsgraph.Load(args[0])
+		sch, _ := util.Load(args[0])
 		fmt.Printf("digraph {\n")
 		for _, cls := range sch.Classes {
 			if cls.Title != "" {
@@ -22,8 +22,8 @@ var Cmd = &cobra.Command{
 		}
 		// Not sure if the print statements here are correct the but output graph seems reasonable
 		for _, cls := range sch.Classes {
-			if ext, ok := cls.Extensions[jsgraph.GraphExtensionTag]; ok {
-				gExt := ext.(jsgraph.GraphExtension)
+			if ext, ok := cls.Extensions[util.GraphExtensionTag]; ok {
+				gExt := ext.(util.GraphExtension)
 				for _, v := range gExt.Targets {
 					fmt.Printf("\t%s -> %s: %s\n", cls.Title, v.Schema.Title, v.Rel)
 					if v.Backref != "" {
