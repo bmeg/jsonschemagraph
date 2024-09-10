@@ -133,12 +133,10 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, p
 				}
 			}
 			for name := range class.Properties {
-				// gather compare to a list of rels so that the vertexes don't include edge reference information
-				if !contains(ListOfRels, name) {
-					if d, ok := data[name]; ok {
-						vData[name] = d
-					}
+				if d, ok := data[name]; ok {
+					vData[name] = d
 				}
+
 			}
 			if project_id != "" {
 				project_parts := strings.Split(project_id, "-")
