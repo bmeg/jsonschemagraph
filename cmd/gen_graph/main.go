@@ -16,7 +16,7 @@ var gzip_files bool
 
 // https://github.com/bmeg/sifter/blob/51a67b0de852e429d30b9371d9975dbefe3a8df9/transform/graph_build.go#L86
 var Cmd = &cobra.Command{
-	Use:   "gen-graph [schema dir] [data dir] [out dir] [class name]",
+	Use:   "gen-graph [schema dir or schema file] [data dir] [out dir] [class name]",
 	Short: "Generates edges and vertices from source data files and schemas",
 	Args:  cobra.MinimumNArgs(4),
 	RunE: func(cmd *cobra.Command, args []string) error {
