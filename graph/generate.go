@@ -1,12 +1,14 @@
-package util
+package graph
 
 import (
 	"fmt"
 	"log"
 	"strings"
 
+	_ "github.com/bmeg/jsonschema/v5/httploader"
+	"github.com/bmeg/jsonschemagraph/compile"
+	"github.com/bmeg/jsonschemagraph/util"
 	"github.com/google/uuid"
-	_ "github.com/santhosh-tekuri/jsonschema/v5/httploader"
 	"google.golang.org/protobuf/types/known/structpb"
 )
 
@@ -46,7 +48,6 @@ func resolveItem(pointer []string, item any) ([]any, error) {
 
 	switch currTyped := curr.(type) {
 	case map[string]any:
-		//log.Println("PART: ", part, "REMAININGPOINTER: ", remainingPointer, "currTyped: ", currTyped)
 		next, ok := currTyped[part]
 		// if miss, return nil
 		if !ok {
@@ -87,14 +88,14 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, p
 			}
 		}
 		out := make([]GraphElement, 0, 1)
-		if id, nerr := getObjectID(data, class); nerr == nil {
+		if id, nerr := util.GetObjectID(data, class); nerr == nil {
 			var ListOfRels []string
 			vData := map[string]any{}
-			if ext, ok := class.Extensions[GraphExtensionTag]; ok {
-				gext := ext.(GraphExtension)
+			if ext, ok := class.Extensions[compile.GraphExtensionTag]; ok {
+				gext := ext.(compile.GraphExtension)
 				for _, target := range gext.Targets {
 					ListOfRels = append(ListOfRels, target.Rel)
-					pointer_string, ok := target.templatePointer["id"]
+					pointer_string, ok := target.TemplatePointer["id"]
 					if !ok {
 						continue
 					}

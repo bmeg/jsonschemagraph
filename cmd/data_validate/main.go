@@ -3,47 +3,13 @@ package data_validate
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"net/url"
-	"os"
-	"path/filepath"
-	"runtime"
 	"strings"
 
 	"github.com/bmeg/golib"
-	"github.com/santhosh-tekuri/jsonschema/v5"
+	"github.com/bmeg/jsonschema/v5"
+	"github.com/bmeg/jsonschemagraph/graph"
 	"github.com/spf13/cobra"
-	"sigs.k8s.io/yaml"
 )
-
-func yamlLoader(s string) (io.ReadCloser, error) {
-	u, err := url.Parse(s)
-	if err != nil {
-		return nil, err
-	}
-	f := u.Path
-	if runtime.GOOS == "windows" {
-		f = strings.TrimPrefix(f, "/")
-		f = filepath.FromSlash(f)
-	}
-	fmt.Printf("Loading: %s\n", f)
-	if strings.HasSuffix(f, ".yaml") {
-		source, err := os.ReadFile(f)
-		if err != nil {
-			return nil, err
-		}
-		d := map[string]any{}
-		yaml.Unmarshal(source, &d)
-		schemaText, err := json.Marshal(d)
-		if err != nil {
-			return nil, err
-		}
-		return io.NopCloser(strings.NewReader(string(schemaText))), nil
-	} else{
-		return nil, fmt.Errorf("First argument must be a .yaml file schema")
-	}
-	return os.Open(f)
-}
 
 // Cmd is the declaration of the command line
 var Cmd = &cobra.Command{
@@ -55,7 +21,7 @@ var Cmd = &cobra.Command{
 		schemaFile := args[0]
 		inputPath := args[1]
 
-		jsonschema.Loaders["file"] = yamlLoader
+		jsonschema.Loaders["file"] = graph.YamlLoader
 
 		compiler := jsonschema.NewCompiler()
 		compiler.ExtractAnnotations = true

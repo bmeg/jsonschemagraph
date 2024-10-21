@@ -7,7 +7,9 @@ import (
 	"os"
 	"strings"
 
+	"github.com/bmeg/jsonschemagraph/graph"
 	"github.com/bmeg/jsonschemagraph/util"
+
 	"github.com/spf13/cobra"
 )
 
@@ -21,10 +23,10 @@ var Cmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(4),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var reader chan []byte
-		var out util.GraphSchema
+		var out graph.GraphSchema
 		var err error
 
-		if out, err = util.Load(args[0]); err != nil {
+		if out, err = graph.Load(args[0]); err != nil {
 			log.Fatal("ERROR: ", err)
 		}
 
