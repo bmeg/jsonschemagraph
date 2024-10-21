@@ -5,7 +5,7 @@ go 1.22.5
 require (
 	github.com/bmeg/golib v0.0.0-20200725232156-e799a31439fc
 	github.com/bmeg/grip v0.0.0-20231102165002-fa720cf43d53
-	github.com/bmeg/jsonschema/v5 v5.3.3
+	github.com/bmeg/jsonschema/v5 v5.3.4-0.20241021183038-e027c9865f72
 	github.com/google/uuid v1.6.0
 	github.com/spf13/cobra v1.8.1
 	google.golang.org/protobuf v1.34.2

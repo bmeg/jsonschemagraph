@@ -141,7 +141,7 @@ func Load(path string, opt ...LoadOpt) (GraphSchema, error) {
 				}
 			}
 		} else {
-
+			fmt.Println("Error: ", err)
 			for _, i := range opt {
 				if i.LogError != nil {
 					i.LogError(path, err)

@@ -2,8 +2,8 @@ github.com/bmeg/golib v0.0.0-20200725232156-e799a31439fc h1:/0v/ZcXYjGs44InmjECr
 github.com/bmeg/golib v0.0.0-20200725232156-e799a31439fc/go.mod h1:hoSeuZtqe58ANXHuWpeODx4bDHGV36QXlCs1yrUvK6M=
 github.com/bmeg/grip v0.0.0-20231102165002-fa720cf43d53 h1:C+O8cz9m6wx2BqD5imbm249IdLWFB4KvoVk7D85WcFo=
 github.com/bmeg/grip v0.0.0-20231102165002-fa720cf43d53/go.mod h1:l5JFofdbx91PL7spCfcCQoI6amVqx2hp7SDKbhmTptM=
-github.com/bmeg/jsonschema/v5 v5.3.3 h1:D6grCYWVSOME02gkaG5t51X+ytq+WlmaRTat6rh0OU4=
-github.com/bmeg/jsonschema/v5 v5.3.3/go.mod h1:W6ZrtycDFIco8t+VZvgCgt2mUb+o8Js25o6g+Pe/CHU=
+github.com/bmeg/jsonschema/v5 v5.3.4-0.20241021183038-e027c9865f72 h1:1lYEb0mM/wxqqyCTPkkfMeM69yGGrxEcz2CTv8m+rss=
+github.com/bmeg/jsonschema/v5 v5.3.4-0.20241021183038-e027c9865f72/go.mod h1:W6ZrtycDFIco8t+VZvgCgt2mUb+o8Js25o6g+Pe/CHU=
 github.com/cpuguy83/go-md2man/v2 v2.0.4/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
