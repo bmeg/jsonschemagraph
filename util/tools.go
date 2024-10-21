@@ -9,10 +9,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/santhosh-tekuri/jsonschema/v5"
+	"github.com/bmeg/jsonschema/v5"
 )
 
-func getObjectID(data map[string]any, schema *jsonschema.Schema) (string, error) {
+func GetObjectID(data map[string]any, schema *jsonschema.Schema) (string, error) {
 	if id, ok := data["id"]; ok {
 		if idStr, ok := id.(string); ok {
 			return idStr, nil
