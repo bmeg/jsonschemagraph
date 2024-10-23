@@ -1,6 +1,7 @@
 package schema_graph
 
 import (
+	"log"
 	"fmt"
 
 	"github.com/bmeg/jsonschemagraph/compile"
@@ -16,10 +17,10 @@ var Cmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 
 		sch, _ := graph.Load(args[0])
-		fmt.Printf("digraph {\n")
+		log.Printf("digraph {\n")
 		for _, cls := range sch.Classes {
 			if cls.Title != "" {
-				fmt.Printf("\t%s\n", cls.Title)
+				log.Printf("\t%s\n", cls.Title)
 			}
 		}
 		// Not sure if the print statements here are correct the but output graph seems reasonable
@@ -28,15 +29,15 @@ var Cmd = &cobra.Command{
 				gExt := ext.(compile.GraphExtension)
 				for _, v := range gExt.Targets {
 					fmt.Printf("\t%s -> %s: %s\n", cls.Title, v.Schema.Title, v.Rel)
-					if v.Backref != "" {
-						fmt.Printf("\t%s -> %s: %s\n", v.Schema.Title, cls.Title, v.Backref)
+					if v.TargetHints.Backref != nil  {
+						fmt.Printf("\t%s -> %s: %s\n", v.Schema.Title, cls.Title, v.TargetHints.Backref[0])
 					}
 				}
 
 			}
 		}
 
-		fmt.Printf("}\n")
+		log.Printf("}\n")
 		return nil
 	},
 }

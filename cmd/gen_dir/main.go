@@ -27,31 +27,29 @@ var Cmd = &cobra.Command{
 
 		files, err := util.ListFilesWithExtension(args[1], []string{".gz", ".ndjson", ".json"})
 		if err != nil {
-			log.Println("Error:", err)
-			return err
+			log.Fatal("ListFilesWithExtension Error: ", err)
 		}
 
 		if out, err = graph.Load(args[0]); err != nil {
-			log.Fatal("ERROR: ", err)
+			log.Fatal("graph.Load: ", err)
 		}
-
+		log.Println("Loaded ", out.ListClasses())
 		for _, file := range files {
-			log.Println("Loaded ", out.ListClasses())
 			if _, err := os.Stat(args[2]); os.IsNotExist(err) {
 				log.Println("Path: ", args[2], " does not exist. Creating directory path")
 				err := os.Mkdir(args[2], os.ModePerm)
 				if err != nil {
-					log.Fatal(err)
+					log.Fatal("os.Mkdir:", err)
 				}
 			}
 			// current buffer size 1 MB
 			if strings.HasSuffix(file, ".gz") {
 				if reader, err = util.ReadGzipLines(file, 1024*1024); err != nil {
-					log.Fatal("ERROR: ", err)
+					log.Fatal("util.ReadGzipLines: ", err)
 				}
 			} else if strings.HasSuffix(file, ".json") || strings.HasSuffix(file, ".ndjson") {
 				if reader, err = util.ReadFileLines(file, 1024*1024); err != nil {
-					log.Fatal("ERROR: ", err)
+					log.Fatal("util.ReadGzipLines: ", err)
 				}
 			}
 
@@ -86,19 +84,19 @@ var Cmd = &cobra.Command{
 
 			vertex_file, err := os.Create(vertex_file_path)
 			if err != nil {
-				log.Println("ERROR ON FILE CREATE", err)
+				log.Printf("os.Create(%s) Err: %s\n", vertex_file_path, err)
 			}
 			defer vertex_file.Close()
 
 			InEdge_file, err := os.Create(inedge_file_path)
 			if err != nil {
-				log.Println("ERROR ON FILE CREATE", err)
+				log.Printf("os.Create(%s) Err: %s\n", inedge_file_path, err)
 			}
 			defer InEdge_file.Close()
 
 			OutEdege_file, err := os.Create(outedge_file_path)
 			if err != nil {
-				log.Println("ERROR ON FILE CREATE", err)
+				log.Printf("os.Create(%s) Err: %s\n", outedge_file_path, err)
 			}
 			defer OutEdege_file.Close()
 

@@ -3,7 +3,6 @@ package gen_graph
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"path/filepath"
 	"reflect"
@@ -104,7 +103,7 @@ var Exons_Out_Edge = []exon{
 func checkNullFields(data map[string]interface{}) bool {
 	for key, value := range data {
 		if value == "" {
-			fmt.Printf("Warning: key %s has no value\n", key)
+			log.Printf("Warning: key %s has no value\n", key)
 			return false
 		} else if subData, ok := value.(map[string]interface{}); ok {
 			if !checkNullFields(subData) {
@@ -152,7 +151,7 @@ func Test_main(t *testing.T) {
 					return
 				}
 				for q, file := range files {
-					fmt.Println(file)
+					log.Println(file)
 					lines, err := ioutil.ReadFile(file)
 					if err != nil {
 						t.Errorf("FATAL ERROR %s, ioutil.Readfile failed for file %s", err, string(file))

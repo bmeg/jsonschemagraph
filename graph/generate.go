@@ -95,11 +95,11 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, p
 				gext := ext.(compile.GraphExtension)
 				for _, target := range gext.Targets {
 					ListOfRels = append(ListOfRels, target.Rel)
-					pointer_string, ok := target.TemplatePointer["id"]
-					if !ok {
+					if (target.TemplatePointers.Id == "") {
 						continue
 					}
-					splitted_pointer := strings.Split(pointer_string.(string), "/")[1:]
+					//log.Println(" TARGET TEMPLATE POINTER ID: ", target.TemplatePointers.Id )
+					splitted_pointer := strings.Split(target.TemplatePointers.Id, "/")[1:]
 					items, err := resolveItem(splitted_pointer, data)
 					// if pointer miss continue
 					if items == nil && err == nil {
@@ -111,7 +111,7 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, p
 					}
 					for _, elem := range items {
 						split_list := strings.Split(elem.(string), "/")
-						if target.Regexmatch == (split_list[0] + "/*") {
+						if target.TargetHints.RegexMatch != nil && target.TargetHints.RegexMatch[0] == (split_list[0] + "/*") {
 							elem := split_list[1]
 							edgeOut := Edge{
 								To:    elem,
@@ -120,12 +120,12 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, p
 								Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", elem, id, target.Rel))),
 							}
 							out = append(out, GraphElement{OutEdge: &edgeOut})
-							if target.Backref != "" {
+							if target.TargetHints.Backref[0] != "" {
 								edgeIn := Edge{
 									To:    id,
 									From:  elem,
-									Label: target.Backref,
-									Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", id, elem, target.Backref))),
+									Label: target.TargetHints.Backref[0],
+									Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", id, elem, target.TargetHints.Backref[0]))),
 								}
 								out = append(out, GraphElement{InEdge: &edgeIn})
 							}
