@@ -2,8 +2,8 @@ package data_validate
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
+	"log"
 
 	"github.com/bmeg/golib"
 	"github.com/bmeg/jsonschema/v5"
@@ -28,10 +28,10 @@ var Cmd = &cobra.Command{
 
 		sch, err := compiler.Compile(schemaFile)
 		if err != nil {
-			fmt.Printf("Error compiling %s : %s\n", schemaFile, err)
+			log.Fatalf("Error compiling %s : %s\n", schemaFile, err)
 		} else {
 			if len(sch.Types) == 1 && sch.Types[0] == "object" {
-				fmt.Printf("OK: %s %s (%s)\n", schemaFile, sch.Title, sch.Title)
+				log.Printf("OK: %s %s (%s)\n", schemaFile, sch.Title, sch.Title)
 			}
 		}
 
@@ -63,12 +63,12 @@ var Cmd = &cobra.Command{
 			err = sch.Validate(row)
 			if err != nil {
 				errorCount++
-				fmt.Printf("Error: %s\n", err)
+				log.Printf("Error: %s\n", err)
 			} else {
 				validCount++
 			}
 		}
-		fmt.Printf("%s results: %d valid records %d invalid records\n", inputPath, validCount, errorCount)
+		log.Printf("%s results: %d valid records %d invalid records\n", inputPath, validCount, errorCount)
 		return nil
 	},
 }

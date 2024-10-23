@@ -76,7 +76,6 @@ func YamlLoader(s string) (io.ReadCloser, error) {
 		f = strings.TrimPrefix(f, "/")
 		f = filepath.FromSlash(f)
 	}
-	fmt.Printf("Loading: %s\n", f)
 	if strings.HasSuffix(f, ".yaml") {
 		source, err := os.ReadFile(f)
 		if err != nil {
@@ -121,10 +120,10 @@ func Load(path string, opt ...LoadOpt) (GraphSchema, error) {
 				if sch.Title != "" {
 					out.Classes[sch.Title] = sch
 				} else {
-					log.Printf("Title not found: %s %#v", f, sch)
+					log.Printf("Title not found: %s %#v\n", f, sch)
 				}
 			} else {
-				fmt.Println("Error: ", err)
+				log.Printf("compiler.Compile(%s):  %s\n", f, err)
 				for _, i := range opt {
 					if i.LogError != nil {
 						i.LogError(f, err)
@@ -136,12 +135,11 @@ func Load(path string, opt ...LoadOpt) (GraphSchema, error) {
 		if sch, err := compiler.Compile(path); err == nil {
 			for _, obj := range ObjectScan(sch) {
 				if obj.Title != "" {
-
 					out.Classes[obj.Title] = obj
 				}
 			}
 		} else {
-			fmt.Println("Error: ", err)
+			log.Printf("compiler.Compile(%s):  %s\n", path, err)
 			for _, i := range opt {
 				if i.LogError != nil {
 					i.LogError(path, err)

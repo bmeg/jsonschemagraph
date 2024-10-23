@@ -1,9 +1,8 @@
 package schema_lint
 
 import (
-	"fmt"
 
-	"github.com/bmeg/grip/log"
+	"log"
 	"github.com/bmeg/jsonschemagraph/graph"
 	"github.com/spf13/cobra"
 )
@@ -17,10 +16,10 @@ var Cmd = &cobra.Command{
 		sch, err := graph.Load(args[0])
 		if err == nil {
 			for _, cls := range sch.Classes {
-				fmt.Printf("OK: %s (%s)\n", cls.Title, cls.Location)
+				log.Printf("OK: %s (%s)\n", cls.Title, cls.Location)
 			}
 		} else {
-			log.Errorf("Loading error: %s", err)
+			log.Fatalf("Loading error: %s", err)
 		}
 		return nil
 	},
