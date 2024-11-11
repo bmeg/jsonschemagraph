@@ -2,6 +2,8 @@ github.com/bmeg/golib v0.0.0-20200725232156-e799a31439fc h1:/0v/ZcXYjGs44InmjECr
 github.com/bmeg/golib v0.0.0-20200725232156-e799a31439fc/go.mod h1:hoSeuZtqe58ANXHuWpeODx4bDHGV36QXlCs1yrUvK6M=
 github.com/bmeg/jsonschema/v5 v5.3.4-0.20241021223433-465090062767 h1:Xxna7pNl+RSeb8Chpo/9kqnCpINE3UYazHAEHQfKPr8=
 github.com/bmeg/jsonschema/v5 v5.3.4-0.20241021223433-465090062767/go.mod h1:W6ZrtycDFIco8t+VZvgCgt2mUb+o8Js25o6g+Pe/CHU=
+github.com/bmeg/jsonschema/v5 v5.3.4-0.20241111204732-55db82022a92 h1:Myx/j+WxfEg+P3nDaizR1hBpjKSLgvr4ydzgp1/1pAU=
+github.com/bmeg/jsonschema/v5 v5.3.4-0.20241111204732-55db82022a92/go.mod h1:6v27bSBKXyIDFqlKQbUSnHlekE1y6bDkgWCuVEaDPng=
 github.com/cpuguy83/go-md2man/v2 v2.0.4/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/golang/protobuf v1.3.2/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
