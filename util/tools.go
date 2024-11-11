@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/bmeg/jsonschema/v5"
+	"github.com/bmeg/jsonschema"
 )
 
 func GetObjectID(data map[string]any, schema *jsonschema.Schema) (string, error) {

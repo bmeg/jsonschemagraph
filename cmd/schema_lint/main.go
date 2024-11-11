@@ -1,8 +1,8 @@
 package schema_lint
 
 import (
-
 	"log"
+
 	"github.com/bmeg/jsonschemagraph/graph"
 	"github.com/spf13/cobra"
 )

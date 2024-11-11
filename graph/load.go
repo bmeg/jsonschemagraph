@@ -13,8 +13,7 @@ import (
 
 	"sigs.k8s.io/yaml"
 
-	"github.com/bmeg/jsonschema/v5"
-	_ "github.com/bmeg/jsonschema/v5/httploader"
+	"github.com/bmeg/jsonschema"
 	"github.com/bmeg/jsonschemagraph/compile"
 )
 
@@ -24,7 +23,7 @@ type LoadOpt struct {
 
 func isObjectSchema(sch *jsonschema.Schema) bool {
 	if sch != nil {
-		for _, i := range sch.Types {
+		for _, i := range sch.Types.ToStrings() {
 			if i == "object" {
 				return true
 			}
@@ -38,7 +37,7 @@ func isObjectSchema(sch *jsonschema.Schema) bool {
 
 func isArraySchema(sch *jsonschema.Schema) bool {
 	if sch != nil {
-		for _, i := range sch.Types {
+		for _, i := range sch.Types.ToStrings() {
 			if i == "array" {
 				return true
 			}
@@ -66,7 +65,9 @@ func ObjectScan(sch *jsonschema.Schema) []*jsonschema.Schema {
 	return out
 }
 
-func YamlLoader(s string) (io.ReadCloser, error) {
+type YamlLoader struct{}
+
+func (YamlLoader) Load(s string) (any, error) {
 	u, err := url.Parse(s)
 	if err != nil {
 		return nil, err
@@ -96,12 +97,15 @@ func YamlLoader(s string) (io.ReadCloser, error) {
 
 func Load(path string, opt ...LoadOpt) (GraphSchema, error) {
 
-	jsonschema.Loaders["file"] = YamlLoader
-
 	compiler := jsonschema.NewCompiler()
-	compiler.ExtractAnnotations = true
+	compiler.AssertVocabs()
 
-	compiler.RegisterExtension(compile.GraphExtensionTag, compile.GraphExtMeta, compile.GraphExtCompiler{})
+	/*loader := jsonschema.SchemeURLLoader{
+		"file": YamlLoader{},
+	}
+	compiler.UseLoader(loader)*/
+	compiler.RegisterVocabulary(compile.HyperMediaVocab())
+	compiler.DefaultDraft(jsonschema.Draft2020HyperSchema)
 
 	info, err := os.Stat(path)
 	if err != nil {

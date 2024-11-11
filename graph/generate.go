@@ -5,8 +5,6 @@ import (
 	"log"
 	"strings"
 
-	_ "github.com/bmeg/jsonschema/v5/httploader"
-	"github.com/bmeg/jsonschemagraph/compile"
 	"github.com/bmeg/jsonschemagraph/util"
 	"github.com/google/uuid"
 	"google.golang.org/protobuf/types/known/structpb"
@@ -73,7 +71,7 @@ func resolveItem(pointer []string, item any) ([]any, error) {
 }
 
 func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, project_id string) ([]GraphElement, error) {
-	namespace := uuid.NewMD5(uuid.NameSpaceDNS, []byte("aced-idp.org"))
+	//namespace := uuid.NewMD5(uuid.NameSpaceDNS, []byte("aced-idp.org"))
 	if class := s.GetClass(classID); class != nil {
 		if clean {
 			var err error
@@ -87,52 +85,51 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, p
 				return nil, err
 			}
 		}
+
 		out := make([]GraphElement, 0, 1)
 		if id, nerr := util.GetObjectID(data, class); nerr == nil {
-			var ListOfRels []string
+			//var ListOfRels []string
 			vData := map[string]any{}
-			if ext, ok := class.Extensions[compile.GraphExtensionTag]; ok {
-				gext := ext.(compile.GraphExtension)
-				for _, target := range gext.Targets {
-					ListOfRels = append(ListOfRels, target.Rel)
-					if (target.TemplatePointers.Id == "") {
-						continue
+			/*for _, target := range class.Targets {
+			ListOfRels = append(ListOfRels, target.Rel)
+			if target.TemplatePointers.Id == "" {
+				continue
+			}
+			//log.Println(" TARGET TEMPLATE POINTER ID: ", target.TemplatePointers.Id )
+			splitted_pointer := strings.Split(target.TemplatePointers.Id, "/")[1:]
+			items, err := resolveItem(splitted_pointer, data)
+			// if pointer miss continue
+			if items == nil && err == nil {
+				continue
+			}
+			// if invalid pointer structure in data, error
+			if err != nil {
+				log.Fatal("ERROR: ", err)
+			}
+			for _, elem := range items {
+				split_list := strings.Split(elem.(string), "/")
+				if target.TargetHints.RegexMatch != nil && target.TargetHints.RegexMatch[0] == (split_list[0]+"/*") {
+					elem := split_list[1]
+					edgeOut := Edge{
+						To:    elem,
+						From:  id,
+						Label: target.Rel,
+						Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", elem, id, target.Rel))),
 					}
-					//log.Println(" TARGET TEMPLATE POINTER ID: ", target.TemplatePointers.Id )
-					splitted_pointer := strings.Split(target.TemplatePointers.Id, "/")[1:]
-					items, err := resolveItem(splitted_pointer, data)
-					// if pointer miss continue
-					if items == nil && err == nil {
-						continue
-					}
-					// if invalid pointer structure in data, error
-					if err != nil {
-						log.Fatal("ERROR: ", err)
-					}
-					for _, elem := range items {
-						split_list := strings.Split(elem.(string), "/")
-						if target.TargetHints.RegexMatch != nil && target.TargetHints.RegexMatch[0] == (split_list[0] + "/*") {
-							elem := split_list[1]
-							edgeOut := Edge{
-								To:    elem,
-								From:  id,
-								Label: target.Rel,
-								Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", elem, id, target.Rel))),
-							}
-							out = append(out, GraphElement{OutEdge: &edgeOut})
-							if target.TargetHints.Backref[0] != "" {
-								edgeIn := Edge{
-									To:    id,
-									From:  elem,
-									Label: target.TargetHints.Backref[0],
-									Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", id, elem, target.TargetHints.Backref[0]))),
-								}
-								out = append(out, GraphElement{InEdge: &edgeIn})
-							}
+					out = append(out, GraphElement{OutEdge: &edgeOut})
+					if target.TargetHints.Backref[0] != "" {
+						edgeIn := Edge{
+							To:    id,
+							From:  elem,
+							Label: target.TargetHints.Backref[0],
+							Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", id, elem, target.TargetHints.Backref[0]))),
 						}
+						out = append(out, GraphElement{InEdge: &edgeIn})
 					}
 				}
 			}
+
+			}*/
 			for name := range class.Properties {
 				if d, ok := data[name]; ok {
 					vData[name] = d

@@ -2,9 +2,7 @@ package schema_graph
 
 import (
 	"log"
-	"fmt"
 
-	"github.com/bmeg/jsonschemagraph/compile"
 	"github.com/bmeg/jsonschemagraph/graph"
 
 	"github.com/spf13/cobra"
@@ -24,18 +22,15 @@ var Cmd = &cobra.Command{
 			}
 		}
 		// Not sure if the print statements here are correct the but output graph seems reasonable
-		for _, cls := range sch.Classes {
-			if ext, ok := cls.Extensions[compile.GraphExtensionTag]; ok {
-				gExt := ext.(compile.GraphExtension)
-				for _, v := range gExt.Targets {
-					fmt.Printf("\t%s -> %s: %s\n", cls.Title, v.Schema.Title, v.Rel)
-					if v.TargetHints.Backref != nil  {
-						fmt.Printf("\t%s -> %s: %s\n", v.Schema.Title, cls.Title, v.TargetHints.Backref[0])
-					}
-				}
-
+		/*for className, _ := range sch.Classes {
+		class := sch.GetClass(className)
+		for _, v := range class.Targets {
+			fmt.Printf("\t%s -> %s: %s\n", class.Schema.Title, v.Schema.Title, v.Rel)
+			if v.TargetHints.Backref != nil {
+				fmt.Printf("\t%s -> %s: %s\n", v.Schema.Title, class.Schema.Title, v.TargetHints.Backref[0])
 			}
 		}
+		}*/
 
 		log.Printf("}\n")
 		return nil

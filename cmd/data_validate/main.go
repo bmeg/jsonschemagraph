@@ -2,12 +2,14 @@ package data_validate
 
 import (
 	"encoding/json"
-	"strings"
+	"fmt"
 	"log"
+	"strings"
 
 	"github.com/bmeg/golib"
-	"github.com/bmeg/jsonschema/v5"
-	"github.com/bmeg/jsonschemagraph/graph"
+	"github.com/bmeg/jsonschema"
+	"github.com/bmeg/jsonschemagraph/compile"
+
 	"github.com/spf13/cobra"
 )
 
@@ -21,19 +23,34 @@ var Cmd = &cobra.Command{
 		schemaFile := args[0]
 		inputPath := args[1]
 
-		jsonschema.Loaders["file"] = graph.YamlLoader
-
 		compiler := jsonschema.NewCompiler()
-		compiler.ExtractAnnotations = true
-
+		compiler.AssertVocabs()
+		//compiler.DefaultDraft(jsonschema.Draft2020HyperSchema)
+		compiler.RegisterVocabulary(compile.HyperMediaVocab())
+		schema, err := jsonschema.UnmarshalJSON(strings.NewReader(schemaFile))
+		fmt.Println("HELLO")
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = compiler.AddResource(schemaFile, schema)
+		if err != nil {
+			log.Fatal(err)
+		}
+		/*loader := jsonschema.SchemeURLLoader{
+			"file": graph.YamlLoader{},
+		}
+		compiler.UseLoader(loader)*/
+		log.Println("HELLO0")
 		sch, err := compiler.Compile(schemaFile)
 		if err != nil {
 			log.Fatalf("Error compiling %s : %s\n", schemaFile, err)
 		} else {
-			if len(sch.Types) == 1 && sch.Types[0] == "object" {
+			schTypes := sch.Types.ToStrings()
+			if len(schTypes) == 1 && schTypes[0] == "object" {
 				log.Printf("OK: %s %s (%s)\n", schemaFile, sch.Title, sch.Title)
 			}
 		}
+		log.Println("HELLO1")
 
 		var reader chan []byte
 		if strings.HasSuffix(inputPath, ".gz") {

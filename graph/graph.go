@@ -4,12 +4,24 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/bmeg/jsonschema/v5"
+	"github.com/bmeg/jsonschema"
 )
 
 type GraphSchema struct {
 	Classes  map[string]*jsonschema.Schema
 	Compiler *jsonschema.Compiler
+}
+
+func (s GraphSchema) GetClass(classID string) *jsonschema.Schema {
+	if class, ok := s.Classes[classID]; ok {
+		return class
+	}
+	var err error
+	var sch *jsonschema.Schema
+	if sch, err = s.Compiler.Compile(classID); err == nil {
+		return sch
+	}
+	return nil
 }
 
 func (s GraphSchema) Validate(classID string, data map[string]any) error {
@@ -26,19 +38,6 @@ func (s GraphSchema) ListClasses() []string {
 		out = append(out, c)
 	}
 	return out
-}
-
-func (s GraphSchema) GetClass(classID string) *jsonschema.Schema {
-	if class, ok := s.Classes[classID]; ok {
-		return class
-	}
-	var err error
-	var sch *jsonschema.Schema
-	if sch, err = s.Compiler.Compile(classID); err == nil {
-		return sch
-	}
-	//log.Printf("compile error: %s", err)
-	return nil
 }
 
 func (s GraphSchema) CleanAndValidate(class *jsonschema.Schema, data map[string]any) (map[string]any, error) {

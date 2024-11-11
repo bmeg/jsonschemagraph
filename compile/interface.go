@@ -1,10 +1,12 @@
 package compile
 
-import "github.com/bmeg/jsonschema/v5"
+import (
+	"github.com/bmeg/jsonschema"
+)
 
 var GraphExtensionTag = "json_schema_graph"
 
-var GraphExtMeta = jsonschema.MustCompileString("graphExtMeta.json", `{"properties": {
+var ExtMeta = `{"properties": {
 	"anchor": {
 		"type": "string",
 		"format": "uri-template"
@@ -57,13 +59,9 @@ var GraphExtMeta = jsonschema.MustCompileString("graphExtMeta.json", `{"properti
 		"type": "string"
 	}
 }
-}`)
+}`
 
 type GraphExtCompiler struct{}
-
-type GraphExtension struct {
-	Targets []Target
-}
 
 type Target struct {
 	Schema           *jsonschema.Schema `json:"schema"`
@@ -83,7 +81,7 @@ type TargetHints struct {
 }
 
 type TargetSchema struct {
-	Ref string `json:"ref"`
+	Ref string `json:"$ref"`
 }
 
 type TemplatePointers struct {
