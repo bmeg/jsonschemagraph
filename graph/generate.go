@@ -5,33 +5,13 @@ import (
 	"log"
 	"strings"
 
+	"github.com/bmeg/grip/gripql"
 	_ "github.com/bmeg/jsonschema/v5/httploader"
 	"github.com/bmeg/jsonschemagraph/compile"
 	"github.com/bmeg/jsonschemagraph/util"
 	"github.com/google/uuid"
 	"google.golang.org/protobuf/types/known/structpb"
 )
-
-type Vertex struct {
-	Gid   string           `protobuf:"bytes,1,opt,name=gid,proto3" json:"gid,omitempty"`
-	Label string           `protobuf:"bytes,2,opt,name=label,proto3" json:"label,omitempty"`
-	Data  *structpb.Struct `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
-}
-
-type Edge struct {
-	Gid   uuid.UUID        `protobuf:"bytes,1,opt,name=gid,proto3" json:"gid,omitempty"`
-	Label string           `protobuf:"bytes,2,opt,name=label,proto3" json:"label,omitempty"`
-	From  string           `protobuf:"bytes,3,opt,name=from,proto3" json:"from,omitempty"`
-	To    string           `protobuf:"bytes,4,opt,name=to,proto3" json:"to,omitempty"`
-	Data  *structpb.Struct `protobuf:"bytes,5,opt,name=data,proto3" json:"data,omitempty"`
-}
-
-type GraphElement struct {
-	Vertex  *Vertex
-	InEdge  *Edge
-	OutEdge *Edge
-	Field   string
-}
 
 type reference struct {
 	dstID   string
@@ -72,7 +52,7 @@ func resolveItem(pointer []string, item any) ([]any, error) {
 	}
 }
 
-func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, project_id string) ([]GraphElement, error) {
+func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, project_id string) ([]gripql.GraphElement, error) {
 	namespace := uuid.NewMD5(uuid.NameSpaceDNS, []byte("aced-idp.org"))
 	if class := s.GetClass(classID); class != nil {
 		if clean {
@@ -87,7 +67,7 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, p
 				return nil, err
 			}
 		}
-		out := make([]GraphElement, 0, 1)
+		out := make([]gripql.GraphElement, 0, 1)
 		if id, nerr := util.GetObjectID(data, class); nerr == nil {
 			var ListOfRels []string
 			vData := map[string]any{}
@@ -95,7 +75,7 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, p
 				gext := ext.(compile.GraphExtension)
 				for _, target := range gext.Targets {
 					ListOfRels = append(ListOfRels, target.Rel)
-					if (target.TemplatePointers.Id == "") {
+					if target.TemplatePointers.Id == "" {
 						continue
 					}
 					//log.Println(" TARGET TEMPLATE POINTER ID: ", target.TemplatePointers.Id )
@@ -111,23 +91,23 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, p
 					}
 					for _, elem := range items {
 						split_list := strings.Split(elem.(string), "/")
-						if target.TargetHints.RegexMatch != nil && target.TargetHints.RegexMatch[0] == (split_list[0] + "/*") {
+						if target.TargetHints.RegexMatch != nil && target.TargetHints.RegexMatch[0] == (split_list[0]+"/*") {
 							elem := split_list[1]
-							edgeOut := Edge{
+							edgeOut := gripql.Edge{
 								To:    elem,
 								From:  id,
 								Label: target.Rel,
-								Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", elem, id, target.Rel))),
+								Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", elem, id, target.Rel))).String(),
 							}
-							out = append(out, GraphElement{OutEdge: &edgeOut})
+							out = append(out, gripql.GraphElement{Edge: &edgeOut})
 							if target.TargetHints.Backref[0] != "" {
-								edgeIn := Edge{
+								edgeIn := gripql.Edge{
 									To:    id,
 									From:  elem,
 									Label: target.TargetHints.Backref[0],
-									Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", id, elem, target.TargetHints.Backref[0]))),
+									Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", id, elem, target.TargetHints.Backref[0]))).String(),
 								}
-								out = append(out, GraphElement{InEdge: &edgeIn})
+								out = append(out, gripql.GraphElement{Edge: &edgeIn})
 							}
 						}
 					}
@@ -152,8 +132,8 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, p
 				log.Println("ERROR: ", err)
 				return nil, err
 			}
-			vert := Vertex{Gid: id, Label: classID, Data: dataPB}
-			out = append(out, GraphElement{Vertex: &vert})
+			vert := gripql.Vertex{Gid: id, Label: classID, Data: dataPB}
+			out = append(out, gripql.GraphElement{Vertex: &vert})
 
 		} else if nerr != nil {
 			log.Println("ERROR: ", nerr)

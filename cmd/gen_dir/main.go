@@ -118,10 +118,10 @@ var Cmd = &cobra.Command{
 			for line := range procChan {
 				if result, err := out.Generate(ClassName, line, false, project_id); err == nil {
 					for _, lin := range result {
-						if b, err := json.Marshal(lin.InEdge); err == nil {
+						if b, err := json.Marshal(lin.Edge); err == nil {
 							IedgeInit = util.Write_line(IedgeInit, b, InEdge_file, InEdge_gzWriter)
 						}
-						if b, err := json.Marshal(lin.OutEdge); err == nil {
+						if b, err := json.Marshal(lin.Edge); err == nil {
 							OedegeInit = util.Write_line(OedegeInit, b, OutEdege_file, OutEdge_gzWriter)
 
 						}
