@@ -79,7 +79,7 @@ type TargetHints struct {
 	Backref     []string `json:"backref"`
 	Direction   []string `json:"direction"`
 	Multiplicty []string `json:"multiplicty"`
-	RegexMatch  []string `json:"regexMatch"`
+	RegexMatch  []string `json:"regex_match"`
 }
 
 type TargetSchema struct {
