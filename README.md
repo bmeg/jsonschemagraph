@@ -104,3 +104,12 @@ Generate a d2 graphical representation of a directory of graph schemas
 jsonschemagraph schema-graph [schema_directory_location] > in.d2
 d2 --watch in.d2 out.svg
 ```
+
+### Example use case adding Namespace DNS and Auth_Resource_Path, Caliper specific data fields:
+
+specify custom namespace for edge generation with "namespace" key in extra args, specify gen3 authentication ProjectId with
+/programs/{program}/projects/{project} string template format. Ex:
+
+```
+jsonschemagraph gen-dir ../iceberg/schemas/graph DATA OUT --extraArgs '{"auth_resource_path": "/programs/ohsu/projects/test", "namespace": "CALIPERIDP.org"}'
+```

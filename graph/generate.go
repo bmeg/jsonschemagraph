@@ -52,12 +52,14 @@ func resolveItem(pointer []string, item any) ([]any, error) {
 	}
 }
 
-func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, namespaceDns string, extraArgs map[string]any) ([]gripql.GraphElement, error) {
-	if namespaceDns == "" {
-		// default NameSpaceDNS if none provided
-		namespaceDns = "caliper-idp.org"
+func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, extraArgs map[string]any) ([]gripql.GraphElement, error) {
+	namespaceDNS := "caliper-idp.org"
+	if nms, ok := extraArgs["namespace"].(string); ok {
+		namespaceDNS = nms
+		delete(extraArgs, "namespace")
 	}
-	namespace := uuid.NewMD5(uuid.NameSpaceDNS, []byte(namespaceDns))
+	log.Println("Using namespace ", namespaceDNS)
+	namespace := uuid.NewMD5(uuid.NameSpaceDNS, []byte(namespaceDNS))
 	if class := s.GetClass(classID); class != nil {
 		if clean {
 			var err error
