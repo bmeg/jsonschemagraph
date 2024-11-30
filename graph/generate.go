@@ -52,8 +52,12 @@ func resolveItem(pointer []string, item any) ([]any, error) {
 	}
 }
 
-func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, project_id string) ([]gripql.GraphElement, error) {
-	namespace := uuid.NewMD5(uuid.NameSpaceDNS, []byte("aced-idp.org"))
+func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, namespaceDns string, extraArgs map[string]any) ([]gripql.GraphElement, error) {
+	if namespaceDns == "" {
+		// default NameSpaceDNS if none provided
+		namespaceDns = "caliper-idp.org"
+	}
+	namespace := uuid.NewMD5(uuid.NameSpaceDNS, []byte(namespaceDns))
 	if class := s.GetClass(classID); class != nil {
 		if clean {
 			var err error
@@ -117,16 +121,12 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, p
 				if d, ok := data[name]; ok {
 					vData[name] = d
 				}
-
 			}
-			if project_id != "" {
-				project_parts := strings.Split(project_id, "-")
-				if len(project_parts) != 2 {
-					return nil, fmt.Errorf("project_id '%s' not in form program-project", project_id)
+			if extraArgs != nil {
+				for key, val := range extraArgs {
+					vData[key] = val
 				}
-				vData["auth_resource_path"] = "/programs/" + project_parts[0] + "/projects/" + project_parts[1]
 			}
-
 			dataPB, err := structpb.NewStruct(vData)
 			if err != nil {
 				log.Println("ERROR: ", err)

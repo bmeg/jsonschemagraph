@@ -13,8 +13,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var project_id string
+var extraArgs string
 var gzip_files bool
+var namespaceDNS string
 
 // https://github.com/bmeg/sifter/blob/51a67b0de852e429d30b9371d9975dbefe3a8df9/transform/graph_build.go#L86
 var Cmd = &cobra.Command{
@@ -28,6 +29,13 @@ var Cmd = &cobra.Command{
 
 		if out, err = graph.Load(args[0]); err != nil {
 			log.Fatalf("graph.Load(%s): %s", args[0], err)
+		}
+
+		var mapstringArgs map[string]any
+		err = json.Unmarshal([]byte(extraArgs), &mapstringArgs)
+		if err != nil {
+			log.Fatal("Error unmarshaling JSON:", err)
+			return nil
 		}
 
 		log.Println("Loaded ", out.ListClasses())
@@ -112,8 +120,9 @@ var Cmd = &cobra.Command{
 		}
 
 		var IedgeInit, VertexInit, OedegeInit = true, true, true
+
 		for line := range procChan {
-			if result, err := out.Generate(args[3], line, false, project_id); err == nil {
+			if result, err := out.Generate(args[3], line, false, namespaceDNS, mapstringArgs); err == nil {
 				for _, lin := range result {
 					if b, err := json.Marshal(lin.Edge); err == nil {
 						IedgeInit = util.Write_line(IedgeInit, b, InEdge_file, InEdge_gzWriter)
@@ -137,6 +146,7 @@ var Cmd = &cobra.Command{
 }
 
 func init() {
-	Cmd.Flags().StringVar(&project_id, "project_id", "", "specify project_id if loading into gen3")
+	Cmd.Flags().StringVar(&namespaceDNS, "namespaceDNS", "caliper-idp.org", "The namespaceDNS to be used for the dataset.")
+	Cmd.Flags().StringVar(&extraArgs, "extraArgs", "", "specify extra args in dict format. Args are applied to every vertex")
 	Cmd.Flags().BoolVar(&gzip_files, "gzip_files", false, "specify output files to be gzipped")
 }
