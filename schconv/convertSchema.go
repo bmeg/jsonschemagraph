@@ -3,17 +3,17 @@ package schconv
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"slices"
 	"strings"
 
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
-
 	"github.com/bmeg/grip/gripql"
 	"github.com/bmeg/jsonschemagraph/compile"
 	"github.com/bmeg/jsonschemagraph/graph"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 func ParseGraphFile(relpath string, format string, graphName string) ([]*gripql.Graph, error) {
@@ -57,11 +57,35 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 	}
 
 	for _, class := range out.Classes {
-		if class.Title == "CodeableReference" {
-			fmt.Printf("%#v\n", class)
-		}
 		vertexData := make(map[string]any)
 		// Since reading from schema there should be no duplicate edges
+
+		for key, sch := range class.Properties {
+			/*"Reference" is not the same as links, but it should be.
+			Need to generate schema that maps links onto everything that has a reference.
+			Because this behavior isn't currently the case, things like codeable reference don't get rendered because they're not currently expressed as links.*/
+			if sch.Ref != nil && sch.Ref.Title != "" && slices.Contains([]string{"Reference", "Link", "Link Description Object", "FHIRPrimitiveExtension"}, sch.Ref.Title) {
+				continue
+			}
+			vertVal := ParseSchema(sch)
+			switch vertVal.(type) {
+			case string:
+				vertexData[key] = vertVal.(string)
+			case int:
+				vertexData[key] = vertVal.(int)
+			case bool:
+				vertexData[key] = vertVal.(bool)
+			case float64:
+				vertexData[key] = vertVal.(float64)
+			case []any:
+				vertexData[key] = vertVal.([]any)
+			case nil:
+			default:
+				log.Printf("ERR State for type: ", vertVal)
+				continue
+			}
+		}
+
 		if ext, ok := class.Extensions[compile.GraphExtensionTag]; ok {
 			enumData := map[string][]string{}
 			for _, target := range ext.(compile.GraphExtension).Targets {
@@ -80,30 +104,6 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 					enum := map[string]any{"data": map[string]any{k: v}, "label": "Edge", "gid": k}
 					graphSchema["edges"] = append(graphSchema["edges"].([]map[string]any), enum)
 				}
-			}
-		}
-
-		for key, sch := range class.Properties {
-			if sch.Ref != nil && sch.Ref.Title != "" && slices.Contains([]string{"Reference", "Link", "FHIRPrimitiveExtension"}, sch.Ref.Title) {
-				continue
-			}
-			vertVal := ParseSchema(sch)
-			//log.Info("FLATTENED VALUES: ", flattened_values)
-			switch vertVal.(type) {
-			case string:
-				vertexData[key] = vertVal.(string)
-			case int:
-				vertexData[key] = vertVal.(int)
-			case bool:
-				vertexData[key] = vertVal.(bool)
-			case float64:
-				vertexData[key] = vertVal.(float64)
-			case []any:
-				vertexData[key] = vertVal.([]any)
-			case nil:
-			default:
-				fmt.Println("ERR State for type: ", vertVal)
-				continue
 			}
 		}
 		vertex := map[string]any{"data": vertexData, "label": "Vertex", "gid": class.Title}
