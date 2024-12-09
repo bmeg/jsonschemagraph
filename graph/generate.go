@@ -58,7 +58,6 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, e
 		namespaceDNS = nms
 		delete(extraArgs, "namespace")
 	}
-	log.Println("Using namespace ", namespaceDNS)
 	namespace := uuid.NewMD5(uuid.NameSpaceDNS, []byte(namespaceDNS))
 	if class := s.GetClass(classID); class != nil {
 		if clean {
@@ -75,16 +74,13 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, e
 		}
 		out := make([]gripql.GraphElement, 0, 1)
 		if id, nerr := util.GetObjectID(data, class); nerr == nil {
-			var ListOfRels []string
 			vData := map[string]any{}
 			if ext, ok := class.Extensions[compile.GraphExtensionTag]; ok {
 				gext := ext.(compile.GraphExtension)
 				for _, target := range gext.Targets {
-					ListOfRels = append(ListOfRels, target.Rel)
 					if target.TemplatePointers.Id == "" {
 						continue
 					}
-					//log.Println(" TARGET TEMPLATE POINTER ID: ", target.TemplatePointers.Id )
 					splitted_pointer := strings.Split(target.TemplatePointers.Id, "/")[1:]
 					items, err := resolveItem(splitted_pointer, data)
 					// if pointer miss continue
@@ -93,11 +89,12 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, e
 					}
 					// if invalid pointer structure in data, error
 					if err != nil {
-						log.Fatal("ERROR: ", err)
+						log.Fatal("Resolve item Error: ", err)
 					}
 					for _, elem := range items {
 						split_list := strings.Split(elem.(string), "/")
-						if target.TargetHints.RegexMatch != nil && target.TargetHints.RegexMatch[0] == (split_list[0]+"/*") {
+						regex_match := target.TargetHints.RegexMatch[0]
+						if target.TargetHints.RegexMatch != nil && (regex_match == (split_list[0]+"/*") || regex_match == "Resource/*") {
 							elem := split_list[1]
 							edgeOut := gripql.Edge{
 								To:    elem,
@@ -131,14 +128,14 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, e
 			}
 			dataPB, err := structpb.NewStruct(vData)
 			if err != nil {
-				log.Println("ERROR: ", err)
+				log.Printf("Error when creating structpb with data: %#v: %s\n", err)
 				return nil, err
 			}
 			vert := gripql.Vertex{Gid: id, Label: classID, Data: dataPB}
 			out = append(out, gripql.GraphElement{Vertex: &vert})
 
 		} else if nerr != nil {
-			log.Println("ERROR: ", nerr)
+			log.Println("Error: ", nerr)
 			return nil, nerr
 		}
 		return out, nil

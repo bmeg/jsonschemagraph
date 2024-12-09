@@ -6,8 +6,10 @@ import (
 	"github.com/bmeg/jsonschemagraph/cmd/data_validate"
 	"github.com/bmeg/jsonschemagraph/cmd/gen_dir"
 	"github.com/bmeg/jsonschemagraph/cmd/gen_graph"
+	"github.com/bmeg/jsonschemagraph/cmd/gen_graphql"
 	"github.com/bmeg/jsonschemagraph/cmd/schema_graph"
 	"github.com/bmeg/jsonschemagraph/cmd/schema_lint"
+
 	"github.com/spf13/cobra"
 )
 
@@ -24,6 +26,7 @@ func init() {
 	RootCmd.AddCommand(schema_lint.Cmd)
 	RootCmd.AddCommand(schema_graph.Cmd)
 	RootCmd.AddCommand(data_validate.Cmd)
+	RootCmd.AddCommand(gen_graphql.Cmd)
 
 }
 
