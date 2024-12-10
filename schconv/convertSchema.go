@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"slices"
 	"strings"
+	"unicode"
 
 	"github.com/bmeg/grip/gripql"
 	"github.com/bmeg/jsonschemagraph/compile"
@@ -43,6 +44,20 @@ func ParseGraphFile(relpath string, format string, graphName string) ([]*gripql.
 	return graphs, nil
 }
 
+func LowerFirstLetter(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	firstRune := rune(s[0])
+	lowerFirst := unicode.ToLower(firstRune)
+	return string(lowerFirst) + s[1:]
+}
+
+func generateQueryList(classes []string) {
+	for i, v := range classes {
+		classes[i] = LowerFirstLetter(classes[i]) + "(offset: Int first: Int filter: JSON sort: JSON accessibility: Accessibility = all format: Format = json): [" + v + "]"
+	}
+}
 func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, error) {
 	out, err := graph.Load(relpath)
 	if err != nil {
@@ -56,9 +71,11 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 
 	for _, class := range out.Classes {
 		vertexData := make(map[string]any)
-
 		for key, sch := range class.Properties {
-
+			// Need a way to skip resource because it is rendered as an edge not a vertex
+			if class.Title == "Resource" {
+				continue
+			}
 			/*"Reference" is not the same as links, but it should be.
 			Need to generate schema that maps links onto everything that has a reference.
 			Because this behavior isn't currently the case, things like codeable reference don't get rendered because they're not currently expressed as links.*/
@@ -120,13 +137,23 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 	}
 
 	// Add the Wild Card Enum that contains all classes
-	listClasses := out.ListClasses()
-	for i, class := range listClasses {
-		listClasses[i] = strings.ToUpper(class)
+	enumClasses := out.ListClasses()
+	for i, class := range enumClasses {
+		enumClasses[i] = strings.ToUpper(class)
 	}
 	graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any),
-		map[string]any{"data": map[string]any{"Resource": listClasses},
+		map[string]any{"data": map[string]any{"Resource": enumClasses},
 			"label": "Vertex", "gid": "Resource"})
+
+	// Add Query type so that vertices can be queried
+
+	listClasses := out.ListClasses()
+	// There needs to be a way to construct this list that is only the major nodes, preferably without hardcoding it.
+	// Non obvious how to do this looking at the schema.
+	generateQueryList(listClasses)
+	graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any),
+		map[string]any{"data": map[string]any{"Query": listClasses},
+			"label": "Vertex", "gid": "Query"})
 
 	expandedJSON, err := json.Marshal(graphSchema)
 	if err != nil {
@@ -134,10 +161,12 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 	}
 
 	//For Testing purposes
-	/*err = os.WriteFile("graphl_vertices.json", expandedJSON, 0644)
-	if err != nil {
-		fmt.Errorf("Failed to write to file: %v", err)
-		}*/
+	/*
+		err = os.WriteFile("graphl_vertices.json", expandedJSON, 0644)
+		if err != nil {
+			fmt.Errorf("Failed to write to file: %v", err)
+		}
+	*/
 
 	graphs := gripql.Graph{}
 	json.Unmarshal(expandedJSON, &graphs)
