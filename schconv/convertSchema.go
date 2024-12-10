@@ -56,7 +56,9 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 
 	for _, class := range out.Classes {
 		vertexData := make(map[string]any)
+
 		for key, sch := range class.Properties {
+
 			/*"Reference" is not the same as links, but it should be.
 			Need to generate schema that maps links onto everything that has a reference.
 			Because this behavior isn't currently the case, things like codeable reference don't get rendered because they're not currently expressed as links.*/
@@ -84,6 +86,7 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 
 		if ext, ok := class.Extensions[compile.GraphExtensionTag]; ok {
 			enumData := map[string][]string{}
+			enumSeen := map[string]bool{}
 			for _, target := range ext.(compile.GraphExtension).Targets {
 				parts := strings.Split(target.Rel, "_")
 				RegexMatch := target.TargetHints.RegexMatch[0][:len(target.TargetHints.RegexMatch[0])-2]
@@ -98,10 +101,11 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 					continue
 				}
 				enumTitle := fmt.Sprintf("%s%s", class.Title, cases.Title(language.Und, cases.NoLower).String(base)) + "Type"
-				vertexData[base] = enumTitle
-				enumData[enumTitle] = append(enumData[enumTitle], strings.ToUpper(targetType))
-				//fmt.Println("ENUM TITLE: ", enumTitle, enumData[enumTitle], parts)
-
+				if _, seen := enumSeen[targetType+enumTitle]; !seen {
+					vertexData[base] = enumTitle
+					enumSeen[targetType+enumTitle] = true
+					enumData[enumTitle] = append(enumData[enumTitle], strings.ToUpper(targetType))
+				}
 			}
 			if enumData != nil {
 				for k, v := range enumData {
@@ -110,6 +114,7 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 				}
 			}
 		}
+
 		vertex := map[string]any{"data": vertexData, "label": "Vertex", "gid": class.Title}
 		graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any), vertex)
 	}
