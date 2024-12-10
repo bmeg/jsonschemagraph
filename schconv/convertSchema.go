@@ -100,6 +100,8 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 				enumTitle := fmt.Sprintf("%s%s", class.Title, cases.Title(language.Und, cases.NoLower).String(base)) + "Type"
 				vertexData[base] = enumTitle
 				enumData[enumTitle] = append(enumData[enumTitle], strings.ToUpper(targetType))
+				//fmt.Println("ENUM TITLE: ", enumTitle, enumData[enumTitle], parts)
+
 			}
 			if enumData != nil {
 				for k, v := range enumData {
@@ -113,8 +115,12 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 	}
 
 	// Add the Wild Card Enum that contains all classes
+	listClasses := out.ListClasses()
+	for i, class := range listClasses {
+		listClasses[i] = strings.ToUpper(class)
+	}
 	graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any),
-		map[string]any{"data": map[string]any{"Resource": out.ListClasses()},
+		map[string]any{"data": map[string]any{"Resource": listClasses},
 			"label": "Vertex", "gid": "Resource"})
 
 	expandedJSON, err := json.Marshal(graphSchema)
