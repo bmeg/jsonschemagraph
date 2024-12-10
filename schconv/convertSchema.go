@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"os"
 	"path/filepath"
 	"slices"
 	"strings"
@@ -52,14 +51,11 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 	}
 	graphSchema := map[string]any{
 		"vertices": []map[string]any{},
-		"edges":    []map[string]any{},
 		"graph":    graphName,
 	}
 
 	for _, class := range out.Classes {
 		vertexData := make(map[string]any)
-		// Since reading from schema there should be no duplicate edges
-
 		for key, sch := range class.Properties {
 			/*"Reference" is not the same as links, but it should be.
 			Need to generate schema that maps links onto everything that has a reference.
@@ -90,19 +86,25 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 			enumData := map[string][]string{}
 			for _, target := range ext.(compile.GraphExtension).Targets {
 				parts := strings.Split(target.Rel, "_")
+				RegexMatch := target.TargetHints.RegexMatch[0][:len(target.TargetHints.RegexMatch[0])-2]
 				if len(parts) == 1 {
-					vertexData[parts[0]] = target.TargetHints.RegexMatch[0][:len(target.TargetHints.RegexMatch[0])-2]
+					vertexData[parts[0]] = RegexMatch
 					continue
 				}
 				base, targetType := parts[0], parts[len(parts)-1]
-				enumTitle := fmt.Sprintf("%s%s", class.Title, cases.Title(language.Und, cases.NoLower).String(base))
+				// In places where there are in-node traversals before hitting an edge, need to
+				// continue with execution to avoid creating a redundant enum.
+				if targetType != RegexMatch {
+					continue
+				}
+				enumTitle := fmt.Sprintf("%s%s", class.Title, cases.Title(language.Und, cases.NoLower).String(base)) + "Type"
 				vertexData[base] = enumTitle
 				enumData[enumTitle] = append(enumData[enumTitle], strings.ToUpper(targetType))
 			}
 			if enumData != nil {
 				for k, v := range enumData {
-					enum := map[string]any{"data": map[string]any{k: v}, "label": "Edge", "gid": k}
-					graphSchema["edges"] = append(graphSchema["edges"].([]map[string]any), enum)
+					enum := map[string]any{"data": map[string]any{k: v}, "label": "Vertex", "gid": k}
+					graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any), enum)
 				}
 			}
 		}
@@ -111,9 +113,9 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 	}
 
 	// Add the Wild Card Enum that contains all classes
-	graphSchema["edges"] = append(graphSchema["edges"].([]map[string]any),
+	graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any),
 		map[string]any{"data": map[string]any{"Resource": out.ListClasses()},
-			"label": "Edge", "gid": "Resource"})
+			"label": "Vertex", "gid": "Resource"})
 
 	expandedJSON, err := json.Marshal(graphSchema)
 	if err != nil {
@@ -121,11 +123,10 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 	}
 
 	//For Testing purposes
-	err = os.WriteFile("graphl_vertices.json", expandedJSON, 0644)
+	/*err = os.WriteFile("graphl_vertices.json", expandedJSON, 0644)
 	if err != nil {
 		fmt.Errorf("Failed to write to file: %v", err)
-	}
-	///
+		}*/
 
 	graphs := gripql.Graph{}
 	json.Unmarshal(expandedJSON, &graphs)
