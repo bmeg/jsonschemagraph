@@ -142,7 +142,7 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 		enumClasses[i] = strings.ToUpper(class)
 	}
 	graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any),
-		map[string]any{"Resource": enumClasses, "label": "Vertex", "gid": "Resource"})
+		map[string]any{"data": enumClasses, "label": "Vertex", "gid": "Resource"})
 
 	// Add Query type so that vertices can be queried
 	listClasses := out.ListClasses()
