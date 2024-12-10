@@ -4,8 +4,11 @@ go 1.22.5
 
 require (
 	github.com/bmeg/golib v0.0.0-20200725232156-e799a31439fc
+	github.com/bmeg/grip v0.0.0-20231102165002-fa720cf43d53
+	github.com/bmeg/jsonschema/v5 v5.3.4-0.20241111204732-55db82022a92
 	github.com/google/uuid v1.6.0
 	github.com/spf13/cobra v1.8.1
+	google.golang.org/appengine v1.6.7
 	google.golang.org/protobuf v1.34.2
 	sigs.k8s.io/yaml v1.4.0
 )
@@ -13,8 +16,6 @@ require (
 require (
 	github.com/akuity/grpc-gateway-client v0.0.0-20230321170839-38ca1b4b439c // indirect
 	github.com/alevinval/sse v1.0.1 // indirect
-	github.com/bmeg/grip v0.0.0-20231102165002-fa720cf43d53 // indirect
-	github.com/bmeg/jsonschema/v5 v5.3.4-0.20241111204732-55db82022a92 // indirect
 	github.com/go-resty/resty/v2 v2.7.0 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0 // indirect
