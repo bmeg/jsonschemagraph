@@ -71,11 +71,11 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 
 	for _, class := range out.Classes {
 		vertexData := make(map[string]any)
+		// Need a way to skip resource because it is rendered as an edge not a vertex
+		if class.Title == "Resource" {
+			continue
+		}
 		for key, sch := range class.Properties {
-			// Need a way to skip resource because it is rendered as an edge not a vertex
-			if class.Title == "Resource" {
-				continue
-			}
 			/*"Reference" is not the same as links, but it should be.
 			Need to generate schema that maps links onto everything that has a reference.
 			Because this behavior isn't currently the case, things like codeable reference don't get rendered because they're not currently expressed as links.*/
@@ -165,7 +165,7 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 		err = os.WriteFile("graphl_vertices.json", expandedJSON, 0644)
 		if err != nil {
 			fmt.Errorf("Failed to write to file: %v", err)
-		}
+			}
 	*/
 
 	graphs := gripql.Graph{}
