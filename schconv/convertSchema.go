@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 	"path/filepath"
 	"slices"
 	"strings"
@@ -16,7 +17,7 @@ import (
 	"golang.org/x/text/language"
 )
 
-func ParseGraphFile(relpath string, format string, graphName string) ([]*gripql.Graph, error) {
+func ParseGraphFile(relpath string, format string, graphName string, vertexSubset []string, writeFile bool) ([]*gripql.Graph, error) {
 	var graphs []*gripql.Graph
 	var err error
 
@@ -32,9 +33,9 @@ func ParseGraphFile(relpath string, format string, graphName string) ([]*gripql.
 	// Parse file contents
 	switch format {
 	case "jsonSchema":
-		graphs, err = ParseIntoGraphqlSchema(path, graphName)
+		graphs, err = ParseIntoGraphqlSchema(path, graphName, vertexSubset, writeFile)
 	case "yamlSchema":
-		graphs, err = ParseIntoGraphqlSchema(relpath, graphName)
+		graphs, err = ParseIntoGraphqlSchema(relpath, graphName, vertexSubset, writeFile)
 	default:
 		err = fmt.Errorf("unknown file format: %s", format)
 	}
@@ -58,7 +59,7 @@ func generateQueryList(classes []string) {
 		classes[i] = LowerFirstLetter(classes[i]) + "(offset: Int first: Int filter: JSON sort: JSON accessibility: Accessibility = all format: Format = json): [" + v + "]"
 	}
 }
-func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, error) {
+func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []string, writeFile bool) ([]*gripql.Graph, error) {
 	out, err := graph.Load(relpath)
 	if err != nil {
 		fmt.Errorf("Err loading schema: %s: %s\n", relpath, err)
@@ -144,13 +145,11 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 	enumResource := map[string]any{"data": map[string]any{"Resource": enumClasses}, "label": "Vertex", "gid": "Resource"}
 	graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any), enumResource)
 
-	// Add Query type so that vertices can be queried
-	listClasses := out.ListClasses()
 	// There needs to be a way to construct this list that is only the major nodes, preferably without hardcoding it.
 	// Non obvious how to do this looking at the schema.
-	generateQueryList(listClasses)
+	generateQueryList(vertexSubset)
 	graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any),
-		map[string]any{"data": map[string]any{"Query": listClasses},
+		map[string]any{"data": map[string]any{"Query": vertexSubset},
 			"label": "Vertex", "gid": "Query"})
 
 	expandedJSON, err := json.Marshal(graphSchema)
@@ -158,13 +157,12 @@ func ParseIntoGraphqlSchema(relpath string, graphName string) ([]*gripql.Graph, 
 		fmt.Errorf("Failed to marshal expanded schema: %v", err)
 	}
 
-	//For Testing purposes
-	/*
+	if writeFile {
 		err = os.WriteFile("graphl_vertices.json", expandedJSON, 0644)
 		if err != nil {
 			fmt.Errorf("Failed to write to file: %v", err)
-			}
-	*/
+		}
+	}
 
 	graphs := gripql.Graph{}
 	json.Unmarshal(expandedJSON, &graphs)
