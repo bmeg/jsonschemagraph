@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/bmeg/jsonschemagraph/schconv"
+	schema "github.com/bmeg/jsonschemagraph/graphql"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 )
@@ -14,7 +14,7 @@ var jsonSchemaFile string
 var yamlSchemaDir string
 var graphName string
 var configPath string
-var writeFile bool = false
+var writeIntermediateFile bool = false
 
 type Config struct {
 	DependencyOrder []string `yaml:"dependency_order"`
@@ -46,17 +46,19 @@ var Cmd = &cobra.Command{
 
 		if jsonSchemaFile != "" && graphName != "" {
 			log.Printf("Loading Json Schema file: %s", jsonSchemaFile)
-			_, err := schconv.ParseGraphFile(jsonSchemaFile, "jsonSchema", graphName, config.DependencyOrder, writeFile)
+			graphs, err := schema.ParseGraphFile(jsonSchemaFile, "jsonSchema", graphName, config.DependencyOrder, writeIntermediateFile)
 			if err != nil {
 				return err
 			}
+			_ = schema.GripGraphqltoGraphql(graphs[0])
 		}
 		if yamlSchemaDir != "" && graphName != "" {
 			log.Printf("Loading Yaml Schema dir: %s", yamlSchemaDir)
-			_, err := schconv.ParseGraphFile(yamlSchemaDir, "yamlSchema", graphName, config.DependencyOrder, writeFile)
+			graphs, err := schema.ParseGraphFile(yamlSchemaDir, "yamlSchema", graphName, config.DependencyOrder, writeIntermediateFile)
 			if err != nil {
 				return err
 			}
+			_ = schema.GripGraphqltoGraphql(graphs[0])
 		}
 
 		return nil
@@ -65,7 +67,7 @@ var Cmd = &cobra.Command{
 
 func init() {
 	gqlflags := Cmd.Flags()
-	gqlflags.BoolVar(&writeFile, "writeFile", false, "Write file to disk")
+	gqlflags.BoolVar(&writeIntermediateFile, "writeIntermediateFile", false, "Write writeIntermediateFile file to disk")
 	gqlflags.StringVar(&jsonSchemaFile, "jsonSchema", "", "Json Schema")
 	gqlflags.StringVar(&yamlSchemaDir, "yamlSchemaDir", "", "Name of YAML schemas dir")
 	gqlflags.StringVar(&configPath, "configPath", "", "Path of Config file for determining the subset of ")

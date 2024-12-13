@@ -1,4 +1,4 @@
-package schconv
+package graphql
 
 import (
 	"encoding/json"
@@ -56,9 +56,10 @@ func LowerFirstLetter(s string) string {
 
 func generateQueryList(classes []string) {
 	for i, v := range classes {
-		classes[i] = LowerFirstLetter(classes[i]) + "(offset: Int first: Int filter: JSON sort: JSON accessibility: Accessibility = all format: Format = json): [" + v + "]"
+		classes[i] = LowerFirstLetter(classes[i]) + "(offset: Int first: Int filter: JSON sort: JSON accessibility: Accessibility = all format: Format = json): [" + v + "Type]"
 	}
 }
+
 func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []string, writeFile bool) ([]*gripql.Graph, error) {
 	out, err := graph.Load(relpath)
 	if err != nil {
@@ -80,9 +81,10 @@ func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []str
 			/*"Reference" is not the same as links, but it should be.
 			Need to generate schema that maps links onto everything that has a reference.
 			Because this behavior isn't currently the case, things like codeable reference don't get rendered because they're not currently expressed as links.*/
-			if sch.Ref != nil && sch.Ref.Title != "" && slices.Contains([]string{"Reference", "Link", "Link Description Object", "FHIRPrimitiveExtension"}, sch.Ref.Title) {
+			if key == "links" || key == "link" || sch.Ref != nil && sch.Ref.Title != "" && slices.Contains([]string{"Reference", "FHIRPrimitiveExtension"}, sch.Ref.Title) {
 				continue
 			}
+
 			vertVal := ParseSchema(sch)
 			switch vertVal.(type) {
 			case string:
@@ -94,6 +96,9 @@ func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []str
 			case float64:
 				vertexData[key] = vertVal.(float64)
 			case []any:
+				if vertVal.([]any)[0].(string) == "Resource" {
+					vertVal.([]any)[0] = "ResourceUnion"
+				}
 				vertexData[key] = vertVal.([]any)
 			case nil:
 			default:
@@ -109,6 +114,11 @@ func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []str
 				parts := strings.Split(target.Rel, "_")
 				RegexMatch := target.TargetHints.RegexMatch[0][:len(target.TargetHints.RegexMatch[0])-2]
 				if len(parts) == 1 {
+					if slices.Contains(vertexSubset, RegexMatch) {
+						RegexMatch += "Type"
+					} else if RegexMatch == "Resource" {
+						RegexMatch += "Union"
+					}
 					vertexData[parts[0]] = RegexMatch
 					continue
 				}
@@ -118,32 +128,35 @@ func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []str
 				if targetType != RegexMatch {
 					continue
 				}
-				enumTitle := fmt.Sprintf("%s%s", class.Title, cases.Title(language.Und, cases.NoLower).String(base)) + "Type"
-				if _, seen := enumSeen[targetType+enumTitle]; !seen {
-					vertexData[base] = enumTitle
-					enumSeen[targetType+enumTitle] = true
-					enumData[enumTitle] = append(enumData[enumTitle], strings.ToUpper(targetType))
+				unionTitle := fmt.Sprintf("%s%s", class.Title, cases.Title(language.Und, cases.NoLower).String(base)) + "Union"
+				if _, seen := enumSeen[targetType+unionTitle]; !seen {
+					vertexData[base] = unionTitle
+					enumSeen[targetType+unionTitle] = true
+					enumData[unionTitle] = append(enumData[unionTitle], targetType)
 				}
 			}
 			if enumData != nil {
 				for k, v := range enumData {
-					enum := map[string]any{"data": map[string]any{k: v}, "label": "Vertex", "gid": k}
+					enum := map[string]any{"data": map[string]any{k: v}, "label": "Vertex", "gid": "Union"}
 					graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any), enum)
 				}
 			}
 		}
 
 		vertex := map[string]any{"data": vertexData, "label": "Vertex", "gid": class.Title}
+		if slices.Contains(vertexSubset, class.Title) {
+			vertex["gid"] = class.Title + "Type"
+		}
 		graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any), vertex)
 	}
 
-	// Add the Wild Card Enum that contains all classes
-	enumClasses := out.ListClasses()
-	for i, class := range enumClasses {
-		enumClasses[i] = strings.ToUpper(class)
+	UnionSubset := []string{}
+	for _, v := range vertexSubset {
+		UnionSubset = append(UnionSubset, v)
 	}
-	enumResource := map[string]any{"data": map[string]any{"Resource": enumClasses}, "label": "Vertex", "gid": "Resource"}
-	graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any), enumResource)
+
+	unionResource := map[string]any{"data": map[string]any{"ResourceUnion": UnionSubset}, "label": "Vertex", "gid": "Union"}
+	graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any), unionResource)
 
 	// There needs to be a way to construct this list that is only the major nodes, preferably without hardcoding it.
 	// Non obvious how to do this looking at the schema.
