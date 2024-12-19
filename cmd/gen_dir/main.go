@@ -12,8 +12,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var extraArgs string
-var gzip_files bool
+var extraArgs string = ""
+var gzip_files bool = false
 
 // https://github.com/bmeg/sifter/blob/51a67b0de852e429d30b9371d9975dbefe3a8df9/transform/graph_build.go#L86
 var Cmd = &cobra.Command{
@@ -31,10 +31,12 @@ var Cmd = &cobra.Command{
 		}
 
 		var mapstringArgs map[string]any
-		err = json.Unmarshal([]byte(extraArgs), &mapstringArgs)
-		if err != nil {
-			log.Fatal("Error unmarshaling JSON:", err)
-			return nil
+		if extraArgs != "" {
+			err = json.Unmarshal([]byte(extraArgs), &mapstringArgs)
+			if err != nil {
+				log.Fatal("Error unmarshaling JSON:", err)
+				return nil
+			}
 		}
 
 		if out, err = graph.Load(args[0]); err != nil {
