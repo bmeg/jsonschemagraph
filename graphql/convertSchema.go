@@ -56,7 +56,7 @@ func LowerFirstLetter(s string) string {
 
 func generateQueryList(classes []string) {
 	for i, v := range classes {
-		classes[i] = LowerFirstLetter(classes[i]) + "(offset: Int first: Int filter: JSON sort: JSON accessibility: Accessibility = all format: Format = json): [" + v + "Type]"
+		classes[i] = LowerFirstLetter(classes[i]) + "(offset: Int first: Int filter: JSON sort: JSON accessibility: Accessibility = all format: Format = json): [" + v + "Type!]!"
 	}
 }
 
@@ -108,8 +108,8 @@ func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []str
 		}
 
 		if ext, ok := class.Extensions[compile.GraphExtensionTag]; ok {
-			enumData := map[string][]string{}
-			enumSeen := map[string]bool{}
+			unionData := map[string][]string{}
+			unionSeen := map[string]bool{}
 			for _, target := range ext.(compile.GraphExtension).Targets {
 				parts := strings.Split(target.Rel, "_")
 				RegexMatch := target.TargetHints.RegexMatch[0][:len(target.TargetHints.RegexMatch[0])-2]
@@ -121,24 +121,39 @@ func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []str
 					}
 					vertexData[parts[0]] = RegexMatch
 					continue
+				} else if len(parts) == 2 {
+					base, targetType := parts[0], parts[len(parts)-1]
+					if targetType != RegexMatch {
+						if value, ok := vertexData[parts[0]]; ok && value != nil {
+							strValue := ""
+							if slice, isSlice := value.([]any); isSlice && len(slice) > 0 {
+								strValue = slice[0].(string)
+							} else if s, isString := value.(string); isString {
+								strValue = s
+							}
+							if len(strValue) >= 5 && strings.HasSuffix(strValue, "Union") {
+								vertexData[parts[0]] = strValue[:len(strValue)-5]
+							}
+						} else {
+							fmt.Printf("Key not found or value is nil: %s\n %s", parts[0], vertexData)
+						}
+						continue
+					}
+					unionTitle := fmt.Sprintf("%s%s", class.Title, cases.Title(language.Und, cases.NoLower).String(base)) + "Union"
+					if _, seen := unionSeen[targetType+unionTitle]; !seen {
+						vertexData[base] = unionTitle
+						unionSeen[targetType+unionTitle] = true
+						unionData[unionTitle] = append(unionData[unionTitle], targetType)
+					}
 				}
-				base, targetType := parts[0], parts[len(parts)-1]
-				// In places where there are in-node traversals before hitting an edge, need to
-				// continue with execution to avoid creating a redundant enum.
-				if targetType != RegexMatch {
-					continue
-				}
-				unionTitle := fmt.Sprintf("%s%s", class.Title, cases.Title(language.Und, cases.NoLower).String(base)) + "Union"
-				if _, seen := enumSeen[targetType+unionTitle]; !seen {
-					vertexData[base] = unionTitle
-					enumSeen[targetType+unionTitle] = true
-					enumData[unionTitle] = append(enumData[unionTitle], targetType)
-				}
+				/* else { base, targetType := parts[0], parts[len(parts)-1]
+				fmt.Println("BASE: ", base, "TARGET TYPE: ", targetType) */
+
 			}
-			if enumData != nil {
-				for k, v := range enumData {
-					enum := map[string]any{"data": map[string]any{k: v}, "label": "Vertex", "gid": "Union"}
-					graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any), enum)
+			if unionData != nil {
+				for k, v := range unionData {
+					union := map[string]any{"data": map[string]any{k: v}, "label": "Vertex", "gid": "Union"}
+					graphSchema["vertices"] = append(graphSchema["vertices"].([]map[string]any), union)
 				}
 			}
 		}
