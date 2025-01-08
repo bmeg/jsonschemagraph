@@ -3,9 +3,9 @@ package graphql
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
+	"reflect"
 	"slices"
 	"strings"
 	"unicode"
@@ -60,6 +60,10 @@ func generateQueryList(classes []string) {
 	}
 }
 
+func isSlice(v interface{}) bool {
+	return reflect.TypeOf(v).Kind() == reflect.Slice
+}
+
 func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []string, writeFile bool) ([]*gripql.Graph, error) {
 	out, err := graph.Load(relpath)
 	if err != nil {
@@ -85,25 +89,16 @@ func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []str
 				continue
 			}
 
-			vertVal := ParseSchema(sch)
-			switch vertVal.(type) {
-			case string:
-				vertexData[key] = vertVal.(string)
-			case int:
-				vertexData[key] = vertVal.(int)
-			case bool:
-				vertexData[key] = vertVal.(bool)
-			case float64:
-				vertexData[key] = vertVal.(float64)
-			case []any:
-				if vertVal.([]any)[0].(string) == "Resource" {
-					vertVal.([]any)[0] = "ResourceUnion"
-				}
-				vertexData[key] = vertVal.([]any)
-			case nil:
-			default:
-				log.Printf("ERR State for type: ", vertVal)
-				continue
+			value := ParseSchema(sch)
+
+			// Fields with edges that aren't defined in our internal schema are not present in the graphql schema either
+			if value == nil {
+				fmt.Printf("WARNING: key %s on type %s may not be supported\n", key, class.Title)
+			} else if isSlice(value) && value.([]any)[0] == "Resource" {
+				value.([]any)[0] = "ResourceUnion"
+				vertexData[key] = value
+			} else {
+				vertexData[key] = value
 			}
 		}
 
