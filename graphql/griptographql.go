@@ -26,11 +26,11 @@ func GripGraphqltoGraphql(graph *gripql.Graph) string {
 	schemaBuilder.WriteString("enum Format {\n  json\n  tsv\n  csv\n}\n")
 
 	for _, v := range graph.Vertices {
-		if v.Gid != "Query" {
+		if v.Id != "Query" {
 			executedFirstBlock := false
 			for name, values := range v.Data.AsMap() {
 				listVals, ok := values.([]any)
-				if ok && v.Gid == "Union" {
+				if ok && v.Id == "Union" {
 					executedFirstBlock = true
 					schemaBuilder.WriteString(fmt.Sprintf("union %s =", name))
 					listValslen := len(listVals)
@@ -47,7 +47,7 @@ func GripGraphqltoGraphql(graph *gripql.Graph) string {
 				}
 			}
 			if !executedFirstBlock {
-				schemaBuilder.WriteString(fmt.Sprintf("type %s {\n", v.Gid))
+				schemaBuilder.WriteString(fmt.Sprintf("type %s {\n", v.Id))
 				for field, fieldType := range v.Data.AsMap() {
 					strFieldType, ok := fieldType.(string)
 					if ok && (strings.HasSuffix(strFieldType, "Type") || strings.HasSuffix(strFieldType, "Union")) {

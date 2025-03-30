@@ -100,7 +100,7 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, e
 								To:    elem,
 								From:  id,
 								Label: target.Rel,
-								Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", elem, id, target.Rel))).String(),
+								Id:    uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", elem, id, target.Rel))).String(),
 							}
 							out = append(out, gripql.GraphElement{Edge: &edgeOut})
 							if target.TargetHints.Backref[0] != "" {
@@ -108,7 +108,7 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, e
 									To:    id,
 									From:  elem,
 									Label: target.TargetHints.Backref[0],
-									Gid:   uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", id, elem, target.TargetHints.Backref[0]))).String(),
+									Id:    uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", id, elem, target.TargetHints.Backref[0]))).String(),
 								}
 								out = append(out, gripql.GraphElement{Edge: &edgeIn})
 							}
@@ -131,7 +131,7 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, e
 				log.Printf("Error when creating structpb with data: %#v: %s\n", err)
 				return nil, err
 			}
-			vert := gripql.Vertex{Gid: id, Label: classID, Data: dataPB}
+			vert := gripql.Vertex{Id: id, Label: classID, Data: dataPB}
 			out = append(out, gripql.GraphElement{Vertex: &vert})
 
 		} else if nerr != nil {
