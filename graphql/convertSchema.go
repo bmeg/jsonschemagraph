@@ -56,7 +56,7 @@ func LowerFirstLetter(s string) string {
 
 func generateQueryList(classes []string) {
 	for i, v := range classes {
-		classes[i] = LowerFirstLetter(classes[i]) + "(offset: Int first: Int filter: JSON sort: JSON accessibility: Accessibility = all format: Format = json): [" + v + "Type!]!"
+		classes[i] = LowerFirstLetter(classes[i]) + "(offset: Int first: Int filter: JSON sort: [SortInput]  accessibility: Accessibility = all): [" + v + "Type!]!"
 	}
 }
 
