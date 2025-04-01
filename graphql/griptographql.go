@@ -26,13 +26,11 @@ func GripGraphqltoGraphql(graph *gripql.Graph) string {
 	schemaBuilder.WriteString("input SortInput {\n  field: String!\n  descending: Boolean\n}\n")
 
 	for _, v := range graph.Vertices {
-		//fmt.Println("V: ", v)
-		//fmt.Printf("BREAK: \n\n")
 		if v.Gid != "Query" {
 			executedFirstBlock := false
 			for name, values := range v.Data.AsMap() {
 				listVals, ok := values.([]any)
-				if ok && v.Gid == "Union" {
+				if ok && v.Id == "Union" {
 					executedFirstBlock = true
 					schemaBuilder.WriteString(fmt.Sprintf("union %s =", name))
 					listValslen := len(listVals)
@@ -49,7 +47,7 @@ func GripGraphqltoGraphql(graph *gripql.Graph) string {
 				}
 			}
 			if !executedFirstBlock {
-				schemaBuilder.WriteString(fmt.Sprintf("type %s {\n", v.Gid))
+				schemaBuilder.WriteString(fmt.Sprintf("type %s {\n", v.Id))
 				for field, fieldType := range v.Data.AsMap() {
 					strFieldType, ok := fieldType.(string)
 					if ok && (strings.HasSuffix(strFieldType, "Type") || strings.HasSuffix(strFieldType, "Union")) {
