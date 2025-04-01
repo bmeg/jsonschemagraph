@@ -23,10 +23,10 @@ func GripGraphqltoGraphql(graph *gripql.Graph) string {
 	// Write gen3 style boiler plate to mirror thier args
 	schemaBuilder.WriteString("scalar JSON\n")
 	schemaBuilder.WriteString("enum Accessibility {\n  all\n  accessible\n  unaccessible\n}\n")
-	schemaBuilder.WriteString("enum Format {\n  json\n  tsv\n  csv\n}\n")
+	schemaBuilder.WriteString("input SortInput {\n  field: String!\n  descending: Boolean\n}\n")
 
 	for _, v := range graph.Vertices {
-		if v.Id != "Query" {
+		if v.Gid != "Query" {
 			executedFirstBlock := false
 			for name, values := range v.Data.AsMap() {
 				listVals, ok := values.([]any)
@@ -51,11 +51,12 @@ func GripGraphqltoGraphql(graph *gripql.Graph) string {
 				for field, fieldType := range v.Data.AsMap() {
 					strFieldType, ok := fieldType.(string)
 					if ok && (strings.HasSuffix(strFieldType, "Type") || strings.HasSuffix(strFieldType, "Union")) {
-						schemaBuilder.WriteString(fmt.Sprintf("  %s(offset: Int first: Int filter: JSON sort: JSON accessibility: Accessibility = all format: Format = json): [%s]\n", field, strFieldType))
+						schemaBuilder.WriteString(fmt.Sprintf("  %s(offset: Int first: Int): %s!\n", field, strFieldType))
 					} else {
 						schemaBuilder.WriteString(fmt.Sprintf("  %s: %s\n", field, fieldType))
 					}
 				}
+				schemaBuilder.WriteString("  auth_resource_path: String\n")
 				schemaBuilder.WriteString("}\n")
 			}
 		} else {

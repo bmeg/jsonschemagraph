@@ -3,23 +3,20 @@ package graphql
 import (
 	"fmt"
 	"slices"
-	"strings"
 
 	"github.com/bmeg/jsonschema/v5"
 )
 
 func jsontographlprimitiveType(returnType any) any {
-	switch returnType.(type) {
-	case string:
+	switch returnType {
+	case "string":
 		return "String"
-	case int:
+	case "integer":
 		return "Int"
-	case bool:
+	case "boolean":
 		return "Boolean"
-	case float64:
+	case "number":
 		return "Float"
-	case []any:
-		return []any{[]any{strings.Title(returnType.([]any)[0].(string))}}
 	default:
 		fmt.Println("ERR State for jsontographlprimitiveType: ", returnType)
 		return ""
@@ -37,6 +34,7 @@ func ParseSchema(schema *jsonschema.Schema) any {
 	if schema.Items2020 != nil {
 		if schema.Items2020.Ref != nil &&
 			schema.Items2020.Ref.Title != "" {
+			// Don't include keys that contain references which types can't be discerned from reading the schema
 			if slices.Contains([]string{"Reference", "FHIRPrimitiveExtension"}, schema.Items2020.Ref.Title) {
 				return nil
 			}

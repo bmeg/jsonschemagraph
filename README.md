@@ -113,3 +113,11 @@ specify custom namespace for edge generation with "namespace" key in extra args,
 ```
 jsonschemagraph gen-dir ../iceberg/schemas/graph DATA OUT --extraArgs '{"auth_resource_path": "/programs/ohsu/projects/test", "namespace": "CALIPERIDP.org"}'
 ```
+
+### Example commands for generating graphql schema from jsonschema
+
+```
+jsonschemagraph gen-graphql --graphName CALIPER --jsonSchema graph-fhir.json  --configPath config.yaml --writeIntermediateFile
+```
+
+This translator does not support codeable references
