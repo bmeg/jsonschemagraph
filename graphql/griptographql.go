@@ -26,7 +26,7 @@ func GripGraphqltoGraphql(graph *gripql.Graph) string {
 	schemaBuilder.WriteString("input SortInput {\n  field: String!\n  descending: Boolean\n}\n")
 
 	for _, v := range graph.Vertices {
-		if v.Gid != "Query" {
+		if v.Id != "Query" {
 			executedFirstBlock := false
 			for name, values := range v.Data.AsMap() {
 				listVals, ok := values.([]any)

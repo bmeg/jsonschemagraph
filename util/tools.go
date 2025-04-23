@@ -21,15 +21,6 @@ func GetObjectID(data map[string]any, schema *jsonschema.Schema) (string, error)
 	return "", fmt.Errorf("object id not found")
 }
 
-func contains(elems []string, v string) bool {
-	for _, s := range elems {
-		if v == s {
-			return true
-		}
-	}
-	return false
-}
-
 func CountLines(filePath string) int {
 	file, err := os.Open(filePath)
 	if err != nil {
