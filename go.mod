@@ -6,7 +6,7 @@ toolchain go1.24.0
 
 require (
 	github.com/bmeg/golib v0.0.0-20200725232156-e799a31439fc
-	github.com/bmeg/grip v0.0.0-20250328235822-525777e2873c
+	github.com/bmeg/grip v0.0.0-20250421161012-b9b392fc8721
 	github.com/bmeg/jsonschema/v5 v5.3.4-0.20241111204732-55db82022a92
 	github.com/google/uuid v1.6.0
 	github.com/spf13/cobra v1.8.1
@@ -31,6 +31,6 @@ require (
 	golang.org/x/net v0.35.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/term v0.29.0 // indirect
-	google.golang.org/genproto v0.0.0-20230303212802-e74f57abe488 // indirect
+	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 // indirect
 	google.golang.org/grpc v1.70.0 // indirect
 )

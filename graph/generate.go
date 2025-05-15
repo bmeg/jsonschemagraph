@@ -59,86 +59,88 @@ func (s GraphSchema) Generate(classID string, data map[string]any, clean bool, e
 		delete(extraArgs, "namespace")
 	}
 	namespace := uuid.NewMD5(uuid.NameSpaceDNS, []byte(namespaceDNS))
-	if class := s.GetClass(classID); class != nil {
-		if clean {
-			var err error
-			data, err = s.CleanAndValidate(class, data)
-			if err != nil {
-				return nil, err
-			}
-		} else {
-			err := class.Validate(data)
-			if err != nil {
-				return nil, err
-			}
-		}
-		out := make([]gripql.GraphElement, 0, 1)
-		if id, nerr := util.GetObjectID(data, class); nerr == nil {
-			vData := map[string]any{}
-			if ext, ok := class.Extensions[compile.GraphExtensionTag]; ok {
-				gext := ext.(compile.GraphExtension)
-				for _, target := range gext.Targets {
-					if target.TemplatePointers.Id == "" {
-						continue
-					}
-					splitted_pointer := strings.Split(target.TemplatePointers.Id, "/")[1:]
-					items, err := resolveItem(splitted_pointer, data)
-					// if pointer miss continue
-					if items == nil && err == nil {
-						continue
-					}
-					// if invalid pointer structure in data, error
-					if err != nil {
-						log.Fatal("Resolve item Error: ", err)
-					}
-					for _, elem := range items {
-						split_list := strings.Split(elem.(string), "/")
-						regex_match := target.TargetHints.RegexMatch[0]
-						if target.TargetHints.RegexMatch != nil && (regex_match == (split_list[0]+"/*") || regex_match == "Resource/*") {
-							elem := split_list[1]
-							edgeOut := gripql.Edge{
-								To:    elem,
-								From:  id,
-								Label: target.Rel,
-								Id:    uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", elem, id, target.Rel))).String(),
-							}
-							out = append(out, gripql.GraphElement{Edge: &edgeOut})
-							if target.TargetHints.Backref[0] != "" {
-								edgeIn := gripql.Edge{
-									To:    id,
-									From:  elem,
-									Label: target.TargetHints.Backref[0],
-									Id:    uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", id, elem, target.TargetHints.Backref[0]))).String(),
-								}
-								out = append(out, gripql.GraphElement{Edge: &edgeIn})
-							}
-						}
-					}
-				}
-			}
-			for name := range class.Properties {
-				if d, ok := data[name]; ok {
-					vData[name] = d
-				}
-			}
-			if extraArgs != nil {
-				for key, val := range extraArgs {
-					vData[key] = val
-				}
-			}
-			dataPB, err := structpb.NewStruct(vData)
-			if err != nil {
-				log.Printf("Error when creating structpb with data: %#v: %s\n", err)
-				return nil, err
-			}
-			vert := gripql.Vertex{Id: id, Label: classID, Data: dataPB}
-			out = append(out, gripql.GraphElement{Vertex: &vert})
-
-		} else if nerr != nil {
-			log.Println("Error: ", nerr)
-			return nil, nerr
-		}
-		return out, nil
+	class := s.GetClass(classID)
+	if class == nil {
+		return nil, fmt.Errorf("class '%s' not found", classID)
 	}
-	return nil, fmt.Errorf("class '%s' not found", classID)
+	if clean {
+		var err error
+		data, err = s.CleanAndValidate(class, data)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		err := class.Validate(data)
+		if err != nil {
+			return nil, err
+		}
+	}
+	out := make([]gripql.GraphElement, 0, 1)
+	id, nerr := util.GetObjectID(data, class)
+	if nerr != nil {
+		log.Println("Error: ", nerr)
+		return nil, nerr
+	}
+	vData := map[string]any{}
+	if ext, ok := class.Extensions[compile.GraphExtensionTag]; ok {
+		gext := ext.(compile.GraphExtension)
+		for _, target := range gext.Targets {
+			if target.TemplatePointers.Id == "" {
+				continue
+			}
+			splitted_pointer := strings.Split(target.TemplatePointers.Id, "/")[1:]
+			items, err := resolveItem(splitted_pointer, data)
+			// if pointer miss continue
+			if items == nil && err == nil {
+				continue
+			}
+			// if invalid pointer structure in data, error
+			if err != nil {
+				log.Fatal("Resolve item Error: ", err)
+			}
+			for _, elem := range items {
+				split_list := strings.Split(elem.(string), "/")
+				regex_match := target.TargetHints.RegexMatch[0]
+				if target.TargetHints.RegexMatch != nil && (regex_match == (split_list[0]+"/*") || regex_match == "Resource/*") {
+					elem := split_list[1]
+					edgeOut := gripql.Edge{
+						To:    elem,
+						From:  id,
+						Label: target.Rel,
+						Id:    uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", elem, id, target.Rel))).String(),
+					}
+					out = append(out, gripql.GraphElement{Edge: &edgeOut})
+					if target.TargetHints.Backref[0] != "" {
+						edgeIn := gripql.Edge{
+							To:    id,
+							From:  elem,
+							Label: target.TargetHints.Backref[0],
+							Id:    uuid.NewSHA1(namespace, []byte(fmt.Sprintf("%s-%s-%s", id, elem, target.TargetHints.Backref[0]))).String(),
+						}
+						out = append(out, gripql.GraphElement{Edge: &edgeIn})
+					}
+				}
+			}
+		}
+	}
+	for name := range class.Properties {
+		if d, ok := data[name]; ok {
+			vData[name] = d
+		}
+	}
+	if extraArgs != nil {
+		for key, val := range extraArgs {
+			vData[key] = val
+		}
+	}
+	dataPB, err := structpb.NewStruct(vData)
+	if err != nil {
+		log.Printf("Error when creating structpb with data: %#v: %s\n", dataPB, err)
+		return nil, err
+	}
+	vert := gripql.Vertex{Id: id, Label: classID, Data: dataPB}
+	out = append(out, gripql.GraphElement{Vertex: &vert})
+
+	return out, nil
+
 }

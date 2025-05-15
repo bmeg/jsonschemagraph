@@ -2,8 +2,8 @@ package gen_graphql
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 
 	schema "github.com/bmeg/jsonschemagraph/graphql"
 	"github.com/spf13/cobra"
@@ -32,7 +32,7 @@ var Cmd = &cobra.Command{
 
 		config := Config{DependencyOrder: []string{}}
 		if configPath != "" {
-			data, err := ioutil.ReadFile(configPath)
+			data, err := os.ReadFile(configPath)
 			if err != nil {
 				log.Fatalf("Failed to read YAML file: %v", err)
 			}

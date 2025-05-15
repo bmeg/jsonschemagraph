@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/bmeg/grip/gripql"
 	"github.com/bmeg/jsonschemagraph/graph"
 	"github.com/bmeg/jsonschemagraph/util"
 	"github.com/spf13/cobra"
@@ -124,19 +125,21 @@ var Cmd = &cobra.Command{
 			}
 
 			var IedgeInit, VertexInit, OedegeInit = true, true, true
+			jum := gripql.NewFlattenMarshaler()
 			for line := range procChan {
 				if result, err := out.Generate(ClassName, line, false, mapstringArgs); err == nil {
 					for _, lin := range result {
-						if b, err := json.Marshal(lin.Edge); err == nil {
-							IedgeInit = util.Write_line(IedgeInit, b, InEdge_file, InEdge_gzWriter)
-						}
-						if b, err := json.Marshal(lin.Edge); err == nil {
-							OedegeInit = util.Write_line(OedegeInit, b, OutEdege_file, OutEdge_gzWriter)
-
-						}
-						if b, err := json.Marshal(lin.Vertex); err == nil {
-							VertexInit = util.Write_line(VertexInit, b, vertex_file, Vertex_gzwriter)
-
+						if lin.Edge != nil {
+							if b, err := jum.Marshal(lin.Edge); err == nil {
+								IedgeInit = util.Write_line(IedgeInit, b, InEdge_file, InEdge_gzWriter)
+							}
+							if b, err := jum.Marshal(lin.Edge); err == nil {
+								OedegeInit = util.Write_line(OedegeInit, b, OutEdege_file, OutEdge_gzWriter)
+							}
+						} else if lin.Vertex != nil {
+							if b, err := jum.Marshal(lin.Vertex); err == nil {
+								VertexInit = util.Write_line(VertexInit, b, vertex_file, Vertex_gzwriter)
+							}
 						}
 					}
 				} else if err != nil {
