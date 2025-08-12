@@ -1,8 +1,8 @@
 package schema_graph
 
 import (
-	"log"
 	"fmt"
+	"log"
 
 	"github.com/bmeg/jsonschemagraph/compile"
 	"github.com/bmeg/jsonschemagraph/graph"
@@ -29,7 +29,7 @@ var Cmd = &cobra.Command{
 				gExt := ext.(compile.GraphExtension)
 				for _, v := range gExt.Targets {
 					fmt.Printf("\t%s -> %s: %s\n", cls.Title, v.Schema.Title, v.Rel)
-					if v.TargetHints.Backref != nil  {
+					if v.TargetHints.Backref != nil {
 						fmt.Printf("\t%s -> %s: %s\n", v.Schema.Title, cls.Title, v.TargetHints.Backref[0])
 					}
 				}
@@ -40,7 +40,4 @@ var Cmd = &cobra.Command{
 		log.Printf("}\n")
 		return nil
 	},
-}
-
-func init() {
 }

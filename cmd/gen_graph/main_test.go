@@ -3,8 +3,8 @@ package gen_graph
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
 	"log"
+	"os"
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -18,9 +18,9 @@ type exon struct {
 }
 
 type exon_vertex struct {
-	Gid   string                 `json:"gid"`
-	Label string                 `json:"label"`
-	Data  map[string]interface{} `json:"data"`
+	Gid   string         `json:"gid"`
+	Label string         `json:"label"`
+	Data  map[string]any `json:"data"`
 }
 
 type ExonDataInfo struct {
@@ -101,12 +101,12 @@ var Exons_Out_Edge = []exon{
 	},
 }
 
-func checkNullFields(data map[string]interface{}) bool {
+func checkNullFields(data map[string]any) bool {
 	for key, value := range data {
 		if value == "" {
 			log.Printf("Warning: key %s has no value\n", key)
 			return false
-		} else if subData, ok := value.(map[string]interface{}); ok {
+		} else if subData, ok := value.(map[string]any); ok {
 			if !checkNullFields(subData) {
 				return false
 			}
@@ -125,20 +125,20 @@ func Test_main(t *testing.T) {
 	//https: //stackoverflow.com/questions/34388083/read-entire-file-of-newline-delimited-json-blobs-to-memory-and-unmarshal-each-bl
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			var arrayName = make([][]map[string]interface{}, 0)
-			arrayName = append(arrayName, []map[string]interface{}{})
+			var arrayName = make([][]map[string]any, 0)
+			arrayName = append(arrayName, []map[string]any{})
 
 			for _, exon := range Exons_In_Edge {
-				map_interface := make(map[string]interface{})
+				map_interface := make(map[string]any)
 				map_interface["label"] = exon.Label
 				map_interface["from"] = exon.From
 				map_interface["to"] = exon.To
 				arrayName[0] = append(arrayName[0], map_interface)
 			}
 
-			arrayName = append(arrayName, []map[string]interface{}{})
+			arrayName = append(arrayName, []map[string]any{})
 			for _, exon := range Exons_Out_Edge {
-				map_interface := make(map[string]interface{})
+				map_interface := make(map[string]any)
 				map_interface["label"] = exon.Label
 				map_interface["from"] = exon.From
 				map_interface["to"] = exon.To
@@ -153,9 +153,9 @@ func Test_main(t *testing.T) {
 				}
 				for q, file := range files {
 					log.Println(file)
-					lines, err := ioutil.ReadFile(file)
+					lines, err := os.ReadFile(file)
 					if err != nil {
-						t.Errorf("FATAL ERROR %s, ioutil.Readfile failed for file %s", err, string(file))
+						t.Errorf("FATAL ERROR %s, os.Readfile failed for file %s", err, string(file))
 						continue
 					}
 					// check number of lines in every file
@@ -165,7 +165,7 @@ func Test_main(t *testing.T) {
 
 					// Iterate over the NDJSON data read from file
 					for i, line := range bytes.Split(lines, []byte{'\n'}) {
-						var v map[string]interface{}
+						var v map[string]any
 						if err := json.Unmarshal(line, &v); err != nil {
 							t.Errorf("FATAL ERROR %s, json unmarshal failed for file %s", err, string(file))
 							return

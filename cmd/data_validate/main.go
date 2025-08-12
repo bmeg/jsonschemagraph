@@ -1,13 +1,13 @@
 package data_validate
 
 import (
-	"encoding/json"
-	"strings"
 	"log"
+	"strings"
 
 	"github.com/bmeg/golib"
 	"github.com/bmeg/jsonschema/v5"
 	"github.com/bmeg/jsonschemagraph/graph"
+	"github.com/bytedance/sonic"
 	"github.com/spf13/cobra"
 )
 
@@ -45,12 +45,12 @@ var Cmd = &cobra.Command{
 			return err
 		}
 
-		procChan := make(chan map[string]interface{}, 100)
+		procChan := make(chan map[string]any, 100)
 		go func() {
 			for line := range reader {
-				o := map[string]interface{}{}
+				var o map[string]any
 				if len(line) > 0 {
-					json.Unmarshal(line, &o)
+					sonic.ConfigFastest.Unmarshal(line, &o)
 					procChan <- o
 				}
 			}

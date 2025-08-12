@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strings"
 
 	"sigs.k8s.io/yaml"
@@ -24,24 +25,11 @@ type LoadOpt struct {
 
 func isObjectSchema(sch *jsonschema.Schema) bool {
 	if sch != nil {
-		for _, i := range sch.Types {
-			if i == "object" {
-				return true
-			}
+		if slices.Contains(sch.Types, "object") {
+			return true
 		}
 		if sch.Ref != nil {
 			return isObjectSchema(sch.Ref)
-		}
-	}
-	return false
-}
-
-func isArraySchema(sch *jsonschema.Schema) bool {
-	if sch != nil {
-		for _, i := range sch.Types {
-			if i == "array" {
-				return true
-			}
 		}
 	}
 	return false

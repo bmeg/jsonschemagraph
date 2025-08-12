@@ -2,16 +2,16 @@ package compile
 
 import (
 	"encoding/json"
+
 	"github.com/bmeg/jsonschema/v5"
 	_ "github.com/bmeg/jsonschema/v5/httploader"
 )
 
-func (s GraphExtension) Validate(ctx jsonschema.ValidationContext, v interface{}) error {
-	//log.Println("graph schema validate error at ", v)
+func (s GraphExtension) Validate(ctx jsonschema.ValidationContext, v any) error {
 	return nil
 }
 
-func (GraphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]interface{}) (jsonschema.ExtSchema, error) {
+func (GraphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]any) (jsonschema.ExtSchema, error) {
 	links, ok := m["links"].([]any)
 	if !ok {
 		return nil, nil
@@ -34,7 +34,7 @@ func (GraphExtCompiler) Compile(ctx jsonschema.CompilerContext, m map[string]int
 		if err == nil {
 			Target.Schema = sch
 			out.Targets = append(out.Targets, Target)
-		}else{
+		} else {
 			return nil, err
 		}
 	}

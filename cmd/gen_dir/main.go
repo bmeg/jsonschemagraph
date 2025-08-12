@@ -2,7 +2,6 @@ package gen_dir
 
 import (
 	"compress/gzip"
-	"encoding/json"
 	"log"
 	"os"
 	"strings"
@@ -10,6 +9,7 @@ import (
 	"github.com/bmeg/grip/gripql"
 	"github.com/bmeg/jsonschemagraph/graph"
 	"github.com/bmeg/jsonschemagraph/util"
+	"github.com/bytedance/sonic"
 	"github.com/spf13/cobra"
 )
 
@@ -33,7 +33,7 @@ var Cmd = &cobra.Command{
 
 		var mapstringArgs map[string]any
 		if extraArgs != "" {
-			err = json.Unmarshal([]byte(extraArgs), &mapstringArgs)
+			err = sonic.ConfigFastest.Unmarshal([]byte(extraArgs), &mapstringArgs)
 			if err != nil {
 				log.Fatal("Error unmarshaling JSON:", err)
 				return nil
@@ -70,7 +70,7 @@ var Cmd = &cobra.Command{
 				for line := range reader {
 					o := map[string]any{}
 					if len(line) > 0 {
-						json.Unmarshal(line, &o)
+						sonic.ConfigFastest.Unmarshal(line, &o)
 						procChan <- o
 					}
 				}
@@ -127,7 +127,7 @@ var Cmd = &cobra.Command{
 			var IedgeInit, VertexInit, OedegeInit = true, true, true
 			jum := gripql.NewFlattenMarshaler()
 			for line := range procChan {
-				if result, err := out.Generate(ClassName, line, false, mapstringArgs); err == nil {
+				if result, err := out.Generate(ClassName, line, mapstringArgs); err == nil {
 					for _, lin := range result {
 						if lin.Edge != nil {
 							if b, err := jum.Marshal(lin.Edge); err == nil {
@@ -158,5 +158,4 @@ var Cmd = &cobra.Command{
 func init() {
 	Cmd.Flags().StringVar(&extraArgs, "extraArgs", "", "specify extra args in dict format. Args are applied to every vertex")
 	Cmd.Flags().BoolVar(&gzip_files, "gzip_files", false, "specify output files to be gzipped")
-
 }
