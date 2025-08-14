@@ -1,14 +1,10 @@
 package cmd
 
 import (
-	"os"
-
-	"github.com/bmeg/jsonschemagraph/cmd/data_validate"
-	"github.com/bmeg/jsonschemagraph/cmd/gen_dir"
-	"github.com/bmeg/jsonschemagraph/cmd/gen_graph"
-	"github.com/bmeg/jsonschemagraph/cmd/gen_graphql"
-	"github.com/bmeg/jsonschemagraph/cmd/schema_graph"
-	"github.com/bmeg/jsonschemagraph/cmd/schema_lint"
+	"github.com/bmeg/jsonschemagraph/cmd/generate"
+	"github.com/bmeg/jsonschemagraph/cmd/graphql"
+	"github.com/bmeg/jsonschemagraph/cmd/lintSchema"
+	"github.com/bmeg/jsonschemagraph/cmd/validate"
 
 	"github.com/spf13/cobra"
 )
@@ -21,19 +17,8 @@ var RootCmd = &cobra.Command{
 }
 
 func init() {
-	RootCmd.AddCommand(gen_dir.Cmd)
-	RootCmd.AddCommand(gen_graph.Cmd)
-	RootCmd.AddCommand(schema_lint.Cmd)
-	RootCmd.AddCommand(schema_graph.Cmd)
-	RootCmd.AddCommand(data_validate.Cmd)
-	RootCmd.AddCommand(gen_graphql.Cmd)
-
-}
-
-var genBashCompletionCmd = &cobra.Command{
-	Use:   "bash",
-	Short: "Generate bash completions file",
-	Run: func(cmd *cobra.Command, args []string) {
-		RootCmd.GenBashCompletion(os.Stdout)
-	},
+	RootCmd.AddCommand(validate.Cmd)
+	RootCmd.AddCommand(lintSchema.Cmd)
+	RootCmd.AddCommand(generate.Cmd)
+	RootCmd.AddCommand(graphql.Cmd)
 }

@@ -1,4 +1,4 @@
-package gen_graphql
+package graphql
 
 import (
 	"fmt"
@@ -11,7 +11,6 @@ import (
 )
 
 var jsonSchemaFile string
-var yamlSchemaDir string
 var graphName string
 var configPath string
 var writeIntermediateFile bool = false
@@ -21,12 +20,12 @@ type Config struct {
 }
 
 var Cmd = &cobra.Command{
-	Use:   "gen-graphql",
-	Short: "Load graph schemas",
+	Use:   "graphql",
+	Short: "generate graphql schemas",
 	Long:  ``,
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if jsonSchemaFile == "" && yamlSchemaDir == "" {
+		if jsonSchemaFile == "" {
 			return fmt.Errorf("No schema file was provided")
 		}
 
@@ -52,15 +51,6 @@ var Cmd = &cobra.Command{
 			}
 			_ = schema.GripGraphqltoGraphql(graphs[0])
 		}
-		if yamlSchemaDir != "" && graphName != "" {
-			log.Printf("Loading Yaml Schema dir: %s", yamlSchemaDir)
-			graphs, err := schema.ParseGraphFile(yamlSchemaDir, "yamlSchema", graphName, config.DependencyOrder, writeIntermediateFile)
-			if err != nil {
-				return err
-			}
-			_ = schema.GripGraphqltoGraphql(graphs[0])
-		}
-
 		return nil
 	},
 }
@@ -69,7 +59,6 @@ func init() {
 	gqlflags := Cmd.Flags()
 	gqlflags.BoolVar(&writeIntermediateFile, "writeIntermediateFile", false, "Write writeIntermediateFile file to disk")
 	gqlflags.StringVar(&jsonSchemaFile, "jsonSchema", "", "Json Schema")
-	gqlflags.StringVar(&yamlSchemaDir, "yamlSchemaDir", "", "Name of YAML schemas dir")
 	gqlflags.StringVar(&configPath, "configPath", "", "Path of Config file for determining the subset of ")
 	gqlflags.StringVar(&graphName, "graphName", "", "Name of schemaGraph")
 }

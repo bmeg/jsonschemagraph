@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/bmeg/jsonschema/v5"
+	"github.com/bmeg/jsonschema/v6"
 )
 
 type GraphSchema struct {

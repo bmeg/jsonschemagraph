@@ -1,4 +1,4 @@
-package schema_lint
+package lintSchema
 
 import (
 	"log"

@@ -1,10 +1,13 @@
 package compile
 
-import "github.com/bmeg/jsonschema/v5"
+import (
+	"strings"
 
-var GraphExtensionTag = "json_schema_graph"
+	"github.com/bmeg/jsonschema/v6"
+)
 
-var GraphExtMeta = jsonschema.MustCompileString("graphExtMeta.json", `{"properties": {
+var GExtUrl = "graphExtMeta.json"
+var GraphExtMeta = strings.NewReader(`{"properties": {
 	"anchor": {
 		"type": "string",
 		"format": "uri-template"
@@ -59,33 +62,31 @@ var GraphExtMeta = jsonschema.MustCompileString("graphExtMeta.json", `{"properti
 }
 }`)
 
-type GraphExtCompiler struct{}
-
-type GraphExtension struct {
+type HyperMediaExt struct {
 	Targets []Target
 }
 
 type Target struct {
-	Schema           *jsonschema.Schema `json:"schema"`
-	Href             string             `json:"href"`
-	Rel              string             `json:"rel"`
-	TargetHints      TargetHints        `json:"targetHints"`
-	TargetSchema     TargetSchema       `json:"targetSchema"`
-	TemplatePointers TemplatePointers   `json:"templatePointers"`
-	TemplateRequired []string           `json:"templateRequired"`
+	Schema           *jsonschema.Schema `json:"schema,omitempty"`
+	Href             string             `json:"href,omitempty"`
+	Rel              string             `json:"rel,omitempty"`
+	TargetHints      TargetHints        `json:"targetHints,omitempty"`
+	TargetSchema     TargetSchema       `json:"targetSchema,omitempty"`
+	TemplatePointers TemplatePointers   `json:"templatePointers,omitempty"`
+	TemplateRequired []string           `json:"templateRequired,omitempty"`
 }
 
 type TargetHints struct {
-	Backref     []string `json:"backref"`
-	Direction   []string `json:"direction"`
-	Multiplicty []string `json:"multiplicty"`
-	RegexMatch  []string `json:"regex_match"`
+	Backref     []string `json:"backref,omitempty"`
+	Direction   []string `json:"direction,omitempty"`
+	Multiplicty []string `json:"multiplicty,omitempty"`
+	RegexMatch  []string `json:"regex_match,omitempty"`
 }
 
 type TargetSchema struct {
-	Ref string `json:"ref"`
+	Ref string `json:"ref,omitempty"`
 }
 
 type TemplatePointers struct {
-	Id string `json:"id"`
+	Id string `json:"id,omitempty"`
 }

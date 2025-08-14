@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"slices"
 
-	"github.com/bmeg/jsonschema/v5"
+	"github.com/bmeg/jsonschema/v6"
 )
 
 func jsontographlprimitiveType(returnType any) any {
@@ -22,6 +22,7 @@ func jsontographlprimitiveType(returnType any) any {
 		return ""
 	}
 }
+
 func ParseSchema(schema *jsonschema.Schema) any {
 	/* This function traverses through the compiled json schema constructing graphql schema structures in grip form */
 	vertData := make(map[string]any)
@@ -52,10 +53,9 @@ func ParseSchema(schema *jsonschema.Schema) any {
 		return vertData
 	}
 
-	// AnyOf support not implemented
 	if schema.AnyOf != nil {
 		return nil
 	}
 
-	return jsontographlprimitiveType(schema.Types[0])
+	return jsontographlprimitiveType(schema.Types.ToStrings()[0])
 }

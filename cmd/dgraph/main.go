@@ -1,4 +1,4 @@
-package schema_graph
+package dgraph
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ import (
 )
 
 var Cmd = &cobra.Command{
-	Use:   "schema-graph [schema dir]",
+	Use:   "dgraph [schema dir]",
 	Short: "Generates a d2 file to visualize graph schema structure",
 	Args:  cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
@@ -25,18 +25,16 @@ var Cmd = &cobra.Command{
 		}
 		// Not sure if the print statements here are correct the but output graph seems reasonable
 		for _, cls := range sch.Classes {
-			if ext, ok := cls.Extensions[compile.GraphExtensionTag]; ok {
-				gExt := ext.(compile.GraphExtension)
+			if len(cls.Extensions) > 0 {
+				gExt := cls.Extensions[0].(*compile.HyperMediaExt)
 				for _, v := range gExt.Targets {
 					fmt.Printf("\t%s -> %s: %s\n", cls.Title, v.Schema.Title, v.Rel)
 					if v.TargetHints.Backref != nil {
 						fmt.Printf("\t%s -> %s: %s\n", v.Schema.Title, cls.Title, v.TargetHints.Backref[0])
 					}
 				}
-
 			}
 		}
-
 		log.Printf("}\n")
 		return nil
 	},

@@ -25,20 +25,11 @@ func ParseGraphFile(relpath string, format string, graphName string, vertexSubse
 	if relpath == "" {
 		return nil, fmt.Errorf("path is empty")
 	}
-	// Try to get absolute path. If it fails, fall back to relative path.
 	path, err := filepath.Abs(relpath)
 	if err != nil {
 		path = relpath
 	}
-
-	switch format {
-	case JSCHEMA:
-		graphs, err = ParseIntoGraphqlSchema(path, graphName, vertexSubset, writeFile)
-	case YSCHEMA:
-		graphs, err = ParseIntoGraphqlSchema(relpath, graphName, vertexSubset, writeFile)
-	default:
-		err = fmt.Errorf("unknown file format: %s", format)
-	}
+	graphs, err = ParseIntoGraphqlSchema(path, graphName, vertexSubset, writeFile)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse graph at path %s: \n%v", path, err)
 	}
@@ -99,10 +90,10 @@ func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []str
 			}
 		}
 
-		if ext, ok := class.Extensions[compile.GraphExtensionTag]; ok {
+		if len(class.Extensions) > 0 {
 			unionData := map[string][]string{}
 			unionSeen := map[string]bool{}
-			for _, target := range ext.(compile.GraphExtension).Targets {
+			for _, target := range class.Extensions[0].(*compile.HyperMediaExt).Targets {
 				parts := strings.Split(target.Rel, "_")
 				RegexMatch := target.TargetHints.RegexMatch[0][:len(target.TargetHints.RegexMatch[0])-2]
 				if len(parts) == 1 {
@@ -138,9 +129,6 @@ func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []str
 						unionData[unionTitle] = append(unionData[unionTitle], targetType)
 					}
 				}
-				/* else { base, targetType := parts[0], parts[len(parts)-1]
-				fmt.Println("BASE: ", base, "TARGET TYPE: ", targetType) */
-
 			}
 			if unionData != nil {
 				for k, v := range unionData {

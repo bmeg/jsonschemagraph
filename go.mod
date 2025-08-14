@@ -7,7 +7,7 @@ toolchain go1.24.0
 require (
 	github.com/bmeg/golib v0.0.0-20200725232156-e799a31439fc
 	github.com/bmeg/grip v0.0.0-20250421161012-b9b392fc8721
-	github.com/bmeg/jsonschema/v5 v5.3.4-0.20241111204732-55db82022a92
+	github.com/bmeg/jsonschema/v6 v6.0.4
 	github.com/bytedance/sonic v1.14.0
 	github.com/google/uuid v1.6.0
 	github.com/hashicorp/go-multierror v1.1.1
@@ -15,7 +15,6 @@ require (
 	golang.org/x/text v0.22.0
 	google.golang.org/protobuf v1.36.5
 	gopkg.in/yaml.v3 v3.0.1
-	sigs.k8s.io/yaml v1.4.0
 )
 
 require (
