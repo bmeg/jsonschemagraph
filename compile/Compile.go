@@ -2,7 +2,6 @@ package compile
 
 import (
 	"fmt"
-	"regexp"
 	"slices"
 	"strings"
 
@@ -62,17 +61,18 @@ func compile(ctx *jsonschema.CompilerContext, m map[string]any) (jsonschema.Sche
 				Err: fmt.Errorf("targets[%d].templatePointers.id must be a valid JSON Pointer starting with '/'", i),
 			}
 		}
+
+		targets[i].TemplatePointers.SplittedId = strings.Split(target.TemplatePointers.Id, "/")[1:]
+
+		if len(target.TargetHints.Backref) > 0 && target.TargetHints.Backref[0] == "" {
+			return nil, &jsonschema.SchemaValidationError{
+				Err: fmt.Errorf("targets[%d].targetHints.Backref[0] cannot be an empty string", i),
+			}
+		}
 		if len(target.TargetHints.RegexMatch) > 0 {
 			if target.TargetHints.RegexMatch[0] == "" {
 				return nil, &jsonschema.SchemaValidationError{
 					Err: fmt.Errorf("targets[%d].targetHints.regexMatch[0] cannot be an empty string", i),
-				}
-			}
-			for j, regexStr := range target.TargetHints.RegexMatch {
-				if _, err := regexp.Compile(regexStr); err != nil {
-					return nil, &jsonschema.SchemaValidationError{
-						Err: fmt.Errorf("targets[%d].targetHints.regexMatch[%d] is not a valid regular expression: %w", i, j, err),
-					}
 				}
 			}
 		}

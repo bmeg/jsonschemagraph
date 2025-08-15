@@ -89,4 +89,7 @@ type TargetSchema struct {
 
 type TemplatePointers struct {
 	Id string `json:"id,omitempty"`
+	// This field is meant to be "pre-split" and popualted during compile time
+	// as remove repeated execution split operations
+	SplittedId []string `json:"splitted_id,omitempty"`
 }

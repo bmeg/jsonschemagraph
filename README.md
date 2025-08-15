@@ -6,12 +6,14 @@ To build, install from root:
 go build . ; go install .
 ```
 
-benchmark old vs new:
+benchmark new vs old:
 
 ```
-jsonschemagraph generate iceberg/schemas/graph/graph-fhir.json ../../g3t_projs/dev-cbds/cbds-htan/META/ OUT 105.49s user 12.71s system 160% cpu 1:13.72 total
+jsonschemagraph generate iceberg/schemas/graph/graph-fhir.json  OUT2  76.73s user 7.21s system 178% cpu 47.103 total
 
+vs
 
+jsonschemagraph gen-dir iceberg/schemas/graph/graph-fhir.json  ../../g3t_projs/dev-cbds/cbds-htan/META OUT  175.85s user 14.78s system 176% cpu 1:47.74 total
 ```
 
 ```

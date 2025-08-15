@@ -6,7 +6,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/bmeg/grip/gripql"
 	"github.com/bmeg/jsonschemagraph/graph"
 	"github.com/bmeg/jsonschemagraph/util"
 	"github.com/bytedance/sonic"
@@ -53,7 +52,6 @@ var Cmd = &cobra.Command{
 					log.Fatal("os.Mkdir:", err)
 				}
 			}
-			// current buffer size 1 MB
 			if strings.HasSuffix(file, ".gz") {
 				if reader, err = util.ReadGzipLines(file, 1024*1024); err != nil {
 					log.Fatal("util.ReadGzipLines: ", err)
@@ -125,24 +123,24 @@ var Cmd = &cobra.Command{
 				defer Vertex_gzwriter.Close()
 			}
 
-			var IedgeInit, VertexInit, OedegeInit = true, true, true
-			jum := gripql.NewFlattenMarshaler()
+			/*var IedgeInit, VertexInit, OedegeInit = true, true, true
+			jum := gripql.NewFlattenMarshaler()*/
 			for line := range procChan {
-				if result, err := out.Generate(ClassName, line, mapstringArgs); err == nil {
-					for _, lin := range result {
-						if lin.Edge != nil {
-							if b, err := jum.Marshal(lin.Edge); err == nil {
-								IedgeInit = util.Write_line(IedgeInit, b, InEdge_file, InEdge_gzWriter)
-							}
-							if b, err := jum.Marshal(lin.Edge); err == nil {
-								OedegeInit = util.Write_line(OedegeInit, b, OutEdege_file, OutEdge_gzWriter)
-							}
-						} else if lin.Vertex != nil {
-							if b, err := jum.Marshal(lin.Vertex); err == nil {
-								VertexInit = util.Write_line(VertexInit, b, vertex_file, Vertex_gzwriter)
-							}
+				if _, err := out.Generate(ClassName, line, mapstringArgs); err == nil {
+					/*for _, lin := range result {
+					if lin.Edge != nil {
+						if b, err := jum.Marshal(lin.Edge); err == nil {
+							IedgeInit = util.Write_line(IedgeInit, b, InEdge_file, InEdge_gzWriter)
+						}
+						if b, err := jum.Marshal(lin.Edge); err == nil {
+							OedegeInit = util.Write_line(OedegeInit, b, OutEdege_file, OutEdge_gzWriter)
+						}
+					} else if lin.Vertex != nil {
+						if b, err := jum.Marshal(lin.Vertex); err == nil {
+							VertexInit = util.Write_line(VertexInit, b, vertex_file, Vertex_gzwriter)
 						}
 					}
+					}*/
 				}
 			}
 			util.Check_delete(vertex_file_path)
