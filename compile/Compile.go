@@ -1,6 +1,7 @@
 package compile
 
 import (
+	"bytes"
 	"fmt"
 	"slices"
 	"strings"
@@ -11,18 +12,17 @@ import (
 
 func GetHyperMediaVocab() (*jsonschema.Vocabulary, error) {
 	c := jsonschema.NewCompiler()
-
-	schema, err := jsonschema.UnmarshalJSON(GraphExtMeta)
+	schema, err := jsonschema.UnmarshalJSON(bytes.NewReader(GraphExtMeta))
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("jsonschema.UnmarshalJSON: %s", err)
 	}
 	err = c.AddResource(GExtUrl, schema)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("AddResource: %s", err)
 	}
 	compSch, err := c.Compile(GExtUrl)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Compile: %s", err)
 	}
 	return &jsonschema.Vocabulary{
 		URL:     GExtUrl,

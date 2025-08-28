@@ -1,65 +1,77 @@
 package compile
 
 import (
-	"strings"
-
 	"github.com/bmeg/jsonschema/v6"
 )
 
 var GExtUrl = "graphExtMeta.json"
-var GraphExtMeta = strings.NewReader(`{"properties": {
-	"anchor": {
-		"type": "string",
-		"format": "uri-template"
-	},
-	"anchorPointer": {
-		"type": "string",
-		"anyOf": [
-			{ "format": "json-pointer" },
-			{ "format": "relative-json-pointer" }
-		]
-	},
-	"rel": {
-		"anyOf": [
-			{ "type": "string" },
-			{
-				"type": "array",
-				"items": { "type": "string" },
-				"minItems": 1
-			}
-		]
-	},
-	"href": {
-		"type": "string",
-		"format": "uri-template"
-	},
-	"templatePointers": {
-		"type": "object",
-		"additionalProperties": {
+
+var GraphExtMeta = []byte(`{
+	"properties": {
+		"anchor": {
+			"type": "string",
+			"format": "uri-template"
+		},
+		"anchorPointer": {
 			"type": "string",
 			"anyOf": [
-				{ "format": "json-pointer" },
-				{ "format": "relative-json-pointer" }
+				{
+					"format": "json-pointer"
+				},
+				{
+					"format": "relative-json-pointer"
+				}
 			]
-		}
-	},
-	"templateRequired": {
-		"type": "array",
-		"items": {
+		},
+		"rel": {
+			"anyOf": [
+				{
+					"type": "string"
+				},
+				{
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"minItems": 1
+				}
+			]
+		},
+		"href": {
+			"type": "string",
+			"format": "uri-template"
+		},
+		"templatePointers": {
+			"type": "object",
+			"additionalProperties": {
+				"type": "string",
+				"anyOf": [
+					{
+						"format": "json-pointer"
+					},
+					{
+						"format": "relative-json-pointer"
+					}
+				]
+			}
+		},
+		"templateRequired": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"uniqueItems": true
+		},
+		"title": {
 			"type": "string"
 		},
-		"uniqueItems": true
-	},
-	"title": {
-		"type": "string"
-	},
-	"description": {
-		"type": "string"
-	},
-	"$comment": {
-		"type": "string"
+		"description": {
+			"type": "string"
+		},
+		"$comment": {
+			"type": "string"
+		}
 	}
-}
 }`)
 
 type HyperMediaExt struct {
