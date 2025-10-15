@@ -1,8 +1,8 @@
-package schema_lint
+package lintSchema
 
 import (
-
 	"log"
+
 	"github.com/bmeg/jsonschemagraph/graph"
 	"github.com/spf13/cobra"
 )
@@ -12,7 +12,6 @@ var Cmd = &cobra.Command{
 	Short: "Checks a directory of yaml schemas for syntax errors",
 	Args:  cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-
 		sch, err := graph.Load(args[0])
 		if err == nil {
 			for _, cls := range sch.Classes {
@@ -23,8 +22,4 @@ var Cmd = &cobra.Command{
 		}
 		return nil
 	},
-}
-
-func init() {
-
 }

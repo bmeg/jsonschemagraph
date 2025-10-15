@@ -1,8 +1,7 @@
-package gen_dir
+package generate
 
 import (
 	"compress/gzip"
-	"encoding/json"
 	"log"
 	"os"
 	"strings"
@@ -10,6 +9,7 @@ import (
 	"github.com/bmeg/grip/gripql"
 	"github.com/bmeg/jsonschemagraph/graph"
 	"github.com/bmeg/jsonschemagraph/util"
+	"github.com/bytedance/sonic"
 	"github.com/spf13/cobra"
 )
 
@@ -18,27 +18,28 @@ var gzip_files bool = false
 
 // https://github.com/bmeg/sifter/blob/51a67b0de852e429d30b9371d9975dbefe3a8df9/transform/graph_build.go#L86
 var Cmd = &cobra.Command{
-	Use:   "gen-dir [schema dir] [data dir] [out dir]",
+	Use:   "generate [schema file] [data dir] [out dir]",
 	Short: "Generates edges and vertices from source data files and schemas",
 	Args:  cobra.MinimumNArgs(3),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var reader chan []byte
-		var out graph.GraphSchema
+		var out *graph.GraphSchema
 		var err error
 
-		files, err := util.ListFilesWithExtension(args[1], []string{".gz", ".ndjson", ".json"})
+		files, err := util.ListFilesWithExtension(args[1], []string{".gz", ".ndjson"})
 		if err != nil {
 			log.Fatal("ListFilesWithExtension Error: ", err)
 		}
 
 		var mapstringArgs map[string]any
 		if extraArgs != "" {
-			err = json.Unmarshal([]byte(extraArgs), &mapstringArgs)
+			err = sonic.ConfigFastest.Unmarshal([]byte(extraArgs), &mapstringArgs)
 			if err != nil {
 				log.Fatal("Error unmarshaling JSON:", err)
 				return nil
 			}
 		}
+		log.Printf("using extra args: %s\n", extraArgs)
 
 		if out, err = graph.Load(args[0]); err != nil {
 			log.Fatal("graph.Load: ", err)
@@ -52,7 +53,6 @@ var Cmd = &cobra.Command{
 					log.Fatal("os.Mkdir:", err)
 				}
 			}
-			// current buffer size 1 MB
 			if strings.HasSuffix(file, ".gz") {
 				if reader, err = util.ReadGzipLines(file, 1024*1024); err != nil {
 					log.Fatal("util.ReadGzipLines: ", err)
@@ -70,7 +70,7 @@ var Cmd = &cobra.Command{
 				for line := range reader {
 					o := map[string]any{}
 					if len(line) > 0 {
-						json.Unmarshal(line, &o)
+						sonic.ConfigFastest.Unmarshal(line, &o)
 						procChan <- o
 					}
 				}
@@ -127,7 +127,7 @@ var Cmd = &cobra.Command{
 			var IedgeInit, VertexInit, OedegeInit = true, true, true
 			jum := gripql.NewFlattenMarshaler()
 			for line := range procChan {
-				if result, err := out.Generate(ClassName, line, false, mapstringArgs); err == nil {
+				if result, err := out.Generate(ClassName, line, mapstringArgs); err == nil {
 					for _, lin := range result {
 						if lin.Edge != nil {
 							if b, err := jum.Marshal(lin.Edge); err == nil {
@@ -142,8 +142,6 @@ var Cmd = &cobra.Command{
 							}
 						}
 					}
-				} else if err != nil {
-					log.Fatal(err)
 				}
 			}
 			util.Check_delete(vertex_file_path)
@@ -151,12 +149,11 @@ var Cmd = &cobra.Command{
 			util.Check_delete(outedge_file_path)
 
 		}
-		return nil
+		return err
 	},
 }
 
 func init() {
 	Cmd.Flags().StringVar(&extraArgs, "extraArgs", "", "specify extra args in dict format. Args are applied to every vertex")
 	Cmd.Flags().BoolVar(&gzip_files, "gzip_files", false, "specify output files to be gzipped")
-
 }

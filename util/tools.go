@@ -9,16 +9,15 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/bmeg/jsonschema/v5"
+	"github.com/bmeg/jsonschema/v6"
 )
 
 func GetObjectID(data map[string]any, schema *jsonschema.Schema) (string, error) {
-	if id, ok := data["id"]; ok {
-		if idStr, ok := id.(string); ok {
-			return idStr, nil
-		}
+	id, ok := data["id"].(string)
+	if !ok {
+		return "", fmt.Errorf("object 'id' not found in data: %s", data)
 	}
-	return "", fmt.Errorf("object id not found")
+	return id, nil
 }
 
 func CountLines(filePath string) int {
@@ -38,11 +37,10 @@ func CountLines(filePath string) int {
 		}
 		defer gzReader.Close()
 		reader = bufio.NewReader(gzReader)
-	} else if strings.HasSuffix(filePath, ".ndjson") || strings.HasSuffix(filePath, ".json") {
+	} else if strings.HasSuffix(filePath, ".ndjson") {
 		reader = bufio.NewReader(file)
 	}
 
-	// for some of these files the buffer wasn't large enough to get a line count
 	const maxCapacity = 1024 * 1024
 	buf := make([]byte, maxCapacity)
 	scanner := bufio.NewScanner(reader)
@@ -51,25 +49,35 @@ func CountLines(filePath string) int {
 	for scanner.Scan() {
 		count++
 	}
-
 	return count
 }
 
-func ListFilesWithExtension(dir string, suffixes []string) ([]string, error) {
+func ListFilesWithExtension(path string, suffixes []string) ([]string, error) {
+	info, err := os.Stat(path)
+	if err != nil {
+		return nil, err
+	}
+	if !info.IsDir() {
+		for _, suf := range suffixes {
+			if strings.HasSuffix(info.Name(), suf) {
+				return []string{path}, nil
+			}
+		}
+		return []string{}, nil
+	}
 	var files []string
-
-	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+	err = filepath.Walk(path, func(p string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
-
-		// Check if the file has the specified extension
+		if info.IsDir() {
+			return nil
+		}
 		for _, suf := range suffixes {
-			if !info.IsDir() && strings.HasSuffix(info.Name(), suf) {
-				files = append(files, path)
+			if strings.HasSuffix(info.Name(), suf) {
+				files = append(files, p)
 			}
 		}
-
 		return nil
 	})
 	return files, err
@@ -97,5 +105,4 @@ func Write_line(init bool, b []byte, file_writer *os.File, gz_writer *gzip.Write
 		log.Fatal("Write File error", err)
 	}
 	return init
-
 }
