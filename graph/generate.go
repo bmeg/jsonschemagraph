@@ -99,6 +99,7 @@ func (s GraphSchema) buildEdges(class *jsonschema.Schema, namespace uuid.UUID, i
 			}
 
 			targetID := splitList[1]
+
 			var buf bytes.Buffer
 			buf.WriteString(targetID)
 			buf.WriteByte('-')
@@ -115,24 +116,25 @@ func (s GraphSchema) buildEdges(class *jsonschema.Schema, namespace uuid.UUID, i
 				},
 			})
 
-			// Shouldn't have to type check this of len check this since it has been verified at schema compile time
-			backref := target.TargetHints.Backref[0]
-			buf.Reset()
-			buf.WriteString(id)
-			buf.WriteByte('-')
-			buf.WriteString(targetID)
-			buf.WriteByte('-')
-			buf.WriteString(backref)
+			// If backref doesn't exist, don't
+			backref := target.TargetHints.Backref
+			if len(backref) > 0 {
+				buf.Reset()
+				buf.WriteString(id)
+				buf.WriteByte('-')
+				buf.WriteString(targetID)
+				buf.WriteByte('-')
+				buf.WriteString(backref[0])
 
-			out = append(out, &gripql.GraphElement{
-				Edge: &gripql.Edge{
-					To:    id,
-					From:  targetID,
-					Label: backref,
-					Id:    uuid.NewSHA1(namespace, buf.Bytes()).String(),
-				},
-			})
-
+				out = append(out, &gripql.GraphElement{
+					Edge: &gripql.Edge{
+						To:    id,
+						From:  targetID,
+						Label: backref[0],
+						Id:    uuid.NewSHA1(namespace, buf.Bytes()).String(),
+					},
+				})
+			}
 		}
 	}
 	return out, mErr

@@ -9,7 +9,7 @@ go build . ; go install .
 benchmark new vs old:
 
 ```
-jsonschemagraph generate iceberg/schemas/graph/graph-fhir.json  OUT2  76.73s user 7.21s system 178% cpu 47.103 total
+jsonschemagraph generate iceberg/schemas/graph/graph-fhir.json  OUT2  103.37s user 14.65s system 162% cpu 1:12.79 total
 
 vs
 
