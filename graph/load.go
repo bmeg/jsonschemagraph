@@ -14,6 +14,15 @@ import (
 func Load(path string) (*GraphSchema, error) {
 	c := jsonschema.NewCompiler()
 	out := &GraphSchema{Classes: map[string]*jsonschema.Schema{}, Compiler: c}
+
+	c.AssertFormat()
+	c.RegisterFormat(&jsonschema.Format{Name: "date-time", Validate: compile.ValidateFhirDateTime})
+	c.RegisterFormat(&jsonschema.Format{Name: "date", Validate: compile.ValidateFhirDate})
+	c.RegisterFormat(&jsonschema.Format{Name: "binary", Validate: compile.ValidateFhirBinary})
+	c.RegisterFormat(&jsonschema.Format{Name: "binary", Validate: compile.ValidateFhirTime})
+	c.RegisterFormat(&jsonschema.Format{Name: "uuid", Validate: compile.ValidateFhirUUID})
+	c.RegisterFormat(&jsonschema.Format{Name: "uri", Validate: compile.ValidateFhirURI})
+
 	c.AssertVocabs()
 	vc, err := compile.GetHyperMediaVocab()
 	if err != nil {
