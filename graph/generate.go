@@ -4,11 +4,9 @@ import (
 	"bytes"
 	"fmt"
 	"maps"
-	"strings"
 
 	"github.com/bmeg/grip/gripql"
 	"github.com/bmeg/jsonschema/v6"
-	"github.com/bmeg/jsonschemagraph/compile"
 	"github.com/bmeg/jsonschemagraph/util"
 
 	"github.com/google/uuid"
@@ -18,12 +16,12 @@ import (
 
 func (s GraphSchema) Generate(classID string, data map[string]any, extraArgs map[string]any) ([]*gripql.GraphElement, error) {
 	namespace := extractNamespace(extraArgs)
-	class, id, err := validateClassAndData(s, classID, data)
+	_, id, err := validateClassAndData(&s, classID, data, true, false)
 	if err != nil {
 		return nil, err
 	}
 
-	edges, mErr := s.buildEdges(class, namespace, id, data)
+	edges, mErr := s.buildEdges(classID, namespace, id, data, true)
 	dataPB, err := buildVertexData(data, extraArgs)
 	if err != nil {
 		mErr = multierror.Append(mErr, err)
@@ -38,8 +36,36 @@ func (s GraphSchema) Generate(classID string, data map[string]any, extraArgs map
 			Data:  dataPB,
 		},
 	})
-	out = append(out, edges...)
+	for _, edge := range edges {
+		out = append(out, &gripql.GraphElement{Edge: edge})
+	}
 	return out, mErr.ErrorOrNil()
+}
+
+func (s GraphSchema) GenerateEdges(classID string, data map[string]any, extraArgs map[string]any) ([]*gripql.Edge, error) {
+	return s.GenerateEdgesWithOptions(classID, data, extraArgs, true, true)
+}
+
+func (s GraphSchema) GenerateEdgesWithOptions(classID string, data map[string]any, extraArgs map[string]any, validate bool, includeBackrefs bool) ([]*gripql.Edge, error) {
+	return s.generateEdgesInternal(classID, data, extraArgs, validate, false, includeBackrefs)
+}
+
+func (s GraphSchema) GenerateEdgesFastWithOptions(classID string, data map[string]any, extraArgs map[string]any, validate bool, includeBackrefs bool) ([]*gripql.Edge, error) {
+	return s.generateEdgesInternal(classID, data, extraArgs, validate, true, includeBackrefs)
+}
+
+func (s GraphSchema) BuildEdgesWithID(classID, id string, data map[string]any, extraArgs map[string]any, includeBackrefs bool) ([]*gripql.Edge, error) {
+	namespace := extractNamespace(extraArgs)
+	edges, mErr := s.buildEdges(classID, namespace, id, data, includeBackrefs)
+	return edges, mErr.ErrorOrNil()
+}
+
+func (s GraphSchema) generateEdgesInternal(classID string, data map[string]any, extraArgs map[string]any, validate bool, fastValidate bool, includeBackrefs bool) ([]*gripql.Edge, error) {
+	_, id, err := validateClassAndData(&s, classID, data, validate, fastValidate)
+	if err != nil {
+		return nil, err
+	}
+	return s.BuildEdgesWithID(classID, id, data, extraArgs, includeBackrefs)
 }
 
 // extractNamespace extracts the namespace from extraArgs or uses a default, returning the UUID namespace.
@@ -53,13 +79,21 @@ func extractNamespace(extraArgs map[string]any) uuid.UUID {
 }
 
 // validateClassAndData validates the class and data, returning the class and object ID.
-func validateClassAndData(s GraphSchema, classID string, data map[string]any) (*jsonschema.Schema, string, error) {
+func validateClassAndData(s *GraphSchema, classID string, data map[string]any, validate bool, fastValidate bool) (*jsonschema.Schema, string, error) {
 	class := s.GetClass(classID)
 	if class == nil {
 		return nil, "", fmt.Errorf("class '%s' not found", classID)
 	}
-	if err := class.Validate(data); err != nil {
-		return nil, "", err
+	if validate {
+		var err error
+		if fastValidate {
+			err = class.ValidateFast(data)
+		} else {
+			err = class.Validate(data)
+		}
+		if err != nil {
+			return nil, "", err
+		}
 	}
 	id, err := util.GetObjectID(data, class)
 	if err != nil {
@@ -68,12 +102,16 @@ func validateClassAndData(s GraphSchema, classID string, data map[string]any) (*
 	return class, id, nil
 }
 
-func (s GraphSchema) buildEdges(class *jsonschema.Schema, namespace uuid.UUID, id string, data map[string]any) ([]*gripql.GraphElement, *multierror.Error) {
+func (s GraphSchema) buildEdges(classID string, namespace uuid.UUID, id string, data map[string]any, includeBackrefs bool) ([]*gripql.Edge, *multierror.Error) {
+	plan := (&s).GetEdgePlan(classID)
+	if plan == nil {
+		return nil, multierror.Append(nil, fmt.Errorf("edge plan not found for class %q", classID))
+	}
 	var mErr *multierror.Error
-	// Preallocate with estimated capacity (1 edge + 1 backref per target)
-	out := make([]*gripql.GraphElement, 0, len(class.Extensions[0].(*compile.HyperMediaExt).Targets)*2)
-	for _, target := range class.Extensions[0].(*compile.HyperMediaExt).Targets {
-		items, err := resolveItem(target.TemplatePointers.SplittedId, data)
+	out := make([]*gripql.Edge, 0, plan.EstimatedEdges)
+	resolver := referenceResolver{}
+	for _, rule := range plan.Rules {
+		items, err := resolver.resolve(rule, data)
 		if err != nil {
 			mErr = multierror.Append(mErr, err)
 			continue
@@ -82,57 +120,42 @@ func (s GraphSchema) buildEdges(class *jsonschema.Schema, namespace uuid.UUID, i
 			continue
 		}
 
-		for _, elem := range items {
-			elemStr, ok := elem.(string)
+		for _, ref := range items {
+			refType, targetID, ok := splitReference(ref)
 			if !ok {
-				mErr = multierror.Append(mErr, fmt.Errorf("expected string in resolved item, got %T", elem))
 				continue
 			}
-			splitList := strings.Split(elemStr, "/")
-			if len(splitList) < 2 {
+			if !rule.AllowAnyMatch && rule.MatchPrefix != refType+"/*" {
 				continue
 			}
-
-			matchPrefix := target.TargetHints.RegexMatch[0]
-			if matchPrefix != (splitList[0]+"/*") && matchPrefix != "Resource/*" {
-				continue
-			}
-
-			targetID := splitList[1]
 
 			var buf bytes.Buffer
 			buf.WriteString(targetID)
 			buf.WriteByte('-')
 			buf.WriteString(id)
 			buf.WriteByte('-')
-			buf.WriteString(target.Rel)
+			buf.WriteString(rule.Rel)
 
-			out = append(out, &gripql.GraphElement{
-				Edge: &gripql.Edge{
-					To:    targetID,
-					From:  id,
-					Label: target.Rel,
-					Id:    uuid.NewSHA1(namespace, buf.Bytes()).String(),
-				},
+			out = append(out, &gripql.Edge{
+				To:    targetID,
+				From:  id,
+				Label: rule.Rel,
+				Id:    uuid.NewSHA1(namespace, buf.Bytes()).String(),
 			})
 
-			// If backref doesn't exist, don't
-			backref := target.TargetHints.Backref
-			if len(backref) > 0 {
+			if includeBackrefs && rule.HasBackref {
 				buf.Reset()
 				buf.WriteString(id)
 				buf.WriteByte('-')
 				buf.WriteString(targetID)
 				buf.WriteByte('-')
-				buf.WriteString(backref[0])
+				buf.WriteString(rule.Backref)
 
-				out = append(out, &gripql.GraphElement{
-					Edge: &gripql.Edge{
-						To:    id,
-						From:  targetID,
-						Label: backref[0],
-						Id:    uuid.NewSHA1(namespace, buf.Bytes()).String(),
-					},
+				out = append(out, &gripql.Edge{
+					To:    id,
+					From:  targetID,
+					Label: rule.Backref,
+					Id:    uuid.NewSHA1(namespace, buf.Bytes()).String(),
 				})
 			}
 		}
@@ -151,30 +174,27 @@ func buildVertexData(data, extraArgs map[string]any) (*structpb.Struct, error) {
 	return dataPB, nil
 }
 
-func resolveItem(pointer []string, item any) ([]any, error) {
-	if len(pointer) == 0 {
-		return nil, fmt.Errorf("List Pointer is of len 0")
-	}
-	currents := []any{item}
-	for _, part := range pointer {
-		var newCurrents []any
-		for _, curr := range currents {
-			switch c := curr.(type) {
-			case map[string]any:
-				if next, ok := c[part]; ok {
-					newCurrents = append(newCurrents, next)
-				}
-			case []any:
-				if part != "-" {
-					return nil, fmt.Errorf("expecting '-' for list iteration in json pointer")
-				}
-				newCurrents = append(newCurrents, c...)
-			}
+func splitReference(ref string) (string, string, bool) {
+	firstSlash := -1
+	for i := 0; i < len(ref); i++ {
+		if ref[i] == '/' {
+			firstSlash = i
+			break
 		}
-		if len(newCurrents) == 0 {
-			return nil, nil
-		}
-		currents = newCurrents
 	}
-	return currents, nil
+	if firstSlash <= 0 || firstSlash == len(ref)-1 {
+		return "", "", false
+	}
+	targetType := ref[:firstSlash]
+	targetID := ref[firstSlash+1:]
+	for i := 0; i < len(targetID); i++ {
+		if targetID[i] == '/' {
+			targetID = targetID[:i]
+			break
+		}
+	}
+	if targetID == "" {
+		return "", "", false
+	}
+	return targetType, targetID, true
 }

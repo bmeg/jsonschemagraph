@@ -13,7 +13,11 @@ import (
 
 func Load(path string) (*GraphSchema, error) {
 	c := jsonschema.NewCompiler()
-	out := &GraphSchema{Classes: map[string]*jsonschema.Schema{}, Compiler: c}
+	out := &GraphSchema{
+		Classes:   map[string]*jsonschema.Schema{},
+		EdgePlans: map[string]*ClassEdgePlan{},
+		Compiler:  c,
+	}
 
 	c.AssertFormat()
 	c.RegisterFormat(&jsonschema.Format{Name: "date-time", Validate: compile.ValidateFhirDateTime})
@@ -62,6 +66,7 @@ func Load(path string) (*GraphSchema, error) {
 	for _, obj := range compile.ObjectScan(sch) {
 		if obj.Title != "" {
 			out.Classes[obj.Title] = obj
+			out.EdgePlans[obj.Title] = compileEdgePlan(obj)
 		}
 	}
 	return out, nil
