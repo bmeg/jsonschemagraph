@@ -9,9 +9,9 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/bmeg/grip/gripql"
 	"github.com/bmeg/jsonschemagraph/compile"
 	"github.com/bmeg/jsonschemagraph/graph"
+	"github.com/bmeg/jsonschemagraph/model"
 	"github.com/bytedance/sonic"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
@@ -20,8 +20,8 @@ import (
 const JSCHEMA = "jsonSchema"
 const YSCHEMA = "yamlSchema"
 
-func ParseGraphFile(relpath string, format string, graphName string, vertexSubset []string, writeFile bool) ([]*gripql.Graph, error) {
-	var graphs []*gripql.Graph
+func ParseGraphFile(relpath string, format string, graphName string, vertexSubset []string, writeFile bool) ([]*model.Graph, error) {
+	var graphs []*model.Graph
 	if relpath == "" {
 		return nil, fmt.Errorf("path is empty")
 	}
@@ -53,7 +53,7 @@ func isSlice(v any) bool {
 	return reflect.TypeOf(v).Kind() == reflect.Slice
 }
 
-func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []string, writeFile bool) ([]*gripql.Graph, error) {
+func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []string, writeFile bool) ([]*model.Graph, error) {
 	out, err := graph.Load(relpath)
 	if err != nil {
 		return nil, fmt.Errorf("Err loading schema: %s: %s\n", relpath, err)
@@ -171,7 +171,7 @@ func ParseIntoGraphqlSchema(relpath string, graphName string, vertexSubset []str
 			fmt.Errorf("Failed to write to file: %v", err)
 		}
 	}
-	graphs := gripql.Graph{}
+	graphs := model.Graph{}
 	sonic.ConfigFastest.Unmarshal(expandedJSON, &graphs)
-	return []*gripql.Graph{&graphs}, nil
+	return []*model.Graph{&graphs}, nil
 }

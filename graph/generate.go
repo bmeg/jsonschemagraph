@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"maps"
 
-	"github.com/bmeg/grip/gripql"
 	"github.com/bmeg/jsonschema/v6"
+	"github.com/bmeg/jsonschemagraph/model"
 	"github.com/bmeg/jsonschemagraph/util"
 
 	"github.com/google/uuid"
@@ -14,7 +14,7 @@ import (
 	"google.golang.org/protobuf/types/known/structpb"
 )
 
-func (s GraphSchema) Generate(classID string, data map[string]any, extraArgs map[string]any) ([]*gripql.GraphElement, error) {
+func (s GraphSchema) Generate(classID string, data map[string]any, extraArgs map[string]any) ([]*model.GraphElement, error) {
 	namespace := extractNamespace(extraArgs)
 	_, id, err := validateClassAndData(&s, classID, data, true, false)
 	if err != nil {
@@ -28,39 +28,39 @@ func (s GraphSchema) Generate(classID string, data map[string]any, extraArgs map
 		return nil, mErr.ErrorOrNil()
 	}
 
-	out := make([]*gripql.GraphElement, 0, len(edges)+1)
-	out = append(out, &gripql.GraphElement{
-		Vertex: &gripql.Vertex{
+	out := make([]*model.GraphElement, 0, len(edges)+1)
+	out = append(out, &model.GraphElement{
+		Vertex: &model.Vertex{
 			Id:    id,
 			Label: classID,
 			Data:  dataPB,
 		},
 	})
 	for _, edge := range edges {
-		out = append(out, &gripql.GraphElement{Edge: edge})
+		out = append(out, &model.GraphElement{Edge: edge})
 	}
 	return out, mErr.ErrorOrNil()
 }
 
-func (s GraphSchema) GenerateEdges(classID string, data map[string]any, extraArgs map[string]any) ([]*gripql.Edge, error) {
+func (s GraphSchema) GenerateEdges(classID string, data map[string]any, extraArgs map[string]any) ([]*model.Edge, error) {
 	return s.GenerateEdgesWithOptions(classID, data, extraArgs, true, true)
 }
 
-func (s GraphSchema) GenerateEdgesWithOptions(classID string, data map[string]any, extraArgs map[string]any, validate bool, includeBackrefs bool) ([]*gripql.Edge, error) {
+func (s GraphSchema) GenerateEdgesWithOptions(classID string, data map[string]any, extraArgs map[string]any, validate bool, includeBackrefs bool) ([]*model.Edge, error) {
 	return s.generateEdgesInternal(classID, data, extraArgs, validate, false, includeBackrefs)
 }
 
-func (s GraphSchema) GenerateEdgesFastWithOptions(classID string, data map[string]any, extraArgs map[string]any, validate bool, includeBackrefs bool) ([]*gripql.Edge, error) {
+func (s GraphSchema) GenerateEdgesFastWithOptions(classID string, data map[string]any, extraArgs map[string]any, validate bool, includeBackrefs bool) ([]*model.Edge, error) {
 	return s.generateEdgesInternal(classID, data, extraArgs, validate, true, includeBackrefs)
 }
 
-func (s GraphSchema) BuildEdgesWithID(classID, id string, data map[string]any, extraArgs map[string]any, includeBackrefs bool) ([]*gripql.Edge, error) {
+func (s GraphSchema) BuildEdgesWithID(classID, id string, data map[string]any, extraArgs map[string]any, includeBackrefs bool) ([]*model.Edge, error) {
 	namespace := extractNamespace(extraArgs)
 	edges, mErr := s.buildEdges(classID, namespace, id, data, includeBackrefs)
 	return edges, mErr.ErrorOrNil()
 }
 
-func (s GraphSchema) generateEdgesInternal(classID string, data map[string]any, extraArgs map[string]any, validate bool, fastValidate bool, includeBackrefs bool) ([]*gripql.Edge, error) {
+func (s GraphSchema) generateEdgesInternal(classID string, data map[string]any, extraArgs map[string]any, validate bool, fastValidate bool, includeBackrefs bool) ([]*model.Edge, error) {
 	_, id, err := validateClassAndData(&s, classID, data, validate, fastValidate)
 	if err != nil {
 		return nil, err
@@ -102,13 +102,13 @@ func validateClassAndData(s *GraphSchema, classID string, data map[string]any, v
 	return class, id, nil
 }
 
-func (s GraphSchema) buildEdges(classID string, namespace uuid.UUID, id string, data map[string]any, includeBackrefs bool) ([]*gripql.Edge, *multierror.Error) {
+func (s GraphSchema) buildEdges(classID string, namespace uuid.UUID, id string, data map[string]any, includeBackrefs bool) ([]*model.Edge, *multierror.Error) {
 	plan := (&s).GetEdgePlan(classID)
 	if plan == nil {
 		return nil, multierror.Append(nil, fmt.Errorf("edge plan not found for class %q", classID))
 	}
 	var mErr *multierror.Error
-	out := make([]*gripql.Edge, 0, plan.EstimatedEdges)
+	out := make([]*model.Edge, 0, plan.EstimatedEdges)
 	resolver := referenceResolver{}
 	for _, rule := range plan.Rules {
 		items, err := resolver.resolve(rule, data)
@@ -136,7 +136,7 @@ func (s GraphSchema) buildEdges(classID string, namespace uuid.UUID, id string, 
 			buf.WriteByte('-')
 			buf.WriteString(rule.Rel)
 
-			out = append(out, &gripql.Edge{
+			out = append(out, &model.Edge{
 				To:    targetID,
 				From:  id,
 				Label: rule.Rel,
@@ -151,7 +151,7 @@ func (s GraphSchema) buildEdges(classID string, namespace uuid.UUID, id string, 
 				buf.WriteByte('-')
 				buf.WriteString(rule.Backref)
 
-				out = append(out, &gripql.Edge{
+				out = append(out, &model.Edge{
 					To:    id,
 					From:  targetID,
 					Label: rule.Backref,

@@ -4,7 +4,6 @@ go 1.24.2
 
 require (
 	github.com/bmeg/golib v0.0.0-20200725232156-e799a31439fc
-	github.com/bmeg/grip v0.0.0-20250915204302-93cb1e8117c8
 	github.com/bmeg/jsonschema/v6 v6.0.5
 	github.com/bytedance/sonic v1.15.2
 	github.com/google/uuid v1.6.0

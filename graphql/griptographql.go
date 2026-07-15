@@ -6,7 +6,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/bmeg/grip/gripql"
+	"github.com/bmeg/jsonschemagraph/model"
 )
 
 func IsUpper(s string) bool {
@@ -18,7 +18,7 @@ func IsUpper(s string) bool {
 	return true
 }
 
-func GripGraphqltoGraphql(graph *gripql.Graph) string {
+func GripGraphqltoGraphql(graph *model.Graph) string {
 	var schemaBuilder strings.Builder
 	// Write gen3 style boiler plate to mirror thier args
 	schemaBuilder.WriteString("scalar JSON\n")

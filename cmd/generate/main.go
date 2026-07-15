@@ -6,8 +6,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/bmeg/grip/gripql"
 	"github.com/bmeg/jsonschemagraph/graph"
+	"github.com/bmeg/jsonschemagraph/model"
 	"github.com/bmeg/jsonschemagraph/util"
 	"github.com/bytedance/sonic"
 	"github.com/spf13/cobra"
@@ -125,7 +125,7 @@ var Cmd = &cobra.Command{
 			}
 
 			var IedgeInit, VertexInit, OedegeInit = true, true, true
-			jum := gripql.NewFlattenMarshaler()
+			jum := model.NewFlattenMarshaler()
 			for line := range procChan {
 				if result, err := out.Generate(ClassName, line, mapstringArgs); err == nil {
 					for _, lin := range result {

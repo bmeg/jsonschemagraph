@@ -3,8 +3,6 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/benbjohnson/clock v1.1.0/go.mod h1:J11/hYXuz8f4ySSvYwY0FKfm+ezbsZBKZxNJlLklBHA=
 github.com/bmeg/golib v0.0.0-20200725232156-e799a31439fc h1:/0v/ZcXYjGs44InmjECrls31onIbVKVu1Q/E2cmnCEU=
 github.com/bmeg/golib v0.0.0-20200725232156-e799a31439fc/go.mod h1:hoSeuZtqe58ANXHuWpeODx4bDHGV36QXlCs1yrUvK6M=
-github.com/bmeg/grip v0.0.0-20250915204302-93cb1e8117c8 h1:UhgcpVbQuvqg8KJ0ioB4i/KaQw1Zel34oHKjSENPEIA=
-github.com/bmeg/grip v0.0.0-20250915204302-93cb1e8117c8/go.mod h1:mIN98ALRqqjqRHqopIuZ9iDJ97w4gAzXqdKE6Enuu7Y=
 github.com/bmeg/jsonschema/v6 v6.0.5 h1:GnyWf8badsqBE0KytRwiuev240HtH89aj04+CzOd6SQ=
 github.com/bmeg/jsonschema/v6 v6.0.5/go.mod h1:g21s8u35PcH2eGtPBjavAPmXWTwBLd40lHNyq72+ihs=
 github.com/bytedance/gopkg v0.1.3 h1:TPBSwH8RsouGCBcMBktLt1AymVo2TVsBVCY4b6TnZ/M=
